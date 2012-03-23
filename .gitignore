@@ -1,0 +1,7 @@
+# ommiting copyrighted stuff
+ksiazki_i_artykuly/*
+
+# tmp
+*~
+*.bak
+*.ini

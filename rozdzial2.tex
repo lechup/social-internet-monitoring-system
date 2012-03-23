@@ -1,0 +1,57 @@
+\chapter{Specyfikacja wymagań}
+\label{cha:specyfikacjaWymagan}
+
+Jak wspomniano w~\ref{sec:ZMTO} autor chce wykorzystać jak najwięcej metodyk ,,zwinnych'' przy każdym aspekcie tworzenia oprogramowania czyli także w przypadku specyfikacji wymagań. Nie znaleziono do tej pory idealnego rozwiązania uniwersalnego pobierania wymagań od klienta. W większości przypadków trzeba pewnego czasu aby wypracować wspólny język z klientem i nauczyć się razem z nim współpracować przy akwizycji wymagań.
+
+Na podstawowe dobre praktyki niekoniecznie ,,zwinnej'' inżynierii wymagań składają się między innymi\footnote{Informacje zaczerpnięte z \cite{Wol09p}}:
+
+
+\begin{itemize}
+    \item Ocena wykonalności systemu -- przed przystąpieniem do szczegółowej akwizycji wymagań, należy sprawdzić wykonalność implementacji systemu
+    \item Dokument specyfikacji wymagań -- istnieje jakiś dokument, który ułatwia akwizycję wymagań
+    \begin{itemize}
+        \item Należy zdefiniować standardową strukturę dokumentu
+        \item Należy wyjaśnić jak korzystać z dokumentu
+        \item Należy załączyć podsumowanie wymagań
+        \item Należy zadbać o czytelną strukturę dokumentu
+        \item Należy zadbać o łatwość wprowadzania zmian w dokumencie
+        \item Należy używać prostego i ścisłego języka
+        \item Należy budować słownik wymienianych terminów specjalistycznych
+    \end{itemize}
+    \item Pozyskiwanie wymagań -- praktyki na samym etapie pozyskiwania wymagań
+    \begin{itemize}
+        \item Należy być wyczulonym na czynniki organizacyjne i polityczne
+        \item Należy przechowywać źródła wymagań
+        \item Należy używać celów biznesowych przy pozyskiwaniu wymagań 
+    \end{itemize}
+\end{itemize}
+
+
+\section{,,Zwinna'' specyfikacja wymagań}
+\label{sec:zwinnaSpecyfikacjaWymagan}
+
+
+Zgodnie z~\ref{sec:ZMTOzalozenia} podchodząc ,,zwinnie'' do projektowania systemu od początku należy pobrać od klienta tylko te wymagania, które są konieczne do osiągnięcia celów biznesowych. Wszystkie sprawy poboczne, dodatkowe, należy zostawić na później, aż projekt przejdzie do etapu ,,utrzymanie'' (\ref{sec:ZMTOcykl}). Celem ,,zwinnej'' specyfikacji wymagań jest stworzenie wymagań \emph{mimimalnego systemu, spełniającego wszystkie podstawowe funkcje biznesowe zdefiniowane przez klienta}.
+
+\section{Narzędzia}
+\label{sec:ZSWnarzedzia}
+
+Głównymi narzędziami wykorzystywanymi przy ,,zwinnej'' specyfikacji wymagań to:
+\begin{itemize}
+    \item user stories (w \cite{Mad09} określane jako karty wymagań) -- krótkie, ogólnikowe historyjki opisujące jakąś funkcjonalność systemu
+    \item screens (w \cite{Mad09} określane jako ekrany) -- szkie obrazujące ogólny układ przycisków, formularzy, tabel mogących pojawić się w karcie wymagań
+    \item testy akceptacyjne/scenariusze -- opisy słowne prawidłowego zachowania systemu dotyczące kart wymagań, swojego rodzaju scenariusz karty wymagań na bazie których programiści mogą stworzyć testy (o testach akceptacyjnych w ,,XP'' można więcej przeczytać w \cite{Jef00} pod hasłem ,,Acceptance tests'')  
+\end{itemize}
+
+Dokumenty te nie mają konkretnej formy, ,,zwinna'' metodyka pozwala dostosować ją do własnych wymagań, które będą działały najlepiej dla wykorzystujących metodykę programistów oraz ich klienta. Karty wymagań, scenariusze oraz ekrany należy spisywać na małych karteczach jednego formatu. Na potrzeby projektu można pokusić się o cyfryzację kart wymagań, tak aby łatwiej było się nimi wymieniać i ich nie zgubić, czy też nie zagubić się w ich gąszczu. W \ref{sec:cośtam} autor pracy proponuje do tego celu wykorzystanie szablonu \LaTeX. Przygotowując powyższe ,,dokumenty'' należy pamiętać o zasadach:
+\begin{itemize}
+    \item prostota -- Złożone scenariusze czy karty wymagań należy rozbić na kilka mniejszych, dzielenie musi być zrobione z klientem w formie rozmowy -- nigdy przez samego programistę. Karty wymagań powinny być do wykonania w ciągu jednego do dwóch tygodni czasu programisty.
+    \item klient jest autorem kart wymagań jak i testów akceptacyjnych/scenariuszy -- Programista może jedynie pokazać jak należy pisać kartę wymagań, tak żeby wypracować z klientem wspólny język, może pomagać w podzieleniu złozonych wymagań na mniejsze. Dopuszcza się sugerowanie możliwych scenariuszy, natomiast sama rekacja systemu musi być już określona przez klienta.
+    \item ekrany powinny mieć swoją sekwencję -- Jak istnieje sekwencja ekranów, należy pamiętać o nadaniu numerów odpowiadających kolejności ich występowania.
+    \item 
+\end{itemize}
+
+%Biorąc pod uwagę dobre praktyki inżynierii wymagań(\ref{cha:specyfikacjaWymagan}) oraz informacje zawarte w pracy ,,Zwinna specyfikacja wymagań'' można pokusić się o stworzenie bardziej uniwersalnego szablonu zwinnej specyfikacji wymagań.
+\newpage
+%---------------------------------------------------------------------------
+
