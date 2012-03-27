@@ -1,0 +1,48 @@
+% trochę domyślnego formatowania dokumentu
+\documentclass[a4paper]{article}
+\usepackage{fullpage}
+
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage[polish]{babel}
+\usepackage{userstory}
+
+\begin{document}
+    \begin{userstory}{Logowanie użytkownika}
+        Użytkownik za pomocą formularza może zalogować się do serwisu,
+        uzyskując w ten sposób dostęp do jego dodatkowych funkcjonalności.
+        \scr{img/us1/1.png}{Formularz logowania.}
+        
+        \begin{tests}
+            \test{
+                Użytkownik tylko po podaniu podaniu loginu oraz pasującego do niego hasła
+                zostaje zalogowany.
+            }
+            \test{
+                Użytkownik po podaniu błędnego hasła lub nieistniejącego loginu,
+                zostaje o tym poinformowany oraz oferuje mu się od razu formularz przypomnienia hasła.
+                \scr{img/us1/2.jpg}{Ekran informacji o błędym haśle lub loginie.}
+            }
+            \test{
+                Użytkownik po zalogowaniu
+                widzi zmodyfikowane menu na wszystkich stronach serwisu.
+                \scr{img/us1/2.jpg}{Zakładki menu dla zalogowanego użytkownika.}
+                \scr{img/us1/3.jpg}{Zakładki menu dla niezalogowanego użytkownika.}
+            }
+            \test{
+                Użytkownik po zalogowaniu
+                ma dostęp do panelu.
+            }
+            \test{
+                Użytkownik po zalogowaniu\\*
+                może przeglądać profile innych użytkowników.
+            }
+        \end{tests}
+        \begin{questions}
+            \question{
+                Czy użytkownik po wykonaniu błędnego logowania\\*
+                ma być przekierowany na nową stronę, czy pozostawać na tej samej?
+            }
+        \end{questions}
+    \end{userstory}
+\end{document}

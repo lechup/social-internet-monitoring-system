@@ -31,27 +31,32 @@ Na podstawowe dobre praktyki niekoniecznie ,,zwinnej'' inżynierii wymagań skł
 \label{sec:zwinnaSpecyfikacjaWymagan}
 
 
-Zgodnie z~\ref{sec:ZMTOzalozenia} podchodząc ,,zwinnie'' do projektowania systemu od początku należy pobrać od klienta tylko te wymagania, które są konieczne do osiągnięcia celów biznesowych. Wszystkie sprawy poboczne, dodatkowe, należy zostawić na później, aż projekt przejdzie do etapu ,,utrzymanie'' (\ref{sec:ZMTOcykl}). Celem ,,zwinnej'' specyfikacji wymagań jest stworzenie wymagań \emph{mimimalnego systemu, spełniającego wszystkie podstawowe funkcje biznesowe zdefiniowane przez klienta}.
+Zgodnie z~\ref{sec:ZMTOzalozenia} podchodząc ,,zwinnie'' do projektowania systemu od początku należy pobrać od klienta tylko te wymagania, które są konieczne do osiągnięcia celów biznesowych. Wszystkie sprawy poboczne, dodatkowe, należy zostawić na później, aż projekt przejdzie do etapu ,,utrzymanie'' (\ref{sec:ZMTOcykl}). Celem ,,zwinnej'' specyfikacji wymagań jest stworzenie wymagań \emph{minimalnego systemu, spełniającego wszystkie podstawowe funkcje biznesowe zdefiniowane przez klienta}.
 
-\section{Narzędzia}
+\subsection{Narzędzia}
 \label{sec:ZSWnarzedzia}
 
-Głównymi narzędziami wykorzystywanymi przy ,,zwinnej'' specyfikacji wymagań to:
+Głównymi narzędziami wykorzystywanymi przy ,,zwinnej'' specyfikacji wymagań są:
 \begin{itemize}
     \item user stories (w \cite{Mad09} określane jako karty wymagań) -- krótkie, ogólnikowe historyjki opisujące jakąś funkcjonalność systemu
-    \item screens (w \cite{Mad09} określane jako ekrany) -- szkie obrazujące ogólny układ przycisków, formularzy, tabel mogących pojawić się w karcie wymagań
-    \item testy akceptacyjne/scenariusze -- opisy słowne prawidłowego zachowania systemu dotyczące kart wymagań, swojego rodzaju scenariusz karty wymagań na bazie których programiści mogą stworzyć testy (o testach akceptacyjnych w ,,XP'' można więcej przeczytać w \cite{Jef00} pod hasłem ,,Acceptance tests'')  
+    \item screens (w \cite{Mad09} określane jako ekrany) -- szkice obrazujące ogólny układ przycisków, formularzy, tabel mogących pojawić się w karcie wymagań
+    \item acceptance tests (w \cite{Mad09} określane jako testy akceptacyjne/scenariusze) -- opisy słowne prawidłowego zachowania systemu dotyczące kart wymagań, swojego rodzaju scenariusz karty wymagań na bazie których programiści mogą stworzyć testy (o testach akceptacyjnych w ,,XP'' można więcej przeczytać w \cite{Jef00} pod hasłem ,,Acceptance tests'')  
 \end{itemize}
 
-Dokumenty te nie mają konkretnej formy, ,,zwinna'' metodyka pozwala dostosować ją do własnych wymagań, które będą działały najlepiej dla wykorzystujących metodykę programistów oraz ich klienta. Karty wymagań, scenariusze oraz ekrany należy spisywać na małych karteczach jednego formatu. Na potrzeby projektu można pokusić się o cyfryzację kart wymagań, tak aby łatwiej było się nimi wymieniać i ich nie zgubić, czy też nie zagubić się w ich gąszczu. W \ref{sec:cośtam} autor pracy proponuje do tego celu wykorzystanie szablonu \LaTeX. Przygotowując powyższe ,,dokumenty'' należy pamiętać o zasadach:
+Dokumenty te nie mają konkretnej formy, ,,zwinna'' metodyka pozwala dostosować ją do własnych wymagań, które będą działały najlepiej dla wykorzystujących metodykę programistów oraz ich klienta. Karty wymagań, scenariusze oraz ekrany należy spisywać na małych karteczkach jednego formatu. Przygotowując powyższe ,,dokumenty'' należy pamiętać o zasadach:
 \begin{itemize}
     \item prostota -- Złożone scenariusze czy karty wymagań należy rozbić na kilka mniejszych, dzielenie musi być zrobione z klientem w formie rozmowy -- nigdy przez samego programistę. Karty wymagań powinny być do wykonania w ciągu jednego do dwóch tygodni czasu programisty.
-    \item klient jest autorem kart wymagań jak i testów akceptacyjnych/scenariuszy -- Programista może jedynie pokazać jak należy pisać kartę wymagań, tak żeby wypracować z klientem wspólny język, może pomagać w podzieleniu złozonych wymagań na mniejsze. Dopuszcza się sugerowanie możliwych scenariuszy, natomiast sama rekacja systemu musi być już określona przez klienta.
+    \item klient jest autorem kart wymagań jak i testów akceptacyjnych/scenariuszy -- Programista może jedynie pokazać jak należy pisać kartę wymagań, tak żeby wypracować z klientem wspólny język, może pomagać w podzieleniu złożonych wymagań na mniejsze. Dopuszcza się sugerowanie możliwych scenariuszy, natomiast sama reakcja systemu musi być już określona przez klienta.
     \item ekrany powinny mieć swoją sekwencję -- Jak istnieje sekwencja ekranów, należy pamiętać o nadaniu numerów odpowiadających kolejności ich występowania.
-    \item 
 \end{itemize}
 
-%Biorąc pod uwagę dobre praktyki inżynierii wymagań(\ref{cha:specyfikacjaWymagan}) oraz informacje zawarte w pracy ,,Zwinna specyfikacja wymagań'' można pokusić się o stworzenie bardziej uniwersalnego szablonu zwinnej specyfikacji wymagań.
+\subsection{Cyfryzacja}
+\label{sec:ZSWcyfryzacja}
+
+Na potrzeby tej pracy autor musiał wymyślić sposób na cyfryzację kart wymagań, związanych z nimi testów akceptacyjnych oraz ekranów, tak aby w łatwy sposób dało się je dołączyć do pracy. Dodatkową zaletą formy elektronicznej jest fakt, że ułatwi ona wymianę informacji pomiędzy uczestnikami projektu, pomoże uniknąć sytuacji zagubienia/zniszczenia jakiegoś elementu kart wymagań, ułatwi ich zarządzaniem i przetrzymywaniem np. w wykorzystywanym systemie kontroli wersji.
+
+Wykorzystywanie \LaTeX~u do składu pracy nakierowało autora pracy na pomysł stworzenia szablonu \LaTeX, który można by było wykorzystać celem konwersji kart wymagań i ich elementów analogowych do dokumentu cyfrowego. Łatwe oddzielenie warstwy prezentacji od samej treści oraz możliwość eksportu do formatu PDF umożliwiałoby również tworzenie w prosty sposób ładnego dokumentu dla klienta po spotkaniach na których pobierane są od niego wymagania.
+
 \newpage
 %---------------------------------------------------------------------------
 
