@@ -56,6 +56,53 @@ Wykorzystywanie \LaTeX~u do składu pracy nakierowało autora pracy na pomysł s
 
 Tak powstał tzw. ,,package'' udostępniający środowisko \texttt{userstory}. Szczegółowy opis tego środowiska znajduje się \namedref{cha:dodatekA}.
 
+\section{Etap I -- Badanie (Exploration)}
+\label{sec:SWbadanie}
+
+Zgodnie z cyklem życia projektu ,,XP'' (więcej \namedref{sec:ZMTOcykl}), powinno zacząć się od akwizycji ogólnego, głównego zadania systemu. Autor pracy proponuje do tego celu wykorzystać przygotowany przez siebie szablon (więcej \namedref{sec:dodatekAsgzs}). Dopiero posiadając taką wiedzę, można przejść dalej, do tematu \namedrefw{sec:SWbAnalizaWymagan}, czy \namedrefw{sec:SWbTestowanieTechnologii}.
+
+\begin{userstory}{Główne zadanie systemu}
+Użytkownik za pomocą smartphone'a z kamerą działającego pod systemem Android lub za pomocą przeglądarki internetowej na komputerze stacjonarnym i kamery podłączonej do niego, ma możliwość udostępnienia on-line aktualnego obrazu i dźwięku.
+    \begin{questions}
+        \item{
+            \textbf{Kto jest użytkownikiem systemu?} Użytkownikiem systemu może być każdy kto ma przeglądarkę. Aby udostępnić swoją kamerę dodatkowo użytkownik musi być zalogowany, a wcześniej zarejestrowany w systemie. Aby korzystać z reszty funkcji serwisu nie trzeba być zalogowanym.
+        }
+        \item{
+            \textbf{Jakie urządzenia muszą współpracować z systemem?} Wszystkie komputery wyposażone w przeglądarkę IE 7.0+, Firefox 3+, Chrome, Opera 9+. Dodatkowo system ma działać na telefonach komórkowych / tabletach z systemem Android.
+        }
+        \item{
+            \textbf{Czy jest wymóg użycia konkretnej technologii?} Nie jest wymagana żadna konkretna technologia. Wymaganiem jest wykorzystanie technologii Open Source, wszędzie tam gdzie jesteśmy w stanie zastąpić komercyjne rozwiązania.
+        }
+        \item{
+            \textbf{Jaka jest wymagana skalowalność systemu?} System musi być skalowalny, idealnie by było, gdyby obraz z kamery udostępniany przez jednego użytkownika, mógłby być odbierany przez nieskończoną liczbę ludzi. Na pewno w jakiś sposób system musi reagować automatycznie na zwiększony ruch w obrębie jednego stream'a.
+        }
+        \item{
+            \textbf{Czy są jakieś wymagania dotyczące środowiska produkcyjnego w jakim ma działać system?} System docelowo będzie wdrożony na odpowiednim sprzęcie, testy powinien być w stanie odpalić się na średniej klasy laptopie. Im mniejsze wymagania tym lepiej.
+        }
+        \item{
+            \textbf{Czy system ma współpracować z innymi systemami lub udostępniać coś innym systemom?} Duży nacisk będzie kładziony na integrację z serwisami społecznościowymi, głównie chodzi o Facebook'a. Będzie można go wykorzystać celem rejestracji i logowania w serwisie, czy też automatycznego udostępniania stream'u na swojej Facebook'owej ścianie.
+        }
+        \item{
+            \textbf{Czy istnieją systemy podobne do tworzonego?} Jeżeli chodzi o sposób prezentacji interfejsu WWW to najbardziej zbliżony do tego co chce się osiągnąć jest Bambuser. Podobnie ma się sprawa funkcjonalności na telefonie z systemem Android -- aplikacja Bambuser.
+        }
+        \item{
+            \textbf{Czy są jakieś inne specjalne wymagania, które nie wynikają z funkcji jakie powinien posiadać system (wymagania niefunkcjonalne)?} Szybki, skalowalny, bezpieczny, Open Source.
+        }
+    \end{questions}
+\end{userstory}
+
+\subsection{Analiza wymagań}
+\label{sec:SWbAnalizaWymagan}
+
+\subsection{Testowanie technologii}
+\label{sec:SWbTestowanieTechnologii}
+
+\section{Etap II -- Planning (Planowanie)}
+\label{sec:SWbplanowanie}
+
+\section{Iteracje do Pierwszego Wydania (Planowanie)}
+\label{sec:SWbIteracjeDoPierwszegoWydania}
+
 \newpage
 %---------------------------------------------------------------------------
 

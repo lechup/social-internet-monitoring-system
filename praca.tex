@@ -8,6 +8,7 @@
 \usepackage{enumerate}
 \usepackage{listings}
 \usepackage{hyperref}
+\usepackage{userstory}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -16,8 +17,12 @@
     urlcolor=black
 }
 \newcommand\namedref[1]{
-    w rozdziale \texttt{\ref{#1} \nameref{#1}}
+    w~rozdziale \texttt{\ref{#1}~\nameref{#1}}
 }
+\newcommand\namedrefw[1]{
+    \texttt{\ref{#1}~\nameref{#1}}
+}
+% w itemize, chcemy kropki, a nie pauzy
 \renewcommand{\labelitemi}{$\bullet$}
 
 \usepackage{color}
