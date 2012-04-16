@@ -1,25 +1,25 @@
 \chapter{Wprowadzenie}
 \label{cha:wprowadzenie}
 
-W ostatnich latach można zauważyć gwałtowny rozwój rozwój infrastruktury i technologii sieciowych. Coraz więcej gospodarstw domowych połącza się do ,,chmury informacyjnej'' jaką jest Internet. Komputery bez dostępu do sieci powoli stają się po prostu bezużyteczne. Internet dzięki Wi-Fi oraz technologiom telefonii komórkowej takich jak HSPA lub jej następcy LTE staje się medium bezprzewodowym, dostępnym wszędzie tam gdzie istnieje zasięg sieci komórkowej.
+W ostatnich latach można zauważyć gwałtowny rozwój rozwój infrastruktury i technologii sieciowych. Coraz więcej gospodarstw domowych dołącza się do ,,chmury informacyjnej'' jaką jest Internet. Komputery bez dostępu do sieci powoli stają się po prostu bezużyteczne. Internet dzięki Wi-Fi oraz technologiom telefonii komórkowej takich jak HSPA lub jej następcy LTE staje się medium bezprzewodowym, dostępnym wszędzie tam gdzie istnieje zasięg sieci komórkowej.
 
 Wszechobecność i dostępność ,,wielkiej pajęczyny'' powoduje, że coraz częściej korzysta się z niej nie tylko za pomocą komputerów czy laptopów. Nowe ,,gadżety'' takie jak tablety, smartphone'y czy netbook'i stają się nowym interfejsem pomiędzy siecią, a użytkownikiem. Szacuje się, że do roku 2015 większość użytkowników Internetu będzie korzystała właśnie z takich urządzeń mobilnych. Wtedy również, 40\% światowej populacji (2,7 miliarda osób) będzie już korzystała z dobrodziejstw dostępu do natychmiastowej informacji. \footnote{Dane w oparciu o  artykuł \cite{Kim11}}
 
-Zwiększenie szybkości dostępu do Internetu umożliwiło stworzenie technologii pozwalających na transmisję strumieniową danych audio/wideo. Takie serwisy jak YouTube, Vimeo czy MetaCafe już od 2005 roku umożliwiają użytkownikom wysyłanie i udostępnianie swoich nagrań online. Niestety żaden z tych serwisów nie umożliwia udostępniania strumienia danych wideo w czasie rzeczywistym. Dopiero w 2007 roku powstał Bambuser oraz Qik. Serwisy te jak i technologie, które wdrożyli, pozwalają dzielić się strumieniem audio/video w czasie rzeczywistym wykorzystując do tego jedynie telefon komórkowy lub kamerę podłączoną do komputera.
+Zwiększenie szybkości dostępu do Internetu umożliwiło stworzenie technologii pozwalających na transmisję strumieniową danych audio/wideo. Takie serwisy jak YouTube, Vimeo czy MetaCafe już od 2005 roku umożliwiają użytkownikom wysyłanie i udostępnianie swoich nagrań online. Niestety żaden z tych serwisów nie umożliwia udostępniania strumienia danych wideo w czasie rzeczywistym. Dopiero w 2007 roku powstał Bambuser oraz Qik. Serwisy te jak i technologie, które wdrożyły pozwalają dzielić się strumieniem audio/video w czasie rzeczywistym, wykorzystując do tego jedynie telefon komórkowy lub kamerę podłączoną do komputera.
 
 Naturalną koleją rzeczy wydaje się wykorzystanie Internetu celem stworzenia gigantycznego systemu monitoringu. Można sobie wyobrazić system do którego podłączono istniejącą infrastrukturę kamer CCTV i udostępniono ich strumień video online, tak aby każdy obywatel mógł monitorować to co się dzieje w jego okolicy. System można by było rozszerzyć o kamery podłączane przez użytkowników lub ich najnowocześniejsze ,,gadżety'' czyli tablety czy smartphone'y. Tak właśnie autor niniejszej pracy wyobraża sobie ,,Społecznościowy, internetowy system monitoringu''.
 
 \newpage
 %---------------------------------------------------------------------------
 
-
 \section{Cele pracy}
 \label{sec:celePracy}
 
-Głównym celem pracy jest stworzenie specyfikacji wymagań, analizy i projektu systemu określonego jako ,,Społecznościowy, internetowy system monitoringu''. Na każdym etapie prowadzenia projektu w tej pracy, chciano wykorzystać jak najwięcej metodyk ,,zwinnych''. Autor bazując na pracy starszych kolegów (\cite{JakMich06}), jak i doświadczeniu w zwinnym specyfikowaniu systemu doktorantów (\cite{Mad09}), podpierając się literaturą fachową (\cite{Bec99}) chce zaproponować ,,zwinną specyfikację i analizę wymagań'' i pokazać jej zalety względem podejścia konwencjonalnego.
+Głównym celem pracy jest stworzenie specyfikacji wymagań, analizy systemu określonego jako ,,Społecznościowy, internetowy system monitoringu''.
+
+W niniejszej pracy, na każdym etapie prowadzenia projektu, chciano wykorzystać jak najwięcej metodyk ,,zwinnych''. Autor bazując na pracy starszych kolegów (\cite{JakMich06}), jak i doświadczeniu w zwinnym specyfikowaniu systemu doktorantów (\cite{Mad09}), podpierając się literaturą fachową (\cite{Bec99}) chce zaproponować ,,zwinną specyfikację i analizę wymagań''. W szczególności pokazać jej zalety względem podejścia konwencjonalnego.
 
 Dodatkowo autor pracy chce zaimplementować ograniczony prototyp specyfikowanego systemu wykorzystując przy tym jedynie darmowe technologie z preferencją rozwiązań Open Source.
-
 
 \section{Zawartość pracy}
 \label{sec:zawartoscPracy}
@@ -29,84 +29,92 @@ Dodatkowo autor pracy chce zaimplementować ograniczony prototyp specyfikowanego
 \newpage
 %---------------------------------------------------------------------------
 
-
 \section{,,Zwinna'' metodyka tworzenia oprogramowania -- ,,XP''}
 \label{sec:ZMTO}
-
 
 \begin{center}
     ,,Wytwarzając oprogramowanie i pomagając innym w tym zakresie,\\*
     odkrywamy lepsze sposoby wykonywania tej pracy.\\*
-    W wyniku tych doświadczeń przedkładamy:\\*
-    \\*
+    W wyniku tych doświadczeń przedkładamy:\newline
+    \newline
     \textbf{Ludzi i interakcje} ponad procesy i narzędzia.\\*
     \textbf{Działające oprogramowanie} ponad obszerną dokumentację.\\*
     \textbf{Współpracę z klientem} ponad formalne ustalenia.\\*
-    \textbf{Reagowanie na zmiany} ponad podążanie za planem.\\*
-    \\*
+    \textbf{Reagowanie na zmiany} ponad podążanie za planem.\newline
+    \newline
     Doceniamy to, co wymieniono po prawej stronie,\\*
     jednak bardziej cenimy to, co po lewej.''
 \end{center}
-\hfill --- Kent Beck et al.,\\*
-\hfill\texttt{http://agilemanifesto.org}
+\hfill \begin{small}\textit{--- Kent Beck et al., http://agilemanifesto.org}\end{small}
 
+Przy tworzeniu projektu wchodzącego w skład niniejszej pracy autor poczynił kilka założeń. Większość z nich dotyczy sposobu prowadzenia projektu -- dokumentacji, testów, komunikacji w grupie.
 
-Przy tworzeniu projektu wchodzącego w skład niniejszej pracy autor poczynił kilka założeń, celem wykorzystania dostępnych benefitów ,,zwinnej'' metodyki tworzenia oprogramowania. Większość z nich dotyczy sposobu prowadzenia projektu -- dokumentacji, testów, komunikacji w grupie. W następnym punkcie znajduje się lista tych założeń. Projekt nie spełniający ich, nie będzie mógł być prowadzony ,,zwinnie''. Listę można traktować jako swojego rodzaju zbiór dobrych praktyk metodyki rozwoju oprogramowania zwanej ,,Extreme Programming'' lub w skrócie ,,XP'' -- Programowanie Ekstremalne. Oczywiście ze względu na samodzielny charakter pracy, autor nie mógł sprawdzić wszystkich założeń w praktyce. \footnote{Głównym źródłem informacji na którym autor pracy bazuje ten rozdział jest książka \cite{Bec99}. Autor tej książki jest uważany za twórcę metodyki ,,XP''.}
-
+W następnym punkcie znajduje się lista tych założeń. Projekt nie spełniający ich, nie będzie mógł być prowadzony ,,zwinnie''. Listę można traktować jako swojego rodzaju zbiór dobrych praktyk metodyki rozwoju oprogramowania zwanej ,,Extreme Programming'' lub w skrócie ,,XP'' -- Programowanie Ekstremalne. Oczywiście ze względu na samodzielny charakter pracy, autor nie mógł sprawdzić wszystkich założeń w praktyce. \footnote{Głównym źródłem informacji na którym autor pracy bazuje ten rozdział jest książka \cite{Bec99}. Autor tej książki uważany jest za twórcę metodyki ,,XP''.}
 
 \subsection{Założenia}
 \label{sec:ZMTOzalozenia}
 
-
 \begin{itemize}
-\item klient jest zawsze dostępny -- Osoba która wie jak system ma działać od strony użytkownika jest zawsze dostępna dla programistów, forma komunikacji nie jest narzucona, natomiast preferowana jest twarzą w twarz. Osoba ta nie jest potrzebna tylko na początku projektu lecz\emph{przez cały okres} jego tworzenia i rozwoju.
-\item klient ma zawsze możliwość zmiany -- Nie ma rzeczy której nie da się zmienić w systemie, klient może w każdym momencie zmienić wymagania systemu. Grupa projektowa musi reagować na te zmiany.
-\item projekt jest prowadzony w krótkich iteracjach -- Maksymalnie dwutygodniowe okresy czasu, po których klient otrzymuje chciane poprawki/funkcjonalności, wykonania których podjęliśmy się w zadanym okresie czasu.
-\item testowanie automatyczne -- Każdy nowy element systemu musi posiadać napisane testy automatyczne (jednostkowe, funkcjonalne) -- system można w każdym momencie automatycznie przetestować. Najlepiej testy pisać przed implementacją nowego elementu.
-\item projektujemy, planujemy zawsze \emph{proste minimum} -- Nie planujemy na wyrost, określamy minimum, które będzie spełniało wymagania klienta w danej iteracji. Zawsze staramy się trzymać jak najmniejszą złożoność systemu, nawet kosztem dodatkowych zmian.
-\item ciągła integracja -- Poprawki nanoszone są cały czas na istniejący, system, integracja następuje wręcz kilka razy codziennie. Wymagany jest reżim testowy -- integrowane jest tylko to co ma napisane testy automatyczne oraz powoduje, że żadne dotychczasowe nie zwracają błędów.
-\item brak specjalizacji -- Żadna osoba z grupy projektowej nie powinna specjalizować się w jakiejś funkcji (programista, architekt, integrator, analityk). Wszyscy biorą czynny udział we wszystkich aspektach projektu.
-\item grupa prowadząca projekt nie jest zbyt liczna -- Grupa w której tworzony jest projekt lub pod-projekt nie może być zbyt liczna, ułatwia to komunikację. Każdy większy projekt da się podzielić na szereg mniejszych pod-projektów. Nie ma określonego limitu górnego, jeżeli występują problemy w komunikacji najczęściej grupa projektowa jest zbyt liczna.
-\item preferowaną formą komunikacji w grupie projektowej jest komunikacja twarzą w twarz -- Tylko przy takiej rozmowie uczestnicy projektu nie są rozpraszani przez inne rzeczy i mogą skupić się na zadanym temacie. Taki sposób komunikacji ułatwia wynajdywanie błędów i niejasności we wczesnej fazie projektu.
-\item wspólne programowanie, projektowanie -- Faworyzuje się tworzenie wszystkich elementów systemu w parach. Zapewniając w ten sposób ciągłe badanie jakości kodu, czy też poprawności architektury systemu.
-\item architektura jest zmienna -- Architektura jest czymś co się zmienia wraz z rozwojem projektu i funkcjonalności wymaganej przez klienta. Może się zmienić na każdym etapie projektu.
-\item kod i testy są dokumentacją -- Nie ma prowadzonej dodatkowej dokumentacji implementacyjnej np. dla programistów. Dobrze napisane testy, kod z komentarzami oraz ostatecznie rozmowa z innymi uczestnikami projektu jest najlepszą dokumentacją aktualnego stanu systemu.
+    \item klient jest zawsze dostępny -- Osoba która wie jak system ma działać od strony użytkownika jest zawsze dostępna dla programistów, forma komunikacji nie jest narzucona, natomiast preferowana jest twarzą w twarz. Osoba ta nie jest potrzebna tylko na początku projektu lecz \emph{przez cały okres} jego tworzenia i rozwoju.
+    \item klient ma zawsze możliwość zmiany -- Nie ma rzeczy której nie da się zmienić w systemie, klient może w każdym momencie zmienić wymagania systemu. Grupa projektowa musi reagować na te zmiany.
+    \item projekt jest prowadzony w krótkich iteracjach -- jedno do trzy-tygodniowe okresy czasu, po których klient otrzymuje chciane funkcjonalności, wykonania których podjęliśmy się w zadanym okresie czasu.
+    \item testowanie automatyczne -- Każdy nowy element systemu musi posiadać napisane testy automatyczne (jednostkowe, funkcjonalne) -- system można w każdym momencie automatycznie przetestować. Najlepiej testy pisać przed implementacją nowego elementu.
+    \item projektujemy, planujemy zawsze \emph{proste minimum} -- Nie planujemy na wyrost, określamy minimum, które będzie spełniało wymagania klienta w danej iteracji. Zawsze staramy się trzymać jak najmniejszą złożoność systemu, nawet kosztem dodatkowych zmian.
+    \item ciągła integracja -- Poprawki nanoszone są cały czas na istniejący, system, integracja następuje wręcz kilka razy dziennie. Wymagany jest reżim testowy -- integrowane jest tylko to co ma napisane testy automatyczne oraz powoduje, że żadne dotychczasowe nie zwracają błędów.
+    \item brak specjalizacji -- Żadna osoba z grupy projektowej nie powinna specjalizować się w jakiejś funkcji (programista, architekt, integrator, analityk). Wszyscy biorą czynny udział we wszystkich aspektach projektu.
+    \item grupa prowadząca projekt nie jest zbyt liczna -- Grupa w której tworzony jest projekt lub pod-projekt nie może być zbyt liczna, ułatwia to komunikację. Każdy większy projekt da się podzielić na szereg mniejszych pod-projektów. Nie ma określonego limitu górnego, jeżeli występują problemy w komunikacji najczęściej grupa projektowa jest zbyt liczna.
+    \item preferowaną formą komunikacji w grupie projektowej jest komunikacja twarzą w twarz -- Tylko przy takiej rozmowie uczestnicy projektu nie są rozpraszani przez inne rzeczy i mogą skupić się na zadanym temacie. Taki sposób komunikacji ułatwia wynajdywanie błędów i niejasności we wczesnej fazie projektu.
+    \item wspólne programowanie, projektowanie -- Faworyzuje się tworzenie wszystkich elementów systemu w parach. Zapewniając w ten sposób ciągłe badanie jakości kodu, czy też poprawności architektury systemu.
+    \item architektura jest zmienna -- Architektura jest czymś co się zmienia wraz z rozwojem projektu i funkcjonalności wymaganej przez klienta. Może się zmienić na każdym etapie projektu.
+    \item kod i testy są dokumentacją -- Nie ma prowadzonej dodatkowej dokumentacji implementacyjnej np. dla programistów. Dobrze napisane testy, kod z komentarzami oraz ostatecznie rozmowa z innymi uczestnikami projektu jest najlepszą dokumentacją aktualnego stanu systemu.
 \end{itemize}
-
 
 \subsection{Zalety}
 \label{sec:ZMTOzalety}
 
-
 Metodyka ,,Extreme Programming'' zmienia całkowicie podejście do sposobu tworzenia oprogramowania. Głównie przez umieszczenie klienta, w centrum prowadzonego projektu i jego ciągłe zaangażowanie na całym etapie tworzenia i rozwoju systemu. To on może w dowolnym momencie wprowadzić dowolne zmiany. Zyski jakie daje metodyka zwinna jaką jest ,,XP'' można rozpatrywać na wielu płaszczyznach projektu:
 
-
 \begin{itemize}
-\item koszty -- Metodyka daje nowe możliwości związane z liczeniem kosztów (per iteracja, per funkcjonalność). Przez krótkie iteracje i działające oprogramowanie łatwiej rozliczać się z klientem, a sam klient chętniej płaci. Długoterminowo unikamy kosztów wynikających z błędów początkowego projektowania, czy też zmian w projekcie, których nie jesteśmy w stanie uniknąć.
-\item czas -- Zarządzanie czasem w krótkich terminach iteracyjnych jest dużo bardziej wydajne i bardziej przewidywalne niż planowanie całego projektu od początku do końca. Brak konkretnej daty zakończenia projektu umożliwia uniknięcie ,,marszów śmierci'', czy przesuwania terminów. Klient sam zarządza tym co ma być zrobione i jakim kosztem czasowym jest to obarczone. Reżim testowy i ciągła integracja powoduje, że oprogramowanie dostarczane jest szybko, i co bardzo ważne dla klienta -- jest to oprogramowanie spełniające jego aktualne wymagania.
-\item jakość -- Ciągła integracja i obecność testów powoduje, że pomimo możliwych ciągłych zmian kod w większości przypadków działa, czyli jest wysokiej jakości. Jakość kodu gwarantowana jest również przez programowanie w parach. Zastępuje ono cykliczne sprawdzanie kodu oraz umożliwia uniknięcie problemów związanych z błędną architekturą systemu, które najczęściej pojawiają się bardzo późno.
-\item zakres -- Bardzo łatwo zmienić zakres systemu w trakcie jego tworzenia, wymaga się jedynie ustalenia w której iteracji ma być on zwiększony lub pomniejszony. Jako, że nie mamy ustalonych terminów całości projektu, zmiana zakresu nie jest dla nas 
-\item prostota
-\item komunikacja
-\item atmosfera pracy, związanie z projektem
-\item potencjalna porażka projektu
+    \item koszty -- Metodyka daje nowe możliwości związane z liczeniem kosztów (per iteracja, per funkcjonalność). Przez krótkie iteracje i działające oprogramowanie łatwiej rozliczać się z klientem, a sam klient chętniej płaci. Długoterminowo unikamy kosztów wynikających z błędów początkowego projektowania, czy też zmian w projekcie, których nie jesteśmy w stanie uniknąć.
+    \item czas -- Zarządzanie czasem w krótkich terminach iteracyjnych jest dużo bardziej wydajne i bardziej przewidywalne niż planowanie całego projektu od początku do końca. Brak konkretnej daty zakończenia projektu umożliwia uniknięcie ,,marszów śmierci'', czy przesuwania terminów. Klient sam zarządza tym co ma być zrobione i jakim kosztem czasowym jest to obarczone. Reżim testowy i ciągła integracja powoduje, że oprogramowanie dostarczane jest szybko, i co bardzo ważne dla klienta -- jest to oprogramowanie spełniające jego aktualne wymagania.
+    \item jakość -- Ciągła integracja i obecność testów powoduje, że pomimo możliwych ciągłych zmian kod w większości przypadków działa, czyli jest wysokiej jakości. Jakość kodu gwarantowana jest również przez programowanie w parach. Zastępuje ono cykliczne sprawdzanie kodu oraz umożliwia uniknięcie problemów związanych z błędną architekturą systemu, które najczęściej pojawiają się bardzo późno.
+    \item zakres -- Bardzo łatwo zmienić zakres systemu w trakcie jego tworzenia, wymaga się jedynie ustalenia w której iteracji ma być on zwiększony lub pomniejszony. Jako, że nie mamy ustalonych terminów całości projektu, zmiana zakresu nie jest dla nas 
+    \item brak specjalizacji -- Ciągła komunikacja werbalna w projekcie zapobiega specjalizacji poszczególnych członków zespołu. Każdy powinien wiedzieć jak najwięcej o systemie. Takie podejście gwarantuje niezależność w przypadku odejścia członka ,,specjalisty''.
+    \item zmniejszanie możliwości porażki projektu -- Dostarczanie działającego, funkcjonalnego oprogramowania bardzo szybko powoduje najczęściej zadowolenie klienta. Przekłada się to bezpośrednio na poczucie satysfakcji oraz pozytywną atmosferę wśród członków zespołu. Dzięki temu ludzie są mniej skłonni do zmiany miejsca zatrudnienia ze względu na stres, ciągłe przekraczanie terminów czy brak satysfakcji z wykonywanej pracy.
 \end{itemize}
-
 
 \subsection{Wady}
 \label{sec:ZMTOwady}
 
+Jak każda metodyka, także i ta ,,zwinna'' posiada swoje wady. Warto znać je przed rozpoczęciem projektu, w którym planuje się ją wykorzystać. Główne z nich to:
 
-Jak każda metodyka, także i ta ,,zwinna'' posiada swoje wady. Czasami po prostu nie można jej zastosować ze względu na charakter prowadzonego projektu lub przyzwyczajenia klienta. W tym pod-rozdziale skupiono się na dwóch aspektach sprawy -- jakie są główne wady ,,XP'' oraz kiedy jej po prostu nie stosować.
+\begin{itemize}
+    \item ciągła dostępność klienta -- Klient lub osoba wyznaczona przez niego, która zna potrzeby systemu musi być dostępna programistom ,,na zawołanie'' i ściśle z nimi współpracować.
+    \item konsekwencja -- Decydując się na ,,XP'' nie możemy zrezygnować z założeń (wspomniane szczegółowo \namedref{sec:ZMTOzalozenia}). Brak konsekwencji spowoduje w większości przypadków porażkę projektu.
+    \item brak konkretnej daty zakończenia projektu -- Podejście iteracyjno-wymaganiowe powoduje, że znany jest jedynie czas zakończenia aktualnej iteracji w skład której wchodzą konkretne karty wymagań i scenariusze. Ciągła możliwość zmiany zakresu i funkcjonalności systemu powoduje, że nie można określić daty zakończenia projektu.
+\end{itemize}
 
-\todo
-Strona 114-120 w \cite{Bec99}
+Czasami opisywanej metodyki nie można zastosować ze względu na charakter prowadzonego projektu lub przyzwyczajenia klienta/zleceniodawcy. Główne wskazówki kiedy ,,XP'' \textbf{nie nadaje się} jako metodyka prowadzenia projektu:
+
+\begin{itemize}
+    \item duża grupa projektowa -- Grupa projektowa ,,XP'' nie powinna być większa niż 10 osób. Więcej osób to większe problemy w komunikacji.
+    \item długie wykonywanie testów -- Kompilacja i wykonanie testów automatycznych trwa dłużej niż dzień (24 godziny). Co praktycznie uniemożliwia systematyczną ,,ciągłą integrację''.
+    \item brak środowiska testowego innego niż produkcyjny -- W sytuacji kiedy koszty środowiska testowego są bardzo wysokie, klient nie będzie chciał wydawać drugi raz dużych pieniędzy. Może się też zdarzyć, że z innych względów nie będziemy w stanie zagwarantować środowiska testowego, co automatycznie wyklucza testy automatyczne i ,,ciągłą integrację''.
+\end{itemize}
 
 \subsection{Cykl życia idealnego projektu}
 \label{sec:ZMTOcykl}
 
-\todo
-Strona 102-104 w \cite{Bec99}
+Każda metodyka ma swój cykl życia. W tym rozdziale autor chciał przybliżyć idealny cykl życia projektu ,,XP''.
+
+\begin{enumerate}
+    \item \textbf{Badanie (Exploration)} Faza w której pobiera się główne wymaganie systemu od klienta, testuje możliwe do wykorzystania technologie, bada się ich wydajność i użyteczność w projekcie. Jeżeli wykorzystywana technologia jest nowa dla zespołu, testuje się jej wykorzystanie na jakimś małym projekcie powiązanym z docelowym systemem.
+    \item \textbf{Planowanie (Planning)} Faza w której grupa projektowa ustala z klientem szczegóły głównych wymagań systemu. Klient określa priorytet, a grupa projektowa czas potrzebny na wykonanie poszczególnych kart wymagań.
+    \item \textbf{Iteracje do pierwszego wydania (Iterations to First Release)} Faza w której w iteracjach jedno do trzy-tygodniowych przygotowuje się system zgodnie z głównymi wymaganiami klienta. Koniec każdej iteracji powinien być ,,małym świętem'' -- darmowa pizza, wolny dzień w pracy etc.
+    \item \textbf{Wdrażanie do produkcji (Productionizing)} Faza w której system jest wdrażany do produkcji. Pod koniec tego etapu należy zrobić dużą, huczną imprezę.
+    \item \textbf{Utrzymanie i konserwacja (Maintenance)} Jest to najdłuższa faza projektu ,,XP''. Można by właściwie powiedzieć jego naturalny stan. W tej fazie iteracyjne, wdrażane są szczegółowe wymagania klienta, czy też nowe funkcjonalności odpowiadające jego aktualnym potrzebom.
+    \item \textbf{Zakończenie (Death)} Jest to faza w której projekt uznawany jest za zakończony. Może to być sytuacja idealna, w której klient nie ma potrzeby dalszej zmiany oprogramowania -- dostarczono mu produkt idealny. Może to być również mniej przyjemna sytuacja -- system nie jest w stanie spełnić nowych wymagań stawianych przez klienta. Tak czy inaczej, dobrym pomysłem jest zorganizowanie ,,stypy'' na której trzeba poruszyć problem, tego: ,,Co można było zrobić lepiej?'' i wyciągnąć na tej podstawie wnioski mogące się przydać w nowym projekcie.
+\end{enumerate}
 
 \newpage
 %---------------------------------------------------------------------------

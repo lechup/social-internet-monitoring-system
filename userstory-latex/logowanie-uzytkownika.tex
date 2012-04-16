@@ -1,10 +1,11 @@
-% trochę domyślnego formatowania dokumentu
+% domyślne formatowania dokumentu, można zmienić
 \documentclass[a4paper]{article}
 \usepackage{fullpage}
-
 \usepackage[utf8]{inputenc}
 \usepackage{polski}
 \usepackage[polish]{babel}
+
+% dodanie wymaganego nagłówka środowiska userstory
 \usepackage{userstory}
 
 \begin{document}
@@ -14,32 +15,32 @@
         \scr{img/us1/1.png}{Formularz logowania.}
         
         \begin{tests}
-            \test{
+            \item{
                 Użytkownik tylko po podaniu podaniu loginu oraz pasującego do niego hasła
                 zostaje zalogowany.
             }
-            \test{
+            \item{
                 Użytkownik po podaniu błędnego hasła lub nieistniejącego loginu,
                 zostaje o tym poinformowany oraz oferuje mu się od razu formularz przypomnienia hasła.
                 \scr{img/us1/2.jpg}{Ekran informacji o błędym haśle lub loginie.}
             }
-            \test{
+            \item{
                 Użytkownik po zalogowaniu
                 widzi zmodyfikowane menu na wszystkich stronach serwisu.
                 \scr{img/us1/2.jpg}{Zakładki menu dla zalogowanego użytkownika.}
                 \scr{img/us1/3.jpg}{Zakładki menu dla niezalogowanego użytkownika.}
             }
-            \test{
+            \item{
                 Użytkownik po zalogowaniu
                 ma dostęp do panelu.
             }
-            \test{
+            \item{
                 Użytkownik po zalogowaniu\\*
                 może przeglądać profile innych użytkowników.
             }
         \end{tests}
         \begin{questions}
-            \question{
+            \item{
                 Czy użytkownik po wykonaniu błędnego logowania\\*
                 ma być przekierowany na nową stronę, czy pozostawać na tej samej?
             }

@@ -1,0 +1,39 @@
+% trochę domyślnego formatowania dokumentu
+\documentclass[a4paper]{article}
+\usepackage{fullpage}
+
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage[polish]{babel}
+\usepackage{userstory}
+
+\begin{document}
+    \begin{userstory}{Główne zadanie systemu}
+        Tutaj opisać ogólnie główne zadanie systemu, bez realizacji którego nie będzie można powiedzieć, że system działa. Jak system składa się z kilku podsystemów, dla każdego systemu przygotować podobną kartę wymagań.
+%        Użytkownik za pomocą smartfona wyposażonego w system Android oraz kamerę lub za pomocą przeglądarki na komputerze stacjonarnym i kamery podłączonej do niego,\\*
+%        ma możliwość udostępnienia on-line aktualnego obrazu i dźwięku
+        \begin{questions}
+            \item{
+                Jakie jest główne zadanie systemu?
+            }
+            \item{
+                Kto jest użytkownikiem systemu?
+            }
+            \item{
+                Czy jest wymóg użycia konkretnej technologii?
+            }
+            \item{
+                Jakie urządzenia muszą współpracować z systemem?
+            }
+            \item{
+                Jaka jest wymagana skalowalność systemu?
+            }
+            \item{
+                Czy są jakieś wymagania dotyczące środowiska produkcyjnego w jakim ma działać system?
+            }
+            \item{
+                Czy są jakieś specjalne wymagania, które nie wynikają z funkcji jakie powinien posiadać system?
+            }
+        \end{questions}
+    \end{userstory}
+\end{document}

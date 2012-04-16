@@ -1,37 +1,34 @@
 \chapter{Specyfikacja wymagań}
 \label{cha:specyfikacjaWymagan}
 
-Jak wspomniano w~\ref{sec:ZMTO} autor chce wykorzystać jak najwięcej metodyk ,,zwinnych'' przy każdym aspekcie tworzenia oprogramowania czyli także w przypadku specyfikacji wymagań. Nie znaleziono do tej pory idealnego rozwiązania uniwersalnego pobierania wymagań od klienta. W większości przypadków trzeba pewnego czasu aby wypracować wspólny język z klientem i nauczyć się razem z nim współpracować przy akwizycji wymagań.
+Jak wspomniano \namedref{sec:celePracy} autor chce wykorzystać jak najwięcej metodyk ,,zwinnych'' przy każdym aspekcie tworzenia oprogramowania czyli także w przypadku specyfikacji wymagań. Nie znaleziono do tej pory idealnego rozwiązania uniwersalnego pobierania wymagań od klienta. W większości przypadków trzeba pewnego czasu, aby wypracować wspólny język z klientem i nauczyć się razem z nim współpracować przy akwizycji wymagań.
 
-Na podstawowe dobre praktyki niekoniecznie ,,zwinnej'' inżynierii wymagań składają się między innymi\footnote{Informacje zaczerpnięte z \cite{Wol09p}}:
+%Na podstawowe dobre praktyki niekoniecznie ,,zwinnej'' inżynierii wymagań składają się między innymi\footnote{Informacje zaczerpnięte z \cite{Wol09p}}:
 
-
-\begin{itemize}
-    \item Ocena wykonalności systemu -- przed przystąpieniem do szczegółowej akwizycji wymagań, należy sprawdzić wykonalność implementacji systemu
-    \item Dokument specyfikacji wymagań -- istnieje jakiś dokument, który ułatwia akwizycję wymagań
-    \begin{itemize}
-        \item Należy zdefiniować standardową strukturę dokumentu
-        \item Należy wyjaśnić jak korzystać z dokumentu
-        \item Należy załączyć podsumowanie wymagań
-        \item Należy zadbać o czytelną strukturę dokumentu
-        \item Należy zadbać o łatwość wprowadzania zmian w dokumencie
-        \item Należy używać prostego i ścisłego języka
-        \item Należy budować słownik wymienianych terminów specjalistycznych
-    \end{itemize}
-    \item Pozyskiwanie wymagań -- praktyki na samym etapie pozyskiwania wymagań
-    \begin{itemize}
-        \item Należy być wyczulonym na czynniki organizacyjne i polityczne
-        \item Należy przechowywać źródła wymagań
-        \item Należy używać celów biznesowych przy pozyskiwaniu wymagań 
-    \end{itemize}
-\end{itemize}
-
+%\begin{itemize}
+%    \item Ocena wykonalności systemu -- przed przystąpieniem do szczegółowej akwizycji wymagań, należy sprawdzić wykonalność implementacji systemu
+%    \item Dokument specyfikacji wymagań -- istnieje jakiś dokument, który ułatwia akwizycję wymagań
+%    \begin{itemize}
+%        \item Należy zdefiniować standardową strukturę dokumentu
+%        \item Należy wyjaśnić jak korzystać z dokumentu
+%        \item Należy załączyć podsumowanie wymagań
+%        \item Należy zadbać o czytelną strukturę dokumentu
+%        \item Należy zadbać o łatwość wprowadzania zmian w dokumencie
+%        \item Należy używać prostego i ścisłego języka
+%        \item Należy budować słownik wymienianych terminów specjalistycznych
+%    \end{itemize}
+%    \item Pozyskiwanie wymagań -- praktyki na samym etapie pozyskiwania wymagań
+%    \begin{itemize}
+%        \item Należy być wyczulonym na czynniki organizacyjne i polityczne
+%        \item Należy przechowywać źródła wymagań
+%        \item Należy używać celów biznesowych przy pozyskiwaniu wymagań 
+%    \end{itemize}
+%\end{itemize}
 
 \section{,,Zwinna'' specyfikacja wymagań}
 \label{sec:zwinnaSpecyfikacjaWymagan}
 
-
-Zgodnie z~\ref{sec:ZMTOzalozenia} podchodząc ,,zwinnie'' do projektowania systemu od początku należy pobrać od klienta tylko te wymagania, które są konieczne do osiągnięcia celów biznesowych. Wszystkie sprawy poboczne, dodatkowe, należy zostawić na później, aż projekt przejdzie do etapu ,,utrzymanie'' (\ref{sec:ZMTOcykl}). Celem ,,zwinnej'' specyfikacji wymagań jest stworzenie wymagań \emph{minimalnego systemu, spełniającego wszystkie podstawowe funkcje biznesowe zdefiniowane przez klienta}.
+Podchodząc ,,zwinnie'' do projektowania systemu od początku należy pobrać od klienta tylko te wymagania, które są konieczne do osiągnięcia celów biznesowych. Wszystkie sprawy poboczne, dodatkowe, należy zostawić na później, aż projekt przejdzie do etapu ,,Utrzymanie i konserwacja'' (więcej \namedref{sec:ZMTOcykl}). Celem ,,zwinnej'' specyfikacji wymagań jest stworzenie wymagań \emph{minimalnego systemu, spełniającego wszystkie podstawowe funkcje biznesowe zdefiniowane przez klienta}.
 
 \subsection{Narzędzia}
 \label{sec:ZSWnarzedzia}
@@ -56,6 +53,8 @@ Dokumenty te nie mają konkretnej formy, ,,zwinna'' metodyka pozwala dostosować
 Na potrzeby tej pracy autor musiał wymyślić sposób na cyfryzację kart wymagań, związanych z nimi testów akceptacyjnych oraz ekranów, tak aby w łatwy sposób dało się je dołączyć do pracy. Dodatkową zaletą formy elektronicznej jest fakt, że ułatwi ona wymianę informacji pomiędzy uczestnikami projektu, pomoże uniknąć sytuacji zagubienia/zniszczenia jakiegoś elementu kart wymagań, ułatwi ich zarządzaniem i przetrzymywaniem np. w wykorzystywanym systemie kontroli wersji.
 
 Wykorzystywanie \LaTeX~u do składu pracy nakierowało autora pracy na pomysł stworzenia szablonu \LaTeX, który można by było wykorzystać celem konwersji kart wymagań i ich elementów analogowych do dokumentu cyfrowego. Łatwe oddzielenie warstwy prezentacji od samej treści oraz możliwość eksportu do formatu PDF umożliwiałoby również tworzenie w prosty sposób ładnego dokumentu dla klienta po spotkaniach na których pobierane są od niego wymagania.
+
+Tak powstał tzw. ,,package'' udostępniający środowisko \texttt{userstory}. Szczegółowy opis tego środowiska znajduje się \namedref{cha:dodatekA}.
 
 \newpage
 %---------------------------------------------------------------------------

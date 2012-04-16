@@ -7,8 +7,23 @@
 % dodatkowe pakiety
 \usepackage{enumerate}
 \usepackage{listings}
-\lstloadlanguages{TeX}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+\newcommand\namedref[1]{
+    w rozdziale \texttt{\ref{#1} \nameref{#1}}
+}
+\renewcommand{\labelitemi}{$\bullet$}
 
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
 \lstset{
   literate={ą}{{\k{a}}}1
            {ć}{{\'c}}1
@@ -27,9 +42,22 @@
            {Ł}{{\L{}}}1
            {Ś}{{\'S}}1
            {Ź}{{\'Z}}1
-           {Ż}{{\.Z}}1
+           {Ż}{{\.Z}}1,
+    language=[AlLaTeX]TeX,
+    basicstyle=\footnotesize,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=2,
+    frame=false,
+    breaklines=true,
+    tabsize=4,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    caption=\lstname,
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve}
 }
-
 %---------------------------------------------------------------------------
 
 \author{Leszek Piątek}
@@ -76,8 +104,8 @@
 \include{rozdzial1}
 \include{rozdzial2}
 
-% \appendix
-% \include{dodatekA}
+\appendix
+\include{dodatekA}
 % \include{dodatekB}
 
 \bibliographystyle{alpha}

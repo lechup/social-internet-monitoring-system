@@ -6,14 +6,13 @@
 
 all: sample-userstory
 
-sample-userstory: sample-userstory.tex
-	pdflatex sample-userstory.tex
-	pdflatex sample-userstory.tex
+sample-userstory: *.tex
+	pdflatex *.tex
+	pdflatex *.tex
 
 clean:
 	rm -rf *.aux
 	rm -rf *.toc
-	rm -rf *.pdf
 	rm -rf *.log
 	rm -rf *.bbl
 	rm -rf *.blg

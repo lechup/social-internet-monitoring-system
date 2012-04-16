@@ -15,7 +15,6 @@ praca: praca.tex
 clean:
 	rm -rf *.aux
 	rm -rf *.toc
-	rm -rf *.pdf
 	rm -rf *.log
 	rm -rf *.bbl
 	rm -rf *.blg

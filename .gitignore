@@ -5,3 +5,9 @@ ksiazki_i_artykuly/*
 *~
 *.bak
 *.ini
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc

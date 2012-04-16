@@ -12,36 +12,38 @@
             \captionof{figure}{##2}
         \end{center}
     }
-    \newcommand{\question}[1]{
-        \begin{item}
-            \begin{samepage}
-                \textit{\noindent\ignorespaces ##1}
-            \end{samepage}
-        \end{item}
-    }
-    \newcommand{\test}[1]{
-        \begin{item}
-            \textit{\noindent\ignorespaces ##1}
-        \end{item}
-    }
     \newenvironment{tests} {
         \subsection[Testy akceptacyjne] {Testy akceptacyjne\footnote{Testy powinny być pisane \emph{przez klienta}, jedynie \emph{pod nadzorem} programisty!}}
         \begin{itemize}
+            \let\itemi\item
+            \renewcommand{\item}[1]{
+                \begin{itemi}
+                    \textit{\noindent\ignorespaces ####1}
+                \end{itemi}
+            }
     }
     {
+            \let\item\itemi
         \end{itemize}
     }
     \newenvironment{questions} {
-        \subsection[Pytania do klienta]{Pytania do klienta\footnote{Pytania powinny pojawiać się od razu przy rozmowie z klientem, każde z nich powinno wygenerować test akceptacyjny lub zmodyfikować istniejący.}}
+        \subsection[Pytania do klienta]{Pytania do klienta\footnote{Pytania powinny pojawiać się od razu przy rozmowie z klientem tak aby dało się w rozmowie wyjaśnić o co dokładnie chodzi. Każde z pytań niedotyczące głównej karty wymagań systemu powinno wygenerować test akceptacyjny lub zmodyfikować istniejący!}}
         \begin{itemize}
+            \let\itemi\item
+            \renewcommand{\item}[1]{
+                \begin{itemi}
+                    \textit{\noindent\ignorespaces ####1}
+                \end{itemi}
+            }
     }
     {
+            \let\item\itemi
         \end{itemize}
     }
     
     \section{Karta wymagań ,,\emph{#1}''}
-    \label{sec:#1}
     \begin{textit}
+        \noindent\ignorespaces 
 }   
 {
     \end{textit}

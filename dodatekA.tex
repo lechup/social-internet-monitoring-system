@@ -1,0 +1,38 @@
+\chapter{\LaTeX, środowisko \texttt{userstory}}
+\label{cha:dodatekA}
+
+Na potrzeby niniejszej pracy autor musiał wymyślić sposób na cyfryzację kart wymagań, związanych z nimi testów akceptacyjnych oraz ekranów, tak aby w łatwy sposób dało się je dołączyć do pracy. Tak powstał tzw. ,,package'' udostępniający środowisko \texttt{userstory}. Więcej o dodatkowych zaletach cyfryzacji można przeczytać \namedref{sec:ZSWcyfryzacja}.
+
+\section{Sposób użycia}
+\label{sec:dodatekAsu}
+
+Aby skorzystać ze środowiska należy wykonać dwie rzeczy:
+\begin{itemize}
+    \item do katalogu dokumentu \LaTeX wgrać plik \texttt{userstory.sty}
+    \item do generowanego dokumentu dołączyć nagłówek:
+    \begin{lstlisting}
+    \usepackage{userstory}
+    \end{lstlisting}
+\end{itemize}
+
+Po takim zabiegu w kodzie dostępne jest środowisko \texttt{userstory}. W jego wnętrzu zapisujemy treść karty wymagań, dodatkowo mamy do dyspozycji:
+\begin{itemize}
+    \item Środowisko \texttt{tests} do definiowania nowych testów akceptacyjnych. Za pomocą komendy \texttt{\\item} możemy zdefiniować w nim kolejny test akceptacyjny.
+    \item Środowisko \texttt{questions} do definiowania pytań do klienta, które pojawiły się w ,,międzyczasie''. Za pomocą komendy \texttt{\\item} możemy zdefiniować w nim kolejne pytanie.
+    \item Dwuargumentową komendę \texttt{\\src{\$file}{\$caption}} do umieszczania ekranów w dowolnym miejscu środowiska (przy pytaniach, przy samej karcie wymagań albo przy konkretnym teście akceptacyjnym). Argument \textbf{\$file} to ścieżka do pliku graficznego, a \textbf{\$caption} to opis który będzie dodany pod ekranem.
+\end{itemize}
+
+\section{Przykład użycia}
+\label{sec:dodatekApu}
+Poniżej przygotowany przykład wykorzystania środowiska \texttt{userstory} celem przygotowania karty wymagań ,,Logowania użytkownika''.
+\lstinputlisting{userstory-latex/logowanie-uzytkownika.tex}
+
+\section{Kod środowiska}
+\label{sec:dodatekAks}
+Poniżej znajduje się kod wykorzystywany w celu definicji środowiska.
+\lstinputlisting{userstory-latex/userstory.sty}
+
+\section{Szablon ,,Główne zadanie systemu''}
+\label{sec:dodatekAsgzs}
+Poniżej znajduje się kod odpowiedzialny za wygenerowanie szablonu głównego zadania systemu.
+\lstinputlisting{userstory-latex/szablon-glowne-zadanie-systemu.tex}
