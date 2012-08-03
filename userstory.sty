@@ -4,48 +4,51 @@
 \NeedsTeXFormat{LaTeX2e}
 \RequirePackage{graphicx}
 \RequirePackage{capt-of}
+%\RequirePackage{wrapfig}
+\RequirePackage{packed_item}
 
 \newenvironment{userstory}[1]{
+    \noindent
+    \ignorespaces
     \newcommand{\scr}[2]{
+%        \begin{wrapfigure}{r}{0.52\textwidth}
+%          \begin{center}
+%              \includegraphics[width=0.50\textwidth]{##1}
+%          \end{center}
+%          \caption{##2}
+%        \end{wrapfigure}
         \begin{center}
-            \includegraphics[width=0.80\textwidth]{##1}
+            \includegraphics[width=\textwidth]{##1}
             \captionof{figure}{##2}
         \end{center}
     }
     \newenvironment{tests} {
-        \subsubsection[Testy akceptacyjne] {Testy akceptacyjne\footnote{Testy powinny być pisane \emph{przez klienta}, jedynie \emph{pod nadzorem} programisty!}}
-        \begin{itemize}
-            \let\itemi\item
-            \renewcommand{\item}[1]{
-                \begin{itemi}
-                    \textit{\noindent\ignorespaces ####1}
-                \end{itemi}
-            }
+        \noindent
+        \ignorespaces
+        \subsubsection{Testy akceptacyjne ,,\emph{#1}''}
+        \begin{packed_item}
     }
     {
-            \let\item\itemi
-        \end{itemize}
+        \end{packed_item}
+        \noindent
+        \ignorespacesafterend
     }
     \newenvironment{questions} {
-        \subsubsection[Pytania do klienta]{Pytania do klienta\footnote{Pytania powinny pojawiać się od razu przy rozmowie z klientem tak aby dało się w rozmowie wyjaśnić o co dokładnie chodzi. Każde z pytań niedotyczące głównej karty wymagań systemu powinno wygenerować test akceptacyjny lub zmodyfikować istniejący!}}
-        \begin{itemize}
-            \let\itemi\item
-            \renewcommand{\item}[1]{
-                \begin{itemi}
-                    \textit{\noindent\ignorespaces ####1}
-                \end{itemi}
-            }
+        \noindent
+        \ignorespaces
+        \subsubsection{Pytania do klienta ,,\emph{#1}''}
+        \begin{packed_item}
     }
     {
-            \let\item\itemi
-        \end{itemize}
+        \end{packed_item}
+        \noindent
+        \ignorespacesafterend
     }
     
-    \subsection{Karta wymagań ,,\emph{#1}''}
-    \begin{textit}
-        \noindent\ignorespaces 
-}   
+    \subsubsection{Karta wymagań ,,\emph{#1}''}
+}
 {
-    \end{textit}
-    \newpage
+    \noindent
+    \ignorespacesafterend
+    \clearpage
 }

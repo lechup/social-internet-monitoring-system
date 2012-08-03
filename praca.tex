@@ -1,14 +1,18 @@
-\documentclass[pdflatex,11pt]{aghdpl}
+\documentclass{aghdpl}
 % \documentclass{aghdpl}               % przy kompilacji programem latex
 % \documentclass[pdflatex,en]{aghdpl}  % praca w języku angielskim
 \usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
 
 % dodatkowe pakiety
-\usepackage{enumerate}
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{userstory}
+\usepackage{packed_enum}
+\usepackage{packed_item}
+\usepackage{layouts}
+
+% ustawienie kolorów
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -16,12 +20,16 @@
     linkcolor=black,
     urlcolor=black
 }
+% kilka swoich komend do odnośników
+% z w rozdziale
 \newcommand\namedref[1]{
     w~rozdziale \texttt{\ref{#1}~\nameref{#1}}
 }
+% bez w rozdziale
 \newcommand\namedrefw[1]{
     \texttt{\ref{#1}~\nameref{#1}}
 }
+
 % w itemize, chcemy kropki, a nie pauzy
 \renewcommand{\labelitemi}{$\bullet$}
 
@@ -88,7 +96,7 @@
 \facultyPL{Wydział Elektrotechniki, Automatyki, Informatyki i Elektroniki}
 \facultyEN{Faculty of Electrical Engineering, Automatics, Computer Science and Electronics}
 
-\acknowledgements{Serdecznie dziękuję promotorowi dr~inż.~Sebastianowi~Ernstowi za wyrozumiałość i cierpliwość, mamie oraz Elizie~Tymczuk za słowa, SMS'y i przekazy podprogowe motywujące do ,,wzięcia się za siebie'' i stworzenia niniejszej pracy.}
+\acknowledgements{Serdecznie dziękuję promotorowi dr~inż.~Sebastianowi~Ernstowi za wyrozumiałość i cierpliwość.}
 
 \setlength{\cftsecnumwidth}{10mm}
 
@@ -101,13 +109,22 @@
 % Struktura dokumentu
 \begin{document}
 
+\hypersetup{pageanchor=false}
 \titlepages
+\hypersetup{pageanchor=true}
 
 \tableofcontents
 \clearpage
 
 \include{rozdzial1}
 \include{rozdzial2}
+\include{rozdzial3}
+\include{rozdzial4}
+
+
+\pagediagram
+\paragraphdiagram
+\listdiagram
 
 \appendix
 \include{dodatekA}

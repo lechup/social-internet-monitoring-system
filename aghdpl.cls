@@ -4,18 +4,18 @@
 %          
 % Author:  Marcin Szpyrka     (mszpyrka@agh.edu.pl)
 %          Grzegorz J. Nalepa (gjn@agh.edu.pl)
-%          AGH University of Science and Technology, Krak體, POLAND
+%          AGH University of Science and Technology, Krak贸w, POLAND
 % 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \message{*** [aghdpl.cls] ---  (MSz, GJN)  v0.22 <05.04.2011>  ***}       
 
 \newif\ifpdflatex\pdflatexfalse
-\NeedsTeXFormat{LaTeX2e} % 
-\ProvidesClass{aghdpl} 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{aghdpl}
 \DeclareOption{pdflatex}{\pdflatextrue}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}} 
-\ProcessOptions\LoadClass[a4paper,oneside]{report} 
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
+\ProcessOptions\LoadClass[a4paper,oneside]{report}
 
 \RequirePackage{times}
 \RequirePackage[T1]{fontenc}
@@ -45,112 +45,96 @@
 \def\departmentPL#1   {\gdef\@departmentPL{#1}}
 \def\departmentEN#1   {\gdef\@departmentEN{#1}}
 
-% \thesisheaders
-% 
-% \pagestyle{fancy}
-
-%\bibliographystyle{abbrv}
 \linespread{1.3}
 \renewcommand{\labelitemi}{--}
 
 %------------------------------------------------------------------------------
 
-\newcommand{\titlepages}{%
+\newcommand{\titlepages} {
+    \newpage \titlepage 
+    \begin{center}
+        {\sffamily{\Large{\bfseries{\textsc Akademia G\'{o}rniczo-Hutnicza\\[2mm]
+        im. Stanis\l{}awa Staszica w Krakowie}}}
 
-\newpage \titlepage 
+        \vspace*{1mm}\rule{\textwidth}{1mm}\vspace*{1mm}
 
-\begin{center}
+        {\large \@facultyPL}}\\\vspace*{2mm}
+        {\large\textsc{\@departmentPL}}\vspace*{1cm}
 
-{\sffamily{\Large{\bfseries{\textsc Akademia G\'{o}rniczo-Hutnicza\\[2mm]
-im. Stanis\l{}awa Staszica w Krakowie}}}
+        \ifpdflatex\includegraphics[scale=0.3]{agh}
+        \else\includegraphics[scale=0.7]{agh}
+        \fi
+        \vspace*{1cm}
 
-\vspace*{1mm}\rule{\textwidth}{1mm}\vspace*{1mm}
+        {\huge\scshape \@thesistypePL}\\\vspace*{2cm}
+        
+        {\LARGE\scshape \@author}\\\vspace*{2cm}
+        
+        {\LARGE{\bfseries\scshape \@titlePL}}\\\vspace*{3cm}
 
-{\large \@facultyPL}}\\\vspace*{2mm}
-{\large\textsc{\@departmentPL}}\vspace*{1cm}
+        \begin{flushright}
+            \begin{minipage}[!h]{6cm} 
+                \large{\scshape Promotor:}\\ \@supervisorPL
+            \end{minipage}
+        \end{flushright}
+        \vfill{\Large Krak\'{o}w \@date}
+    \end{center}
 
-\ifpdflatex\includegraphics[scale=0.3]{agh}
-\else\includegraphics[scale=0.7]{agh}
-\fi
-\vspace*{1cm}
+    \clearpage \titlepage \vspace*{15cm} \vfill
 
-{\huge\scshape \@thesistypePL}\\\vspace*{2cm}
+    \begin{flushright}
+        \begin{minipage}[!h]{12cm}
+            \mbox{\large{\scshape \textbf{O\'SWIADCZENIE AUTORA PRACY}}}\\[3mm] 
+            {\scshape O\'swiadczam, \'swiadomy odpowiedzialno\'sci karnej za po\'swiadczenie nieprawdy, \.ze niniejsz\k{a} prac\k{e} dyplomow\k{a} wykona\l{}em osobi\'scie i samodzielnie, i nie korzysta\l{}em ze \'zr\'ode\l{} innych ni\.z wymienione w pracy.}\\
+        \end{minipage}
 
-{\LARGE\scshape \@author}\\\vspace*{2cm}
+        \vspace{2cm}
 
-{\LARGE{\bfseries\scshape \@titlePL}}\\\vspace*{3cm}
+        \makebox[6cm][s]{\dotfill}\par
+        \makebox[6cm][c]{\small PODPIS}
+    \end{flushright}
 
-\begin{flushright}
-\begin{minipage}[!h]{6cm} 
-\large{\scshape Promotor:}\\ \@supervisorPL
-\end{minipage}
-\end{flushright}
+    \clearpage \titlepage
 
-\vfill{\Large Krak\'{o}w \@date}
+    \begin{center}
+        {\sffamily{\Large{\bfseries{\textsc AGH\\[2mm]
+        University of Science and Technology in Krakow}}}
 
-\end{center}
+        \vspace*{1mm}\rule{\textwidth}{1mm}\vspace*{1mm}
 
-\clearpage \titlepage \vspace*{15cm} \vfill
+        {\large \@facultyEN}}\\\vspace*{2mm}
+        {\large\textsc{\@departmentEN}}\vspace*{1cm}
 
-\begin{flushright}
-\begin{minipage}[!h]{12cm}
-\mbox{\large{\scshape \textbf{O\'SWIADCZENIE AUTORA PRACY}}}\\[3mm] 
-{\scshape O\'swiadczam, \'swiadomy odpowiedzialno\'sci karnej za po\'swiadczenie nieprawdy, \.ze niniejsz\k{a} prac\k{e} dyplomow\k{a} wykona\l{}em osobi\'scie i samodzielnie, i nie korzysta\l{}em ze \'zr\'ode\l{} innych ni\.z wymienione w pracy.}\\
-\end{minipage}
+        \ifpdflatex\includegraphics[scale=0.3]{agh}
+        \else\includegraphics[scale=0.7]{agh}
+        \fi
+        \vspace*{1cm}
 
-\vspace{2cm}
+        {\huge\scshape \@thesistypeEN}\\\vspace*{2cm}
 
-\makebox[6cm][s]{\dotfill}\par
-\makebox[6cm][c]{\small PODPIS}
+        {\LARGE\scshape \@author}\\\vspace*{2cm}
 
-\end{flushright}
+        {\LARGE{\bfseries\scshape \@titleEN}}\\\vspace*{3cm}
 
-\clearpage \titlepage
+        \begin{flushright}
+            \begin{minipage}[!h]{6cm} 
+                \large{\scshape Supervisor:}\\ \@supervisorEN
+            \end{minipage}
+        \end{flushright}
 
-\begin{center}
+        \vfill{\Large Krakow \@date}
+    \end{center}
 
-{\sffamily{\Large{\bfseries{\textsc AGH\\[2mm]
-University of Science and Technology in Krakow}}}
+    \clearpage \titlepage
 
-\vspace*{1mm}\rule{\textwidth}{1mm}\vspace*{1mm}
-
-{\large \@facultyEN}}\\\vspace*{2mm}
-{\large\textsc{\@departmentEN}}\vspace*{1cm}
-
-\ifpdflatex\includegraphics[scale=0.3]{agh}
-\else\includegraphics[scale=0.7]{agh}
-\fi
-\vspace*{1cm}
-
-{\huge\scshape \@thesistypeEN}\\\vspace*{2cm}
-
-{\LARGE\scshape \@author}\\\vspace*{2cm}
-
-{\LARGE{\bfseries\scshape \@titleEN}}\\\vspace*{3cm}
-
-\begin{flushright}
-\begin{minipage}[!h]{6cm} 
-\large{\scshape Supervisor:}\\ \@supervisorEN
-\end{minipage}
-\end{flushright}
-
-\vfill{\Large Krakow \@date}
-
-\end{center}
-
-\clearpage \titlepage
-
-\vspace*{15cm} \vfill
-\begin{flushright} 
-\begin{minipage}[!h]{8cm}
-{\Large \@acknowledgements}
-\end{minipage}
-\end{flushright}
-
-\clearpage
-
-\setcounter{page}{5}
-
+    \vspace*{15cm} \vfill
+    \begin{flushright} 
+        \begin{minipage}[!h]{8cm}
+            {\Large \@acknowledgements}
+        \end{minipage}
+    \end{flushright}
+    \clearpage
+    \setcounter{page}{5}
 }
 
 \def\thesisheaders{
@@ -184,13 +168,13 @@ University of Science and Technology in Krakow}}}
 \flushbottom
 
 %---------------------------------------------------------------------------
-% Ustawienia parametr體 dla tytu丑w rozdzia丑w, podrozdzia丑w, itd.
+% Ustawienia parametr贸w dla tytu艂贸w rozdzia艂贸w, podrozdzia艂贸w, itd.
 %---------------------------------------------------------------------------
 
 
 \titleformat{\chapter}[block]
 {\bfseries\LARGE}{\filright \LARGE\thechapter. }{0ex}{}
-%odst阷y: lewy, g髍a, d蟪
+%odst臋py: lewy, g贸ra, d贸艂
 \titlespacing{\chapter}{0pt}{17mm}{19mm}
 \titleformat{\section}[block]
 {\bfseries\Large}{\filright \Large\thesection. }{0ex}{}
@@ -198,12 +182,12 @@ University of Science and Technology in Krakow}}}
 \titleformat{\subsection}[block]
 {\bfseries\large}{\filright \large\thesubsection. }{0ex}{}
 \titlespacing{\subsection}{7mm}{6mm}{2.5mm}
-\titleformat{\subsubsection}[block]
-{\bfseries\normalsize}{\filright \normalsize\thesubsubsection. }{0ex}{}
-\titlespacing{\subsubsection}{7mm}{3mm}{1.5mm}
+%\titleformat{\subsubsection}[block]
+%{\bfseries\normalsize}{\filright \normalsize\thesubsubsection. }{0ex}{}
+%\titlespacing{\subsubsection}{7mm}{3mm}{1.5mm}
 
 %---------------------------------------------------------------------------
-% Ustawienia parametr體 generowania spisu tre禼i i spisu rysunk體
+% Ustawienia parametr贸w generowania spisu tre艣ci i spisu rysunk贸w
 %---------------------------------------------------------------------------
 
 \renewcommand{\cfttoctitlefont}{\bfseries\Large}
@@ -212,9 +196,11 @@ University of Science and Technology in Krakow}}}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdot}}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdot}}
 \renewcommand{\cftsubsecleader}{\cftdotfill{\cftdot}}
+\renewcommand{\cftsubsubsecleader}{\cftdotfill{\cftdot}}
 \renewcommand{\cftchapaftersnum}{.}
 \renewcommand{\cftsecaftersnum}{.}
 \renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftsubsubsecaftersnum}{.}
 \setlength{\cftparskip}{2pt}
 \setlength{\cftbeforechapskip}{0mm}
 \renewcommand{\cftchappagefont}{\normalsize}

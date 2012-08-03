@@ -1,72 +1,17 @@
-\chapter{Specyfikacja i analiza wymagań}
-\label{cha:specyfikacjaWymagan}
+\chapter{Projekt, etap I -- Badanie (Exploration)}
+\label{cha:EtapI}
 
-Jak wspomniano \namedref{sec:celePracy} autor chce wykorzystać jak najwięcej metodyk ,,zwinnych'' przy każdym aspekcie tworzenia oprogramowania czyli także w przypadku specyfikacji i analizy wymagań.
+Zgodnie z cyklem życia ,,XP'' (więcej \namedref{sec:ZMTOcykl}), projekt zaczyna się od akwizycji ogólnego, głównego zadania systemu. Proponuje się w tym celu wykorzystać przygotowany szablon (więcej \namedref{sec:dodatekAsgzs}). Zawiera on nie tylko najważniejszą część, czyli ogólny opis głównego zadania systemu, ale także szereg pomocnych pytań pomagających w realizacji systemu zgodnie z oczekiwaniami klienta. Szablonu nie należy traktować jako idealnego, a raczej jako propozycję lub punkt wyjścia do rozwinięcia własnego dokumentu wykorzystywanego do akwizycji ogólnych wymagań w swoich projektach.
 
-Do tej pory nie znaleziono idealnego, uniwersalnego rozwiązania na pobieranie wymagań od klienta. W większości przypadków trzeba pewnego czasu, aby wypracować wspólny język z klientem i nauczyć się razem z nim współpracować przy akwizycji wymagań.
+Sformułowanie głównego zadania systemu pozwala skupić się generowaniu kart wymagań związanych z~nim, a~nie ze~sprawami pobocznymi. Pozwala na uzmysłowienie grupie projektowej jaka jest główna część systemu wokół której należy się skupić.
 
-%Na podstawowe dobre praktyki niekoniecznie ,,zwinnej'' inżynierii wymagań składają się między innymi\footnote{Informacje zaczerpnięte z \cite{Wol09p}}:
+\section{Specyfikacja wymagań}
+\label{sec:EtapIsw}
 
-%\begin{itemize}
-%    \item Ocena wykonalności systemu -- przed przystąpieniem do szczegółowej akwizycji wymagań, należy sprawdzić wykonalność implementacji systemu
-%    \item Dokument specyfikacji wymagań -- istnieje jakiś dokument, który ułatwia akwizycję wymagań
-%    \begin{itemize}
-%        \item Należy zdefiniować standardową strukturę dokumentu
-%        \item Należy wyjaśnić jak korzystać z dokumentu
-%        \item Należy załączyć podsumowanie wymagań
-%        \item Należy zadbać o czytelną strukturę dokumentu
-%        \item Należy zadbać o łatwość wprowadzania zmian w dokumencie
-%        \item Należy używać prostego i ścisłego języka
-%        \item Należy budować słownik wymienianych terminów specjalistycznych
-%    \end{itemize}
-%    \item Pozyskiwanie wymagań -- praktyki na samym etapie pozyskiwania wymagań
-%    \begin{itemize}
-%        \item Należy być wyczulonym na czynniki organizacyjne i polityczne
-%        \item Należy przechowywać źródła wymagań
-%        \item Należy używać celów biznesowych przy pozyskiwaniu wymagań 
-%    \end{itemize}
-%\end{itemize}
+\subsection{Specyfikacja głównego zadania systemu}
+\label{sec:EtapIswSGZS}
 
-\section{,,Zwinna'' specyfikacja wymagań}
-\label{sec:zwinnaSpecyfikacjaWymagan}
-
-Podchodząc ,,zwinnie'' do projektowania systemu od początku należy pobrać od klienta tylko te wymagania, które są konieczne do osiągnięcia celów biznesowych. Wszystkie sprawy poboczne, dodatkowe, należy zostawić na później, aż projekt przejdzie do etapu ,,Utrzymanie i konserwacja'' (więcej \namedref{sec:ZMTOcykl}). Celem ,,zwinnej'' specyfikacji wymagań jest stworzenie wymagań \emph{minimalnego systemu, spełniającego wszystkie podstawowe funkcje biznesowe zdefiniowane przez klienta, który można wdrożyć}.
-
-\subsection{Narzędzia}
-\label{sec:ZSWnarzedzia}
-
-Głównymi narzędziami wykorzystywanymi przy ,,zwinnej'' specyfikacji wymagań są:
-\begin{itemize}
-    \item user stories (w \cite{Mad09} określane jako karty wymagań) -- krótkie, ogólnikowe historyjki opisujące jakąś funkcjonalność systemu
-    \item screens (w \cite{Mad09} określane jako ekrany) -- szkice obrazujące ogólny układ przycisków, formularzy, tabel mogących pojawić się w karcie wymagań
-    \item acceptance tests (w \cite{Mad09} określane jako testy akceptacyjne/scenariusze) -- opisy słowne prawidłowego zachowania systemu dotyczące kart wymagań, swojego rodzaju scenariusz karty wymagań na bazie których programiści mogą stworzyć testy (o testach akceptacyjnych w ,,XP'' można więcej przeczytać w \cite{Jef00} pod hasłem ,,Acceptance tests'')  
-\end{itemize}
-
-Dokumenty te nie mają konkretnej formy, ,,zwinna'' metodyka pozwala dostosować ją do własnych wymagań, które będą działały najlepiej dla wykorzystujących metodykę programistów oraz ich klienta. Karty wymagań, scenariusze oraz ekrany należy spisywać na małych karteczkach jednego formatu. Przygotowując powyższe ,,dokumenty'' należy pamiętać o zasadach:
-\begin{itemize}
-    \item prostota -- Złożone scenariusze czy karty wymagań należy rozbić na kilka mniejszych, dzielenie musi być zrobione z klientem w formie rozmowy -- nigdy przez samego programistę. Karty wymagań powinny być do wykonania w ciągu jednego do dwóch tygodni czasu programisty.
-    \item klient jest autorem kart wymagań jak i testów akceptacyjnych/scenariuszy -- Programista może jedynie pokazać jak należy pisać kartę wymagań, tak żeby wypracować z klientem wspólny język, może pomagać w podzieleniu złożonych wymagań na mniejsze. Dopuszcza się sugerowanie możliwych scenariuszy, natomiast sama reakcja systemu musi być już określona przez klienta.
-    \item ekrany powinny mieć swoją sekwencję -- Jak istnieje sekwencja ekranów, należy pamiętać o nadaniu numerów odpowiadających kolejności ich występowania.
-\end{itemize}
-
-\subsection{Cyfryzacja}
-\label{sec:ZSWcyfryzacja}
-
-Na potrzeby tej pracy autor musiał wymyślić sposób na cyfryzację kart wymagań, związanych z nimi testów akceptacyjnych oraz ekranów, tak aby w łatwy sposób dało się je dołączyć do pracy. Dodatkową zaletą formy elektronicznej jest fakt, że ułatwi ona wymianę informacji pomiędzy uczestnikami projektu, pomoże uniknąć sytuacji zagubienia/zniszczenia jakiegoś elementu kart wymagań, ułatwi ich zarządzaniem i przetrzymywaniem np. w wykorzystywanym systemie kontroli wersji.
-
-Wykorzystywanie \LaTeX~u do składu pracy nakierowało autora pracy na pomysł stworzenia szablonu \LaTeX, który można by było wykorzystać celem konwersji kart wymagań i ich elementów analogowych do dokumentu cyfrowego. Łatwe oddzielenie warstwy prezentacji od samej treści oraz możliwość eksportu do formatu PDF umożliwiałoby również tworzenie w prosty sposób ładnego dokumentu dla klienta po spotkaniach na których pobierane są od niego wymagania.
-
-Tak powstał tzw. ,,package'' udostępniający środowisko \texttt{userstory}. Szczegółowy opis tego środowiska znajduje się \namedref{cha:dodatekA}.
-
-\section{,,Zwinna'' analiza wymagań}
-\label{sec:zwinnaSpecyfikacjaWymagan}
-
-\toworkon{Tutaj będzie o specyfice analizy wymagań w ,,XP''}
-
-\section{Etap I -- Badanie (Exploration)}
-\label{sec:SWbadanie}
-
-Zgodnie z cyklem życia projektu ,,XP'' (więcej \namedref{sec:ZMTOcykl}), powinno zacząć się od akwizycji ogólnego, głównego zadania systemu. Autor pracy proponuje do tego celu wykorzystać przygotowany przez siebie szablon (więcej \namedref{sec:dodatekAsgzs}). Dopiero posiadając taką wiedzę, można przejść dalej, do tematu \namedrefw{sec:SWbAnalizaWymagan}, czy \namedrefw{sec:SWbTestowanieTechnologii}.
+Niżej przedstawiono szablon (więcej \namedref{sec:dodatekAsgzs}) wypełniony razem z klientem na jednym z pierwszych spotkań dotyczących wymagań systemu.
 
 \begin{userstory}{Główne zadanie systemu}
 Użytkownik za pomocą smartphone'a z kamerą działającego pod systemem Android lub za pomocą przeglądarki internetowej na komputerze stacjonarnym i kamery podłączonej do niego, ma możliwość udostępnienia on-line aktualnego obrazu i dźwięku.
@@ -78,7 +23,7 @@ Użytkownik za pomocą smartphone'a z kamerą działającego pod systemem Androi
             \textbf{Jakie urządzenia muszą współpracować z systemem?} Wszystkie komputery wyposażone w przeglądarkę IE 7.0+, Firefox 3+, Chrome, Opera 9+. Dodatkowo system ma działać na telefonach komórkowych / tabletach z systemem Android.
         }
         \item{
-            \textbf{Czy jest wymóg użycia konkretnej technologii?} Nie jest wymagana żadna konkretna technologia. Wymaganiem jest wykorzystanie technologii Open Source, wszędzie tam gdzie jesteśmy w stanie zastąpić komercyjne rozwiązania.
+            \textbf{Czy jest wymóg użycia konkretnej technologii?} Nie jest wymagana żadna konkretna technologia. Wymaganiem jest wykorzystanie technologii Open Source -- wszędzie tam gdzie jesteśmy w stanie zastąpić komercyjne rozwiązania.
         }
         \item{
             \textbf{Jaka jest wymagana skalowalność systemu?} System musi być skalowalny, idealnie by było, gdyby obraz z kamery udostępniany przez jednego użytkownika, mógłby być odbierany przez nieskończoną liczbę ludzi. Na pewno w jakiś sposób system musi reagować automatycznie na zwiększony ruch w obrębie jednego stream'a.
@@ -93,23 +38,127 @@ Użytkownik za pomocą smartphone'a z kamerą działającego pod systemem Androi
             \textbf{Czy istnieją systemy podobne do tworzonego?} Jeżeli chodzi o sposób prezentacji interfejsu WWW to najbardziej zbliżony do tego co chce się osiągnąć jest Bambuser. Podobnie ma się sprawa funkcjonalności na telefonie z systemem Android -- aplikacja Bambuser.
         }
         \item{
-            \textbf{Czy są jakieś inne specjalne wymagania, które nie wynikają z funkcji jakie powinien posiadać system (wymagania niefunkcjonalne)?} Szybki, skalowalny, bezpieczny, Open Source.
+            \textbf{Czy są jakieś inne specjalne wymagania, które nie wynikają z funkcji jakie powinien posiadać system (wymagania niefunkcjonalne)?} Szybki, skalowalny, bezpieczny, wykorzystujący technologie Open Source.
         }
     \end{questions}
 \end{userstory}
 
-\subsection{Analiza wymagań}
-\label{sec:SWbAnalizaWymagan}
+\subsection{Karty wymagań dla ,,pierwszego wydania''}
+\label{sec:EtapIswKWDPW}
 
-\subsection{Testowanie technologii}
-\label{sec:SWbTestowanieTechnologii}
+Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w którym przygotowuje się wszystkie karty wymagań dla ,,pierwszego wydania'' (więcej \namedref{sec:ZMTOcykl}). Faza ta trwa do momentu kiedy klient nie będzie już miał pomysłu na karty wymagań związane z głównym zadaniem systemu lub grupa projektowa nie będzie w stanie lepiej oszacować czasu potrzebnego na wykonanie danej karty wymagań bez rozpoczęcia jej implementacji.
 
-\section{Etap II -- Planning (Planowanie)}
-\label{sec:SWbplanowanie}
+\begin{userstory}{Strona główna dla niezalogowanego użytkownika}
+    Użytkownikowi niezalogowanemu w systemie, po wejściu na główną domenę serwisu, zostaje zaprezentowana zawartość w postaci:
+    \scr{img/strona_glowna.jpg}{Strona główna dla niezalogowanego użytkownika}
+    \begin{packed_enum}
+        \item odnośnik przekierowujący zawsze na stronę główną serwisu
+        \item wyszukiwarka umożliwiająca wyszukiwanie udostępnionych streamów audio/video po kategoriach i lokalizacji
+        \item dwa odnośniki, dzięki którym pokazuje się formularz logowania lub rejestracji
+        \item mapa pokazująca grupy streamów audio/wideo
+    \end{packed_enum}
 
-\section{Iteracje do Pierwszego Wydania (Planowanie)}
-\label{sec:SWbIteracjeDoPierwszegoWydania}
+    \begin{tests}
+        \item{
+            Użytkownik po wejściu na stronie główną widzi mapę swojej okolicy (fizycznej lokalizacji). Lokalizację możemy oszacować za pomocą IP lub jak jest taka możliwość w każdy inny dokładniejszy sposób.
+        }
+        \item{
+            Użytkownik może dowolnie przesuwać mapą. Mapa reaguje na przesuwanie, oraz są na niej aktualizowane punkty streamów audio/video.
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Strona główna dla zalogowanego użytkownika}
+    Użytkownikowi zalogowanemu w systemie, po wejściu na główną domenę serwisu, zostaje zaprezentowana zawartość w postaci:
+    \scr{img/strona_glowna2.jpg}{Strona główna dla zalogowanego użytkownika}
+    \begin{packed_enum}
+        \item avatar pobrany z gravatar.com oraz nazwa zalogowanego użytkownika
+        \item wpis w menu przenoszący do podstrony ustawień zalogowanego użytkownika
+        \item wpis w menu przenoszący do podstrony udostępniania streamu audio/video
+    \end{packed_enum}
+    \begin{tests}
+        \item{
+            Po kliknięciu w menu na pozycję z nazwą zalogowanego użytkownika, pojawiają się poniższe wpisy w menu.
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Rejestracja}
+    Użytkownik po naciśnięciu odnośnika rejestruj,
+    zostaje przekierowany do formularza rejestracji:
+    \scr{img/rejestracja.jpg}{Formularz rejestracji.}
+    \begin{tests}
+        \item{
+            Pole email i powtórz email muszą być takie same, inaczej wyświetlany jest błąd, użytkownik proszony jest o poprawę pól.
+        }
+        \item{
+            Pole hasło i powtórz hasło muszą być takie same, inaczej wyświetlany jest błąd, użytkownik proszony jest o poprawę pól.
+        }
+        \item{
+            Pole loginu musi być unikalne w bazie. W przypadku wystąpienia w bazie zwracamy użytkownikowi błąd.
+        }
+        \item{
+            Pole email musi być unikalne w bazie. W przypadku wystąpienia w bazie zwracamy użytkownikowi błąd.
+        }
+        \item{
+            Po prawidłowym wypełnieniu formularza, użytkownik dostaje informację o konieczności potwierdzenia swojego adresu e-mail. Aby potwierdzić rejestrację musi kliknąć w link aktywacyjny wysłany na swoje konto pocztowe, w ciągu 7 dni od momentu rejestracji. Inaczej konto nie zostanie aktywowane, a zgłoszenie usunięte z bazy.
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Logowanie użytkownika}
+    Użytkownik po naciśnięciu odnośnika zaloguj,
+    zostaje przekierowany do formularza logowania:
+    \scr{img/logowanie.jpg}{Formularz logowania.}
+    \begin{packed_enum}
+        \item reszta strony wyszarzona, formularz logowania jako ,,overlay''
+        \item klikając X'a wracamy do wyszarzonej strony
+        \item miejsce na wpisanie loginu lub email
+        \item miejsce na wpisanie hasła
+        \item link do formularza przypomnienia hasła
+        \item przycisk wysyłający formularz logowania
+    \end{packed_enum}
+    
+    \begin{tests}
+        \item{
+            Użytkownik tylko po podaniu istniejacego loginu oraz pasującego do niego hasła
+            zostaje zalogowany i przeniesiony na oglądaną przed logowaniem stronę.
+        }
+        \item{
+            Użytkownik po zalogowaniu ma dostęp do dodatkowych podstron -- Ustawienia, Podziel się!
+        }
+        \item{
+            Użytkownik po podaniu błędnego hasła lub nieistniejącego loginu, zostaje o tym poinformowany ekranem:
+            \scr{img/logowanie2.jpg}{Ekran informacji o błędnym haśle lub loginie.}
+            \begin{packed_enum}
+                \item informacja o typie błędu
+                \item oznaczenie pól jako błędnie wypełnionych, pole hasła pozostaje puste, pole loginu zostaje jako ostatnia wpisana wartość
+            \end{packed_enum}
+        }
+        \item{
+            Użytkownik po zalogowaniu widzi zmodyfikowane menu na wszystkich podstronach serwisu.
+            \scr{img/strona_glowna2.jpg}{Zmodyfikowane menu na górze}
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Przypomnienie hasła}
+    Użytkownik po naciśnięciu odnośnika zapomniałem hasła,
+    zostaje przekierowany do formularza przypomnienia hasła:
+    \scr{img/przypomnenie_hasla.jpg}{Formularz przypomnienia hasła.}
+    \begin{tests}
+        \item{
+            Po wpisaniu istniejącego loginu lub maila, na maila wysyłane jest zapytanie, czy chcemy resetować hasło z linkiem aktywującym. Po jego kliknięciu otrzymujemy drugi mail z wygenerowanym nowym hasłem, które później możemy zmienić na zakładce ,,Ustawienia''.
+        }
+        \item{
+            Użytkownik po podaniu błędnego loginu/maila zostaje o tym poinformowany ekranem:
+            \scr{img/przypomnenie_hasla2.jpg}{Ekran informacji o błędnym wypełnieniu loginu/hasła.}
+        }
+    \end{tests}
+\end{userstory}
+
+\section{Analiza wymagań}
+\label{sec:EtapIaw}
 
 \newpage
 %---------------------------------------------------------------------------
-

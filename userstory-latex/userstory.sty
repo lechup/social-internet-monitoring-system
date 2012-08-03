@@ -13,7 +13,7 @@
         \end{center}
     }
     \newenvironment{tests} {
-        \subsection[Testy akceptacyjne] {Testy akceptacyjne\footnote{Testy powinny być pisane \emph{przez klienta}, jedynie \emph{pod nadzorem} programisty!}}
+        \subsubsection[Testy akceptacyjne] {Testy akceptacyjne\footnote{Testy powinny być pisane \emph{przez klienta}, jedynie \emph{pod nadzorem} programisty!}}
         \begin{itemize}
             \let\itemi\item
             \renewcommand{\item}[1]{
@@ -27,7 +27,7 @@
         \end{itemize}
     }
     \newenvironment{questions} {
-        \subsection[Pytania do klienta]{Pytania do klienta\footnote{Pytania powinny pojawiać się od razu przy rozmowie z klientem tak aby dało się w rozmowie wyjaśnić o co dokładnie chodzi. Każde z pytań niedotyczące głównej karty wymagań systemu powinno wygenerować test akceptacyjny lub zmodyfikować istniejący!}}
+        \subsubsection[Pytania do klienta]{Pytania do klienta\footnote{Pytania powinny pojawiać się od razu przy rozmowie z klientem tak aby dało się w rozmowie wyjaśnić o co dokładnie chodzi. Każde z pytań niedotyczące głównej karty wymagań systemu powinno wygenerować test akceptacyjny lub zmodyfikować istniejący!}}
         \begin{itemize}
             \let\itemi\item
             \renewcommand{\item}[1]{
@@ -41,7 +41,7 @@
         \end{itemize}
     }
     
-    \section{Karta wymagań ,,\emph{#1}''}
+    \subsection{Karta wymagań ,,\emph{#1}''}
     \begin{textit}
         \noindent\ignorespaces 
 }   

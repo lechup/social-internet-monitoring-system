@@ -1,7 +1,9 @@
 \chapter{\LaTeX, środowisko \texttt{userstory}}
 \label{cha:dodatekA}
 
-Na potrzeby niniejszej pracy autor musiał wymyślić sposób na cyfryzację kart wymagań, związanych z nimi testów akceptacyjnych oraz ekranów, tak aby w łatwy sposób dało się je dołączyć do pracy. Tak powstał tzw. ,,package'' udostępniający środowisko \texttt{userstory}. Więcej o dodatkowych zaletach cyfryzacji można przeczytać \namedref{sec:ZSWcyfryzacja}. Należy pamiętać, że każda metodyka zwinna jest przeciwna generowaniu bezużytecznej dokumentacji, więc należy to wziąć pod uwagę przy wykorzystywaniu środowiska userstory.
+Na potrzeby niniejszej pracy autor musiał wymyślić sposób na cyfryzację kart wymagań, związanych z nimi testów akceptacyjnych oraz ekranów, tak aby w łatwy sposób dało się je dołączyć do pracy. Tak powstał tzw. ,,package'' udostępniający środowisko \texttt{userstory}. Więcej o dodatkowych zaletach cyfryzacji można przeczytać \namedref{sec:ZSWcyfryzacja}.
+
+Należy pamiętać, że każda metodyka zwinna jest przeciwna generowaniu bezużytecznej dokumentacji. Należy więc wziąć to pod uwagę przy wykorzystywaniu środowiska ,,userstory''.
 
 \section{Sposób użycia}
 \label{sec:dodatekAsu}
@@ -24,15 +26,18 @@ Po takim zabiegu w kodzie dostępne jest środowisko \texttt{userstory}. W jego 
 
 \section{Przykład użycia}
 \label{sec:dodatekApu}
+
 Poniżej przygotowany przykład wykorzystania środowiska \texttt{userstory} celem przygotowania karty wymagań ,,Logowania użytkownika''.
 \lstinputlisting{userstory-latex/logowanie-uzytkownika.tex}
 
 \section{Kod środowiska}
 \label{sec:dodatekAks}
+
 Poniżej znajduje się kod wykorzystywany w celu definicji środowiska.
 \lstinputlisting{userstory-latex/userstory.sty}
 
 \section{Szablon ,,Główne zadanie systemu''}
 \label{sec:dodatekAsgzs}
+
 Poniżej znajduje się kod odpowiedzialny za wygenerowanie szablonu głównego zadania systemu.
 \lstinputlisting{userstory-latex/szablon-glowne-zadanie-systemu.tex}
