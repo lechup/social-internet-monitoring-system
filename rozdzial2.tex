@@ -101,7 +101,22 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
             Pole email musi być unikalne w bazie. W przypadku wystąpienia w bazie zwracamy użytkownikowi błąd.
         }
         \item{
-            Po prawidłowym wypełnieniu formularza, użytkownik dostaje informację o konieczności potwierdzenia swojego adresu e-mail. Aby potwierdzić rejestrację musi kliknąć w link aktywacyjny wysłany na swoje konto pocztowe, w ciągu 7 dni od momentu rejestracji. Inaczej konto nie zostanie aktywowane, a zgłoszenie usunięte z bazy.
+            Po prawidłowym wypełnieniu formularza, użytkownik dostaje informację o konieczności potwierdzenia swojego adresu e-mail. Aby potwierdzić rejestrację musi kliknąć w link aktywacyjny wysłany na rejestrowane konto pocztowe, w ciągu 7 dni od momentu rejestracji. W innym wypadku konto nie zostanie aktywowane, a zgłoszenie usunięte z bazy.
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Przypomnienie hasła}
+    Użytkownik po naciśnięciu odnośnika zapomniałem hasła,
+    zostaje przekierowany do formularza przypomnienia hasła:
+    \scr{img/przypomnenie_hasla.jpg}{Formularz przypomnienia hasła.}
+    \begin{tests}
+        \item{
+            Po wpisaniu istniejącego loginu lub maila, na maila wysyłane jest zapytanie, czy chcemy resetować hasło z linkiem aktywującym. Po jego kliknięciu otrzymujemy drugi mail z wygenerowanym nowym hasłem, które później możemy zmienić na zakładce ,,Ustawienia''.
+        }
+        \item{
+            Użytkownik po podaniu błędnego loginu/maila zostaje o tym poinformowany ekranem:
+            \scr{img/przypomnenie_hasla2.jpg}{Ekran informacji o błędnym wypełnieniu loginu/hasła.}
         }
     \end{tests}
 \end{userstory}
@@ -135,30 +150,69 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
                 \item oznaczenie pól jako błędnie wypełnionych, pole hasła pozostaje puste, pole loginu zostaje jako ostatnia wpisana wartość
             \end{packed_enum}
         }
-        \item{
-            Użytkownik po zalogowaniu widzi zmodyfikowane menu na wszystkich podstronach serwisu.
-            \scr{img/strona_glowna2.jpg}{Zmodyfikowane menu na górze}
-        }
+        \item{Użytkownik po zalogowaniu widzi zmodyfikowane menu -- na wszystkich podstronach serwisu.}
+        \scr{img/strona_glowna2.jpg}{Zmodyfikowane menu na górze}
     \end{tests}
 \end{userstory}
 
-\begin{userstory}{Przypomnienie hasła}
-    Użytkownik po naciśnięciu odnośnika zapomniałem hasła,
-    zostaje przekierowany do formularza przypomnienia hasła:
-    \scr{img/przypomnenie_hasla.jpg}{Formularz przypomnienia hasła.}
+\begin{userstory}{Udostępnianie streamu audio/video krok pierwszy}
+    Użytkownik po wybraniu z menu opcji podziel się,
+    zostaje przekierowany do formularza udostępniania audio/video:
+    \scr{img/dzielenie_sie_streamem1.jpg}{Formularz udostępniania audio/video.}
+    \begin{packed_enum}
+        \item {Aby udostępnić stream należy wybrać kategorię, do której ten stream ma być przypisany. Lista kategorii jest przykładową lista, administrator ma mieć możliwość modyfikowania tej listy z poziomu panelu administracyjnego.}
+        \item {Jeżeli w systemie istnieje więcej niż jedna kamera, tutaj wybierana jest kamera źródłowa. Domyślnie wybraną jest pierwsza systemowa kamera.}
+        \item {Możemy wybrać jakość transmisji spośród:
+            \begin{packed_item}
+                \item{wysoka -- wysoka jakość z preferencją wideo nad audio}
+                \item{średnia -- średnia jakość zarówno wideo jak audio}
+                \item{niska -- niska jakość wideo z preferencją jakości audio nad wideo}
+            \end{packed_item}
+        }
+        \item{Po kliknięciu ,,Podziel się'' na formularzu udostępniania audio/video, użytkownikowi otwiera się nowe okno przeglądarki gdzie prezentowane są dane udostępnionego streamu (krok drugi). W starym oknie użytkownik zostaje przekierowany do poprzednio odwiedzanej strony -- przed wybraniem ,,Podziel się''.}
+        \item {Wybór dostępności streamu, albo publiczny -- wszyscy użytkownicy systemu mogą go oglądać/udostępniać (domyślna opcja) -- lub prywatny -- tylko posiadający link do streamu mogą go zobaczyć.}
+    \end{packed_enum}
     \begin{tests}
-        \item{
-            Po wpisaniu istniejącego loginu lub maila, na maila wysyłane jest zapytanie, czy chcemy resetować hasło z linkiem aktywującym. Po jego kliknięciu otrzymujemy drugi mail z wygenerowanym nowym hasłem, które później możemy zmienić na zakładce ,,Ustawienia''.
-        }
-        \item{
-            Użytkownik po podaniu błędnego loginu/maila zostaje o tym poinformowany ekranem:
-            \scr{img/przypomnenie_hasla2.jpg}{Ekran informacji o błędnym wypełnieniu loginu/hasła.}
-        }
+        \item{Jeżeli w systemie nie ma kamery, użytkownik jest informowany o braku możliwości udostępniania, przycisk ,,Podziel się!'' staje się nieaktywny.}
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Udostępnianie streamu audio/video krok drugi}
+    Po kliknięciu ,,Podziel się'' na formularzu udostępniania audio/video, użytkownikowi otwiera się nowe okno przeglądarki gdzie prezentowane są dane udostępnionego streamu. W starym oknie użytkownik zostaje przekierowany do poprzednio odwiedzanej strony -- przed wybraniem ,,Podziel się''.
+    \scr{img/dzielenie_sie_streamem2.jpg}{Okno danych udostępnianego streamu audio/video.}
+    \begin{packed_enum}
+        \item{możliwość zmiany kamery oraz jakości w trakcie nadawania}
+        \item{jeżeli wcześniej wybrano publiczną dostępność streamu, wyświetlamy tutaj unikalny link do dzielenia się streamem ze znajomymi np. za pomocą Facebook'a, w przeciwnym wypadku wyświetlamy ,,permalink'' streamu w formie \url{http://domena.com/login_usera/slug_tytulu_streamu}}
+        \item{przycisk otwierający w nowym oknie link streamu}
+        \item{informacja na temat tytułu oraz kategorii udostępnianego streamu}
+    \end{packed_enum}
+    \begin{tests}
+        \item{Po kliknięciu na pole tekstowe linku, zaznacza się cała zawartość. Dodatkowo zaznaczona zawartość zostaje skopiowana do schowka, na ekranie pojawia się informacja ,,Link skopiowano do schowka!''}
     \end{tests}
 \end{userstory}
 
 \section{Analiza wymagań}
 \label{sec:EtapIaw}
+
+Po rozmowie z klientem, na podstawie ,,głównego zadania systemu'' oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań (więcej w \namedref{sec:ZMTOzwinnaAnalizaWymagan}). 
+
+\subsection{Architektura}
+\label{sec:EtapIawArchitektura}
+
+W tym rozdziale umieszczona zostanie wstępna architektura systemu. Jako, że technologie, które zostaną wykorzystane są ,,nowe'' zarówno dla całej grupy projektowej jak i same w sobie, będziemy potrzebowali prototypu systemu.
+
+Docelowy system będzie się składał z interfejsu webowego, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń (responsive webdesign). Wszystkie stream'y będą umieszczone w bazie PostgreSQL z rozszerzeniem GIS, dzięki czemu możliwe będzie zapisanie lokalizacji stream'u.
+
+Za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt Flash. Do rozproszenia ruchu i stworzenia systemu niezależnego od jakości połączenia sieciowego osoby udostępniającej obraz będą wykorzystane połączenia P2P wbudowane od wersji 10.1 we Flash'a.
+
+Zasada działania sieci P2P, będzie wymuszała udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream.
+
+\subsection{Technologie}
+\label{sec:EtapIawTechnologie}
+
+\begin{description}
+    \item[Responsive Webdesign] opis r wd
+\end{description}
 
 \newpage
 %---------------------------------------------------------------------------
