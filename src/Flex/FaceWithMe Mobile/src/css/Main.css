@@ -1,0 +1,28 @@
+@namespace s "library://ns.adobe.com/flex/spark";
+
+s|SkinnablePopUpContainer {
+	margin: 20 auto 20 auto;
+}
+
+.fieldHelp {
+	fontSize: 13;
+	color: #9b9c9c;
+}
+
+.fieldName {
+	fontSize: 20;
+	fontWeight: bold;
+}
+
+.link {
+	text-decoration: underline;
+	color: #f37d2f;
+}
+
+.bgBlack {
+	background-color: #000000;
+}
+
+.justify {
+	text-align: justify;
+}

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
+        xmlns:s="library://ns.adobe.com/flex/spark" 
+
+		title="Ustawienia"
+		width="100%" height="100%"
+
+		creationComplete="initViewHandler(event);"
+		>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here
+		change="handleSelectionChange(event)"
+		-->
+	</fx:Declarations>
+	
+    <fx:Script>
+        <![CDATA[
+			import flash.net.navigateToURL;
+			import flash.data.EncryptedLocalStore;
+			import flash.events.MouseEvent;
+			import flash.events.Event;
+			import flash.media.Camera;
+
+			import mx.collections.ArrayList;
+			import mx.events.CloseEvent;
+			import mx.managers.PopUpManager;
+
+			import components.SettingsPopup;
+			import spark.events.PopUpEvent;
+
+			protected function initViewHandler(event:Event):void {
+				loadSettings();
+			}
+
+			// wywołaj okienko potwierdzenia zapisu
+			protected function saveButtonClickHandler(event:MouseEvent):void {
+                var settingsPopup:SettingsPopup = new SettingsPopup();
+                settingsPopup.addEventListener('close', settingsPopupCloseHandler);
+                settingsPopup.open(this, true);
+				PopUpManager.centerPopUp(settingsPopup);
+            }
+			
+			protected function settingsPopupCloseHandler(event:PopUpEvent):void {
+				// jeżeli naciśniemy cancel (zwrócimy false) to nie nie robimy
+                if (!event.commit) {
+                    return;
+				}
+
+				// inaczej zapisujemy w EncryptedLocalStore
+				parentApplication.settings.set("password", pass.text);
+				parentApplication.settings.set("login", login.text);
+            }
+
+			protected function registerButtonClickHandler(event:MouseEvent):void {
+				navigateToURL(new URLRequest('https://facewithme.com/register/'), '_blank');
+            }
+
+			// odczytanie zapisanych ustawień w EncryptedLocalStore
+			private function loadSettings():void {
+				login.text = parentApplication.settings.get("login");
+				pass.text = parentApplication.settings.get("password");
+			}
+        ]]>
+    </fx:Script>
+
+	<s:actionContent>
+		<s:Button icon="@Embed(source='../../img/icons/Save.png')"
+			click="saveButtonClickHandler(event);" />
+		<s:Button icon="@Embed(source='../../img/icons/Plus.png')"
+			click="registerButtonClickHandler(event);" />
+	</s:actionContent>	
+	
+	<s:Scroller width="100%" height="100%">
+		<s:VGroup width="100%" id="settingsForm" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="20" gap="10">
+			<s:Label styleName="justify" width="100%">Na tej zakładce wypełnij ustawienia swojego konta FaceWithMe.COM. Dopiero po uzupełnieniu pól będziesz mógł używać zakładki "Podziel się".</s:Label>
+
+			<s:Label styleName="fieldName" width="100%" paddingTop="10">Login*:</s:Label>
+			<s:TextInput id="login" width="100%" />
+
+			<s:Label styleName="fieldName" width="100%">Hasło*:</s:Label>
+			<s:TextInput id="pass" width="100%" displayAsPassword="true" />
+
+			<s:HGroup horizontalAlign="center" width="100%" gap="10" paddingTop="10">
+				<s:Button
+					width="50%"
+					click="saveButtonClickHandler(event);"
+					icon="@Embed(source='../../img/icons/Save.png')">Zapisz!</s:Button>
+				<s:Button
+					width="50%"
+					click="registerButtonClickHandler(event);"
+					icon="@Embed(source='../../img/icons/Plus.png')">Nowe konto</s:Button>
+			</s:HGroup>
+
+			<s:HGroup horizontalAlign="center" width="100%">
+				<s:Label>Jeżeli nie masz jeszcze konta</s:Label>
+				<s:Label click="registerButtonClickHandler(event);" styleName="link">załóż go!</s:Label>
+			</s:HGroup>
+
+			<s:Label styleName="fieldName">Domyślna kamera:</s:Label>
+			<s:HGroup width="100%" gap="10">
+				<s:SpinnerList width="50%" typicalItem="20" height="100" id="default_camera" textAlign="center" dataProvider="{parentApplication.cameraOptions}" />
+			</s:HGroup>
+		</s:VGroup>
+	 </s:Scroller>
+</s:View>

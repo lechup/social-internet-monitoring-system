@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- components\SettingsPopup.mxml -->
+<s:SkinnablePopUpContainer xmlns:fx="http://ns.adobe.com/mxml/2009"
+    xmlns:s="library://ns.adobe.com/flex/spark"
+	xmlns:mx="library://ns.adobe.com/flex/mx"
+	>
+    
+    <fx:Script>
+        <![CDATA[
+        ]]>
+    </fx:Script>
+
+    <s:Panel width="100%" height="100%" title="Potwierdzenie!">
+        <s:VGroup horizontalAlign="center"
+				paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"
+				gap="10">
+            <mx:Text id="informationText" width="100%">
+				<mx:htmlText>
+					<![CDATA[Czy chcesz zapisać aktualnie wprowadzone dane, nadpisując stare?]]>
+				</mx:htmlText>
+			</mx:Text>
+			<s:HGroup verticalAlign="middle"
+					paddingTop="10" paddingLeft="10" paddingBottom="10" paddingRight="10"
+					gap="10">
+				<s:Button label="Tak" click="close(true, null);" />
+				<s:Button label="Nie" click="close(false, null);" />
+			</s:HGroup>
+        </s:VGroup>
+    </s:Panel>
+</s:SkinnablePopUpContainer>

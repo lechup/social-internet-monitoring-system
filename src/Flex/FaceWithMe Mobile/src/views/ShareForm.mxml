@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+        xmlns:s="library://ns.adobe.com/flex/spark"
+
+		title="Podziel się streamem!"
+		width="100%" height="100%"
+
+		creationComplete="initViewHandler(event);"
+		>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+        <![CDATA[
+ 			import flash.events.MouseEvent;
+			import flash.events.Event;
+			
+			protected function initViewHandler(event:Event):void {
+				// default values for shareForm
+				fieldIsPublic.selected = parentApplication.settings.get("isPublic", false);
+				fieldCamera.selectedIndex = parentApplication.settings.get("cameraIndex", 0);
+				fieldQuality.selectedIndex = parentApplication.settings.get("qualityIndex", 2);
+			}
+			
+			protected function shareButtonClickedHandler(event:MouseEvent):void {
+				parentApplication.settings.set("isPublic", fieldIsPublic.selected);
+				parentApplication.settings.set("cameraIndex", fieldCamera.selectedIndex);
+				parentApplication.settings.set("qualityIndex", fieldQuality.selectedIndex);
+				parentApplication.settings.set("isSportChecked", fieldSport.selected);
+				parentApplication.settings.set("isMusicChecked", fieldMusic.selected);
+				parentApplication.settings.set("isGameChecked", fieldGame.selected);
+				parentApplication.settings.set("isMovieChecked", fieldMovie.selected);
+				parentApplication.settings.set("isOthersChecked", fieldOthers.selected);
+				navigator.pushView(views.Share);
+			}
+		]]>
+    </fx:Script>
+	
+	<s:Scroller width="100%" height="100%"> 
+		<s:VGroup width="100%" id="shareForm" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="20" gap="10">
+			<s:HGroup width="100%" gap="10">
+				<s:VGroup width="45%" gap="10">
+					<s:Label width="100%" styleName="fieldName">Tytuł:</s:Label>
+					<s:TextInput id="fieldTitle" width="100%" />
+				</s:VGroup>
+				<s:VGroup width="45%" gap="10">
+					<s:Label width="100%" styleName="fieldName">Dostępność:</s:Label>
+					<s:ToggleSwitch slideDuration="1000" skinClass="components.PrivatePublicToggleSwitch" width="100%" id="fieldIsPublic"></s:ToggleSwitch>
+				</s:VGroup>
+				<s:VGroup width="10%" height="100%"></s:VGroup>
+			</s:HGroup>
+			<s:HGroup width="100%" gap="10">
+				<s:VGroup width="45%" gap="10">
+					<s:Label width="100%" styleName="fieldName">Kategoria:</s:Label>
+					<s:CheckBox label="SPORT" id="fieldSport"></s:CheckBox>
+					<s:CheckBox label="MUZYKA" id="fieldMusic"></s:CheckBox>
+					<s:CheckBox label="GRA" id="fieldGame"></s:CheckBox>
+					<s:CheckBox label="FILM" id="fieldMovie"></s:CheckBox>
+					<s:CheckBox label="INNE" id="fieldOthers"></s:CheckBox>
+				</s:VGroup>
+				<s:VGroup width="45%" gap="10">
+					<s:Label width="100%" styleName="fieldName">Wybierz kamerę:</s:Label>
+					<s:SpinnerList width="100%" typicalItem="20" height="100" wrapElements="false" id="fieldCamera" textAlign="center" dataProvider="{parentApplication.cameraOptions}" />
+
+					<s:Label styleName="fieldName">Wybierz jakość:</s:Label>
+					<s:SpinnerList width="100%" typicalItem="20" wrapElements="false" height="100" id="fieldQuality" textAlign="center" dataProvider="{parentApplication.qualityOptions}" labelField="name" />				
+				</s:VGroup>
+				<s:VGroup width="10%" height="100%"></s:VGroup>
+			</s:HGroup>
+			<s:Button
+				width="90%"
+				click="shareButtonClickedHandler(event);"
+				icon="@Embed(source='../../img/icons/Video.png')">Podziel się streamem!</s:Button>
+		</s:VGroup>
+	 </s:Scroller>
+
+	<s:actionContent>
+		<s:Button
+			width="100%"
+			click="shareButtonClickedHandler(event);"
+			icon="@Embed(source='../../img/icons/Video.png')" />
+	</s:actionContent>
+</s:View>
