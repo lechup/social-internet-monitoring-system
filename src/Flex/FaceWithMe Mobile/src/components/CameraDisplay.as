@@ -8,17 +8,22 @@ package components {
 	import org.osmf.containers.MediaContainer;
 	
 	public class CameraDisplay extends UIComponent {
-		private var mediaContainer:MediaContainer;
-		private var cameraMediaElement:CameraElement;
-
-		public function set camera(camera:Camera):void{
+		private var mediaContainer:MediaContainer = null;
+		private var cameraMediaElement:CameraElement = null;
+		
+		public function CameraDisplay (){
 			mediaContainer = new MediaContainer();
-			cameraMediaElement = new CameraElement();
 			mediaContainer.width = width;
 			mediaContainer.height = height;
+			cameraMediaElement = new CameraElement();
 			addChild(mediaContainer);
 			mediaContainer.addMediaElement(cameraMediaElement);
-			cameraMediaElement.camera = camera;  //You have to wait until after adding the media element to the mediaContainer before setting the camera property as that will trigger the mediaContainers layout routines.
+		}
+		
+		public function set camera(camera:Camera):void {
+			// You have to wait until after adding the media element to the mediaContainer before setting the camera
+			// property as that will trigger the mediaContainers layout routines.
+			cameraMediaElement.camera = camera;
 		}
 
 		public function get camera():Camera {

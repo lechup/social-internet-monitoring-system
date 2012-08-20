@@ -22,10 +22,7 @@
 	
 	<s:Scroller width="100%" height="100%"> 
 		<s:VGroup width="100%" id="debugForm" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" gap="10">
-			<s:Label styleName="fieldName">Debug ALL:</s:Label>
 			<s:TextArea id="debugText" width="100%" height="100%" />
-			<s:Label styleName="fieldName">Debug CAMERA:</s:Label>
-			<s:TextArea id="cameraDebug" width="100%" height="100%" text="{parentApplication.debugCamera}" />
 		</s:VGroup>
 	 </s:Scroller>
 </s:View>

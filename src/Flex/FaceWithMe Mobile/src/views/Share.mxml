@@ -66,7 +66,6 @@
 				//debug += "motionLevel: " + camera.motionLevel + "\n";
 				//debug += "motionTimeout: " + camera.motionTimeout + "\n";
 				debug += "quality: " + camera.quality + "\n";
-				parentApplication.debugCamera = debug;
 			}
 
 			private function setupMicrophone():void {
@@ -111,8 +110,11 @@
 				// get currentMode
 				var currentMode:Object = parentApplication.qualityOptions.getItemAt(parentApplication.settings.get("qualityIndex", 2));
 
-				// do some logging
-				parentApplication.log("currentMode: " + currentMode.width + "x" + currentMode.height);
+				parentApplication.log("currentCameraMode, set: " + currentMode.width + "x" + currentMode.height);
+
+				// set quality of streaming
+				// we indicate that FMS should adjust quality to available banwidth
+				camera.setQuality(0, 80);
 
 				// set the mode of camera!
 				camera.setMode(
@@ -120,18 +122,23 @@
 					currentMode.height,
 					30
 				);
-				
-				// set quality of streaming
-				// we indicate that FMS should adjust quality to available banwidth
-				camera.setQuality(0, 90);
+
+				parentApplication.log("currentCameraMode, after set: " + camera.width + "x" + camera.height);
 			}
-			
+
+			private function detachCamera():void {
+				camera = null;
+				netStream.attachCamera(null);
+				//netStream.close();
+				//netStream.dispose();
+			}
+
 			private function setupNetConnectionAndStream():void {
 				netConnection = new NetConnection();
 				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 				netConnection.connect(SERVER);
 			}
-			
+
 			private function netStatusHandler(event:NetStatusEvent):void{
 				switch(event.info.code){
 					case "NetConnection.Connect.Success":
@@ -158,6 +165,7 @@
 				// audio
 				netStream.audioReliable = true;
 				netStream.attachAudio(microphone);
+
 				// video
 				netStream.videoReliable = false;
 				netStream.attachCamera(camera);
@@ -172,14 +180,8 @@
 			}
 
 			protected function resizeViewHandler(event:ResizeEvent):void {
-				if (camera != null) {
-					playPauseButton.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-					setCameraDisplayDimensions();
-					setupCamera();
-					playPauseButton.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
-				} else {
-					setCameraDisplayDimensions();
-				}
+				setupCamera();
+				setCameraDisplayDimensions();
 			}
 
 			protected function togglePauseButtonClickHandler(event:MouseEvent):void {
@@ -188,8 +190,7 @@
 			}
 
 			protected function stopButtonClickHandler(event:MouseEvent):void {
-				cameraDisplay.camera = null;
-				netStream.attachCamera(null);
+				detachCamera();
 				navigator.popView();
 			}
 			

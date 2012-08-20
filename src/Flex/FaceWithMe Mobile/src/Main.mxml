@@ -38,8 +38,6 @@
 			
 			public var DEBUG:Boolean = true;
 			public var debugText:String = "";
-			[Bindable]
-			public var debugCamera:String = "";
 			public function log(string:String):void {
 				if (DEBUG) {
 					string = "Widok " + tabbedNavigator.activeView.title + ": " + string;
