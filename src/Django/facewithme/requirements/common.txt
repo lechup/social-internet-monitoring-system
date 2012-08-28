@@ -1,0 +1,13 @@
+psycopg2
+django
+South
+# PIL that works with fonts etc, for django-captcha
+Pillow
+pyamf
+
+# dev
+-e git+git://github.com/jqb/django-staticserve.git#egg=staticserve
+ipython
+django-debug-toolbar
+fabric
+factory_boy

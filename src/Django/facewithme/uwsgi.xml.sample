@@ -1,0 +1,10 @@
+<uwsgi>
+    <autoload />
+    <virtualenv>/var/www/langito/.virtualenvs/langito</virtualenv>
+    <pythonpath>/var/www/langito/langito</pythonpath>
+    <module>env</module>
+    <socket>127.0.0.1:34238</socket>
+    <socket-timeout>10</socket-timeout>
+    <listen>150</listen>
+    <workers>5</workers>
+</uwsgi>
