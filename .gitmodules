@@ -1,0 +1,3 @@
+[submodule "src/Django/facewithme/src/bootstrap/source"]
+	path = src/Django/facewithme/src/bootstrap/source
+	url = git://github.com/iRynek/bootstrap.git
