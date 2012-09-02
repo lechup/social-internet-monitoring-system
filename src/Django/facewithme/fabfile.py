@@ -5,9 +5,9 @@ from time import sleep
 
 ####################
 ## CONFIG
-env.project_root = '~/fiestakawiarnia/'
-env.activate_virtual_env = 'source ~/.virtualenvs/fiestakawiarnia/bin/activate'
-env.hosts = ['fiestakawiarnia@ovh2.irynek.pl:26']
+env.project_root = '~/facewithme/'
+env.activate_virtual_env = 'source ~/.virtualenvs/facewithme/bin/activate'
+env.hosts = ['facewithme@ovh2.irynek.pl:26']
 env.roledefs = {
     'web': env.hosts,
 }
