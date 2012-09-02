@@ -45,5 +45,5 @@ def deploy():
     git_pull()
     collectstatic()
     restart_server()
-    sleep(4)    
-    clear_cache()
+#    sleep(4)    
+#    clear_cache()
