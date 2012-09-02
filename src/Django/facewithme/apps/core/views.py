@@ -41,3 +41,23 @@ class ReceivingPrivateView(DetailView):
             return redirect('core:privatestreaminfoview')
         else:
             return superclass_return
+        
+class GeoIPView(TemplateView):
+    template_name = "js/geoip.js"
+
+    def render_to_response(self, context, **response_kwargs):
+        """
+        Returns template with text/javasctipy content-type
+        additionaly in context of template we have {{object}}
+        https://docs.djangoproject.com/en/dev/ref/contrib/gis/geoip/#django.contrib.gis.geoip.GeoIP.city
+        """
+        response_kwargs['content_type'] = 'text/javascript'
+
+        from django.contrib.gis.geoip import GeoIP
+        context['object'] = GeoIP(path='lib/geoip/')
+        context['object'] = context['object'].city(self.request.META['REMOTE_ADDR'])
+
+        return super(GeoIPView, self).render_to_response(
+            context,
+            **response_kwargs
+        )

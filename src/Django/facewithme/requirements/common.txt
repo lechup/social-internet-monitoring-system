@@ -1,12 +1,15 @@
+# default
 psycopg2
 django
 South
-# PIL that works with fonts etc, for django-captcha
 Pillow
+
+# project specific
 pyamf
+pygeoip
 
 # dev
--e git+git://github.com/jqb/django-staticserve.git#egg=staticserve
+-e git+https://github.com/jqb/django-staticserve.git#egg=staticserve
 ipython
 django-debug-toolbar
 fabric
