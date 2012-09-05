@@ -72,7 +72,7 @@ EMAIL_HOST_USER = 'irynek_fail'
 EMAIL_USE_TLS = False
 EMAIL_PORT = 587
 SERVER_EMAIL = 'fail@irynek.pl'
-DEFAULT_FROM_EMAIL = 'iRynek.pl Fail :( <fail@irynek.pl>'
+DEFAULT_FROM_EMAIL = 'iRynek.pl Fail <fail@irynek.pl>'
 
 # APPS SETTINGS #########################################
 # django.contrib.sites
