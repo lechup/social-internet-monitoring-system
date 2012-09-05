@@ -20,9 +20,9 @@ $(document).ready(function() {
 	}
 	function initializeMap() {
 		var mapOptions = {
-			zoom: 18,
+			zoom: 10,
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			center: new google.maps.LatLng(50.20, 19.50)
+			center: new google.maps.LatLng(0, 0)
 		};
 	
 		map = new google.maps.Map(document.getElementById('map'), mapOptions);

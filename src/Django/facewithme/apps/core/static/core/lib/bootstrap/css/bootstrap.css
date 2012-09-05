@@ -5644,6 +5644,7 @@ a.badge:hover {
 }
 
 .facewithme-container-fluid {
+  width: auto !important;
   margin-right: -20px;
   margin-left: -20px;
 }
