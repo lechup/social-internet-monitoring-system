@@ -29,9 +29,21 @@ def git_pull():
 
 
 @task
-def collectstatic():
+def get_static():
     with cd(env.project_root):
         virtualenv(u'python manage.py collectstatic --noinput')
+
+
+@task
+def sync_db():
+    with cd(env.project_root):
+        virtualenv(u'python manage.py syncdb')
+
+
+@task
+def migrate():
+    with cd(env.project_root):
+        virtualenv(u'python manage.py migrate')
 
 
 @task
@@ -39,11 +51,19 @@ def restart_server():
     with cd(env.project_root):
         run(u'touch uwsgi.xml')
 
+@task
+def get_requirements():
+    with cd(env.project_root):
+        virtualenv(u'pip install -r requirements/common.txt')
+
 
 @task
 def deploy():
     git_pull()
-    collectstatic()
+    get_static()
+    get_requirements()
+    sync_db()
+    migrate()
     restart_server()
 #    sleep(4)    
 #    clear_cache()
