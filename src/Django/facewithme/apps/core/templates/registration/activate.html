@@ -1,0 +1,17 @@
+{% extends "registration/information_base.html" %}
+
+{% block title_information %}
+	{% if account %}
+		Aktywacja konta zakończona!
+	{% else %}
+		Problem z aktywacją konta!
+	{% endif %}
+{% endblock %}
+
+{% block content_information %}
+	{% if account %}
+		Dziękujemy {{ account }}, za dokonanie aktywacji konta!  Możesz teraz <a href="http://facewithme.com">zalogować się</a> używając podanego przy rejestracji loginu i hasła.
+	{% else %}
+		Oops &ndash; wygląda na to, że adres URL aktywujący konto jest niepoprawny. Sprawdź ponownie wiadomość i sprawdź jego poprawność! 
+	{% endif %}
+{% endblock %}

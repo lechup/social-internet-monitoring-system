@@ -5,3 +5,4 @@
 /settings/local.py
 .project
 .pydevproject
+.settings

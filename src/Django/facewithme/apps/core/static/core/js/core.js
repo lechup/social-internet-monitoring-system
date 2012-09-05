@@ -36,3 +36,8 @@ $(document).ready(function() {
 		}
 	}
 });
+
+function modal(modal_id, iframe_id, iframe_src) {
+	$(iframe_id).attr('src', iframe_src);
+	$(modal_id).modal();
+}

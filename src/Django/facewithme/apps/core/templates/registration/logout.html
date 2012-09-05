@@ -1,0 +1,15 @@
+{% extends "registration/information_base.html" %}
+{% block title_information %}Zostałeś wylogowany!{% endblock %}
+{% block content_information %}
+	Zostałeś poprawnie wylogowany!
+{% endblock %}
+
+{% block js_include %}
+	<script src="{% get_static_prefix %}core/lib/jquery/jquery.min.js"></script>
+	<script src="{% get_static_prefix %}core/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script>
+		if (parent) {
+			parent.$('');
+		}
+	</script>
+{% endblock %}

@@ -1,0 +1,13 @@
+Witaj!
+
+Prawdopodobnie Ty (lub ktoś udający Ciebie) poprosił o rejestrację konta na {{ site.name }}.
+
+Jeżeli to nie byłeś Ty, zignoruj tę wiadomość. Twój email zostanie usunięty z naszej bazy automatycznie po upływie {{ expiration_days }} dni.
+
+jeżeli natomiast chcesz aktywować konto, kliknij na poniższy link przed upływem {{ expiration_days }} dni:
+http://{{ site.domain }}{% url registration_activate activation_key %}
+
+PS: Jeżeli powyższy link nie jest "klikalny", spróbuj skopiować go do nowego okna przeglądarki i nacisnąć Enter!
+
+Pozdrowienia,
+Ekipa {{ site.name }}!

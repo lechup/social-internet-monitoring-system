@@ -10,7 +10,7 @@ LANGUAGE_CODE = 'pl'
 DEBUG = False
 TEMPLATE_DEBUG = False
 ADMINS = (
-    (u'Leszek Piątek', u'lpiatek@gmail.com')
+    (u'Leszek Piątek', u'lpiatek@gmail.com'),
 )
 MANAGERS = ()
 
@@ -23,10 +23,15 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.sessions',
     'django.contrib.messages',
+    
+    'apps.core', # overwrite admin registration templates
+
     'django.contrib.admin',
     'django.contrib.staticfiles',
     'django.contrib.gis',
-    'apps.core',   
+    
+    'registration',
+    'bootstrapform',
     'south',
 )
 
@@ -56,6 +61,18 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 )
 
+# media files
+MEDIA_ROOT = projectpath('media')
+MEDIA_URL = '/media/'
+
+# email
+EMAIL_HOST = 'smtp.proste.pl'
+EMAIL_HOST_PASSWORD = 'eevecg76'
+EMAIL_HOST_USER = 'irynek_fail'
+EMAIL_USE_TLS = False
+EMAIL_PORT = 587
+SERVER_EMAIL = 'fail@irynek.pl'
+
 # APPS SETTINGS #########################################
 # django.contrib.sites
 SITE_ID = 1
@@ -67,19 +84,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 STATIC_ROOT = projectpath('static')
 STATIC_URL = '/static/'
 
-# media files
-MEDIA_ROOT = projectpath('media')
-MEDIA_URL = '/media/'
-
-# email
-EMAIL_BACKEND = u'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = u'smtp.proste.pl'
-EMAIL_HOST_PASSWORD = u'x8kv7fh4'
-EMAIL_HOST_USER = u'fiesta-kawiarnia_kontakt'
-EMAIL_USE_TLS = False
-EMAIL_PORT = 587
-EMAIL_SENDER = u'kontakt@fiesta-kawiarnia.pl'
-EMAIL_DEFAULT_TO = [u'lpiatek@gmail.com', u'kontakt@fiesta-kawiarnia.pl']
-EMAIL_TITLE_STRING = u'[fiesta-kawiarnia.pl] - %s'
+# registration
+ACCOUNT_ACTIVATION_DAYS = 2
 
 # APPS SETTINGS #########################################

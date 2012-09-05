@@ -1,10 +1,12 @@
 # default
-psycopg2
 django
-South
 Pillow
+psycopg2
+South
 
 # project specific
+django-registration
+django-bootstrap-form
 pyamf
 pygeoip
 

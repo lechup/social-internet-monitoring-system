@@ -5627,3 +5627,23 @@ a.badge:hover {
   width: 100%;
   height: 100%;
 }
+
+.facewithme-modal {
+  top: 2.5%;
+  left: 2.5%;
+  width: 95%;
+  height: 95%;
+  padding: 0;
+  margin: 0;
+}
+
+.facewithme-modal .modal-body {
+  height: 100%;
+  max-height: none;
+  padding: 0;
+}
+
+.facewithme-container-fluid {
+  margin-right: -20px;
+  margin-left: -20px;
+}

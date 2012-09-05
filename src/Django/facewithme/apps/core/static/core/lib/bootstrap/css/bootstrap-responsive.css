@@ -437,6 +437,15 @@
   }
 }
 
+@media (min-width: 1200px) {
+  .facewithme-modal {
+    top: 19%;
+    left: 19%;
+    width: 60%;
+    height: 60%;
+  }
+}
+
 @media (min-width: 768px) and (max-width: 979px) {
   .row {
     margin-left: -20px;
@@ -904,6 +913,10 @@
   .carousel-caption {
     position: static;
   }
+}
+
+@media (max-width: 767px) {
+  
 }
 
 @media (max-width: 979px) {
