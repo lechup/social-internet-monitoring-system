@@ -1,4 +1,4 @@
-package data {
+package com.facewithme {
 	import flash.utils.ByteArray;
 	import flash.data.EncryptedLocalStore;
 

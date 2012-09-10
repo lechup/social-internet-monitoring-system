@@ -5,7 +5,7 @@
 		title="Podziel się streamem!"
 		width="100%" height="100%"
 
-		creationComplete="initViewHandler(event);"
+		creationComplete="creationCompleteHandler(event);"
 		>
 	
 	<fx:Declarations>
@@ -17,14 +17,21 @@
  			import flash.events.MouseEvent;
 			import flash.events.Event;
 			
-			protected function initViewHandler(event:Event):void {
-				// default values for shareForm
-				fieldIsPublic.selected = parentApplication.settings.get("isPublic", false);
+			protected function creationCompleteHandler(event:Event):void {
+				//set default/last set values for shareForm
+				fieldTitle.text = parentApplication.settings.get("title", "");
+				fieldIsPublic.selected = parentApplication.settings.get("isPublic", true);
 				fieldCamera.selectedIndex = parentApplication.settings.get("cameraIndex", 0);
 				fieldQuality.selectedIndex = parentApplication.settings.get("qualityIndex", 2);
+				fieldSport.selected = parentApplication.settings.get("isSportChecked", false);
+				fieldMusic.selected = parentApplication.settings.get("isMusicChecked", false);
+				fieldGame.selected = parentApplication.settings.get("isGameChecked", false);
+				fieldMovie.selected = parentApplication.settings.get("isMovieChecked", false);
+				fieldOthers.selected = parentApplication.settings.set("isOthersChecked", false);
 			}
 			
 			protected function shareButtonClickedHandler(event:MouseEvent):void {
+				parentApplication.settings.set("title", fieldTitle.text);
 				parentApplication.settings.set("isPublic", fieldIsPublic.selected);
 				parentApplication.settings.set("cameraIndex", fieldCamera.selectedIndex);
 				parentApplication.settings.set("qualityIndex", fieldQuality.selectedIndex);
@@ -33,7 +40,7 @@
 				parentApplication.settings.set("isGameChecked", fieldGame.selected);
 				parentApplication.settings.set("isMovieChecked", fieldMovie.selected);
 				parentApplication.settings.set("isOthersChecked", fieldOthers.selected);
-				navigator.pushView(views.Share);
+				navigator.pushView(views.ShareLoader);
 			}
 		]]>
     </fx:Script>
@@ -47,7 +54,7 @@
 				</s:VGroup>
 				<s:VGroup width="45%" gap="10">
 					<s:Label width="100%" styleName="fieldName">Dostępność:</s:Label>
-					<s:ToggleSwitch slideDuration="1000" skinClass="components.PrivatePublicToggleSwitch" width="100%" id="fieldIsPublic"></s:ToggleSwitch>
+					<s:ToggleSwitch slideDuration="1000" skinClass="com.facewithme.components.PrivatePublicToggleSwitch" width="100%" id="fieldIsPublic"></s:ToggleSwitch>
 				</s:VGroup>
 				<s:VGroup width="10%" height="100%"></s:VGroup>
 			</s:HGroup>
@@ -62,10 +69,10 @@
 				</s:VGroup>
 				<s:VGroup width="45%" gap="10">
 					<s:Label width="100%" styleName="fieldName">Wybierz kamerę:</s:Label>
-					<s:SpinnerList width="100%" typicalItem="20" height="100" wrapElements="false" id="fieldCamera" textAlign="center" dataProvider="{parentApplication.cameraOptions}" />
+					<s:SpinnerList width="100%" typicalItem="20" height="100" wrapElements="false" id="fieldCamera" textAlign="center" dataProvider="{parentApplication.settingsConst.cameraOptions}" />
 
 					<s:Label styleName="fieldName">Wybierz jakość:</s:Label>
-					<s:SpinnerList width="100%" typicalItem="20" wrapElements="false" height="100" id="fieldQuality" textAlign="center" dataProvider="{parentApplication.qualityOptions}" labelField="name" />				
+					<s:SpinnerList width="100%" typicalItem="20" wrapElements="false" height="100" id="fieldQuality" textAlign="center" dataProvider="{parentApplication.settingsConst.qualityOptions}" labelField="name" />
 				</s:VGroup>
 				<s:VGroup width="10%" height="100%"></s:VGroup>
 			</s:HGroup>

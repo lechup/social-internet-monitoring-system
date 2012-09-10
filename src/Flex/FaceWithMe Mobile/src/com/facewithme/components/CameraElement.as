@@ -1,4 +1,4 @@
-package components{
+package com.facewithme.components{
 	import flash.media.Camera;
 	import flash.media.Video;
 	import org.osmf.media.MediaElement;

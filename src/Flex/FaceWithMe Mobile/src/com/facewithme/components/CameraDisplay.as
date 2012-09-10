@@ -1,7 +1,7 @@
 //
 // Source from: http://cookbooks.adobe.com/post_Using_Camera_with_a_MediaContainer_instead_of_Vide-19618.html
 //
-package components {
+package com.facewithme.components {
 	import flash.events.Event;
 	import flash.media.Camera;
 	import mx.core.UIComponent;

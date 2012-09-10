@@ -4,90 +4,298 @@
 		xmlns:mx="library://ns.adobe.com/flex/mx"
 		width="100%"
 		height="100%"
-		creationComplete="initHandler(event);"
 		>
-
-	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
-	</fx:Declarations>
 
 	<fx:Style source="css/Main.css" />
 
 	<fx:Script>
         <![CDATA[
-			import components.InformationPopup;
-			import data.SettingsData;
-			
-			import flash.media.Camera;
-			import flash.events.Event;
+			import com.facewithme.components.InformationPopup;
+			import com.facewithme.SettingsData;
 			import flash.data.EncryptedLocalStore;
-			
+			import flash.events.Event;
+			import flash.events.KeyboardEvent;
+			import flash.media.Camera;
+			import flash.media.Microphone;
+			import flash.net.NetConnection;
+			import flash.net.NetStream;
+			import mx.collections.ArrayList;
+			import mx.events.CloseEvent;
+			import mx.events.FlexEvent;
+			import mx.events.StateChangeEvent;
+			import mx.managers.PopUpManager;
+			import mx.utils.ObjectProxy;
 			import spark.events.IndexChangeEvent;
 
-			import mx.events.StateChangeEvent;
-			import mx.events.CloseEvent;
-			import mx.managers.PopUpManager;
-			import mx.collections.ArrayList
-
-			[Bindable]
-            public var cameraOptions:ArrayList;
-			[Bindable]
-			public var qualityOptions:ArrayList;
 			
+			public var netConnection:NetConnection;
+			public var netStream:NetStream;
+			public var camera:Camera;
+			public var microphone:Microphone;
+			public var entry:Object;	
 			public var settings:SettingsData = new SettingsData();
-			
-			public var DEBUG:Boolean = true;
-			public var debugText:String = "";
-			public function log(string:String):void {
-				if (DEBUG) {
-					string = "Widok " + tabbedNavigator.activeView.title + ": " + string;
-					debugText += string + "\n";
-					trace(string);
-				}
-			}
-			
-			protected function initHandler(event:Event):void {
-				// ustaw opcje spinnerów
-				cameraOptions = new ArrayList(Camera.names);
-				qualityOptions = new ArrayList([
+			private const _settingsConst:Object = {
+				'amfgateway' : 'http://facewithme.com:8000/amf/',
+				'debug' : true,
+				'cameraOptions' : new ArrayList(Camera.names),
+				'qualityOptions' : new ArrayList([
 					{"name" : "80x60", "width" : 80, "height" : 60},
 					{"name" : "160x120", "width" : 160, "height" : 120},
 					{"name" : "320x240", "width" : 320, "height" : 240},
 					{"name" : "640x480", "width" : 640, "height" : 480},
-				]);
-				
-				// event odpalany w momencie zmiany tabów, przed ruszaniem widoku
-				tabbedNavigator.addEventListener('changing', tabbedNavigatorChangingHandler);
-				// jak nie ma ustawień to odpal najpierw zakładkę ustawienia, a 'nie podziel się'
-				if (!areSettingsSet())
-					tabbedNavigator.selectedIndex = 1;
+				])
+			};
+			[Bindable]
+			public var settingsConst:ObjectProxy = new ObjectProxy(_settingsConst);
+			[Bindable]
+			public var debugText:String = "";
+			private var amfgateway:NetConnection;
+
+			public function setupCamera():void {
+				log("setupCamera");
+
+				// if there is any camera!
+				if (settings.get("cameraIndex", 0) != -1) {
+					log("Wybrana kamera: " +
+						settingsConst.cameraOptions.getItemAt(
+							settings.get("cameraIndex", 0)
+						)
+					);
+
+					// get proper camera
+					camera = Camera.getCamera(
+						new String(
+							settings.get("cameraIndex", 0)
+						)
+					);
+
+					// does camera really exists?
+					if (camera != null) {
+						// do we have rights for capturing from camera?
+						if (camera.muted) {
+							// TODO INFO PANEL
+							log("User doesn't allow application to read data from camera!");
+						}
+					} else {
+						// TODO INFO PANEL
+						log("Camera doesn't exists or it is used by other application...");
+					}
+				}
+				else {
+					// TODO INFO PANEL
+					log("There is no camera!");
+				}
 			}
 			
-			protected function tabbedNavigatorChangingHandler(event:IndexChangeEvent):void {
-				log('tabbedNavigatorChangingHandler start');
-				// nie wyświetlaj 'podziel się' jak nie ma wypełnionego pola hasła i loginu
-				if (event.newIndex == 0 && !areSettingsSet()) {
-					event.preventDefault();
-					settingsNotSetConfirmationPopup();
+			public function isCamera():Boolean {
+				if (camera != null && !camera.muted)
+					return true;
+				else
+					return false;
+			}
+
+			public function setupMicrophone():void {
+				log("setupMicrophone");
+				microphone = Microphone.getEnhancedMicrophone();
+			}
+
+			public function setCameraMode():void {
+				log("setCameraMode");
+
+				// get currentMode
+				var currentMode:Object = settingsConst.qualityOptions.getItemAt(settings.get("qualityIndex", 2));
+				log("currentCameraMode, set: " + currentMode.width + "x" + currentMode.height);
+
+				// set quality of streaming
+				// we indicate that FMS should adjust quality to available banwidth
+				camera.setQuality(0, 80);
+
+				// set the mode of camera!
+				camera.setMode(
+					currentMode.width,
+					currentMode.height,
+					30
+				);
+
+				log("cameraMode, after set: " + camera.width + "x" + camera.height);
+			}
+
+			public function setupAmfGateway():void {
+				// jeżeli z kamerą coś nie tak...
+				if ((camera != null) && (!camera.muted)) {
+					// only when amf gateway is not set
+					if (amfgateway == null) {
+						log("setupAmfGateway");
+						amfgateway = new NetConnection();
+						amfgateway.addEventListener(NetStatusEvent.NET_STATUS, amfgatewayNetStatusHandler);
+						amfgateway.connect(settingsConst.amfgateway);
+						
+						// create new entry on FWM, what we get in return is Object {
+						//	'uuid': new_entry.uuid,
+						//	'server': new_entry.server.url,
+						//	'url': new_entry.get_absolute_url(),
+						// }
+
+						var categories:Array = [];
+						if (settings.get("isSportChecked", false))
+							categories.push("sport");
+						if (settings.get("isMusicChecked", false))
+							categories.push("music");
+						if (settings.get("isGameChecked", false))
+							categories.push("game");
+						if (settings.get("isMovieChecked", false))
+							categories.push("movie");
+						if (settings.get("isOthersChecked", false))
+							categories.push("others");
+
+						amfgateway.call(
+							"fwm.start_broadcasting",
+							new Responder(fwmStartBroadcasting, responderFault),
+							settings.get("title"),
+							settings.get("isPublic"),
+							[],
+							categories
+						);
+					} else
+						log("amfgateway jest już skonfigurowany!");
 				}
-            }
-			
-			// wywołaj okienko informacji, że musisz wypełnić ustawienia
-			protected function settingsNotSetConfirmationPopup():void {
+			}
+
+			public function stopBroadcasting():void {
+				log("stopBroadcasting");
+				// remove entry from FWM
+				if (entry != null) {
+					amfgateway.call(
+						"fwm.stop_broadcasting",
+						new Responder(null, responderFault),
+						entry.uuid
+					);
+					entry = null;
+				}
+				
+				// close netStream
+				if (netStream != null) {
+					netStream.close();
+					netStream.dispose();
+					netStream = null;
+				}
+				// close netConnection
+				if (netConnection != null) {
+					netConnection.close();
+					netConnection = null;
+				}
+				// close amfgateway connection
+				if (amfgateway != null) {
+					amfgateway.close();
+					amfgateway = null;
+				}
+			}
+
+			private function amfgatewayNetStatusHandler(event:NetStatusEvent):void {				
+				log("amfgatewayNetStatusHandler");
+				log("Connection code: " + event.info.code);
+			}
+
+	        private function fwmStartBroadcasting(result:Object):void {
+				log("fmwStartBroadcasting");
+	            if (result == null) {
+					// TO DO INFO PANEL
+					log("There is stream with that name or name is shorter than 5 letters!");
+					stopBroadcasting();
+					share.popToFirstView();
+				} else {
+					entry = result;
+					setupNetConnectionAndStream();
+				}
+	        }
+
+			private function responderFault(error:*):void {
+	            log("Remote error:");
+	            for ( var d:String in error ) {
+					log(error[d]);
+	            }
+				// TODO INFO PANEL
+				stopBroadcasting();
+				share.popToFirstView();
+			}
+
+			private function setupNetConnectionAndStream():void {
+				log("setupNetConnectionAndStream");
+				netConnection = new NetConnection();
+				netConnection.maxPeerConnections = 10;
+				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+				netConnection.connect(entry.server);
+			}
+
+			private function netStatusHandler(event:NetStatusEvent):void {
+				log("netStatusHandler");
+				switch(event.info.code){
+					case "NetConnection.Connect.Success":
+						log("Connection successful!");
+						setupStream();
+						break;
+					case "NetConnection.Connect.Failed":
+						// TODO INFO PANEL
+						log("Connection failed!");
+						stopBroadcasting();
+						share.popToFirstView();
+						break;
+					default:
+						log("Connection code: " + event.info.code);
+				}
+			}
+
+			private function setupStream():void {
+				log("setupStream");
+				var groupspec:GroupSpecifier = new GroupSpecifier(entry.uuid);
+				groupspec.serverChannelEnabled = true;
+				groupspec.multicastEnabled = true;
+
+				netStream = new NetStream(netConnection, groupspec.groupspecWithAuthorizations());
+				netStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+				netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
+				function asyncErrorHandler(event:AsyncErrorEvent):void {
+					// ignore asyncErrors
+				}
+
+				// multicast
+				netStream.multicastAvailabilitySendToAll = true;
+				netStream.multicastPushNeighborLimit = 3;
+				netStream.multicastRelayMarginDuration = 5;
+				netStream.multicastWindowDuration = 30;
+
+				// audio
+				netStream.audioReliable = true;
+				netStream.attachAudio(microphone);
+
+				// video
+				netStream.videoReliable = false;
+				netStream.attachCamera(camera);
+
+				// publish
+				netStream.publish("multicast");
+
+				// show share view, with parent in data object
+				share.pushView(views.Share);
+			}
+
+			private function settingsNotSetConfirmationPopup():void {
                 var informationPopup:InformationPopup = new InformationPopup();
                 informationPopup.open(this, true);
 				informationPopup.informationText.text = "Musisz uzupełnić dane konta, aby mieć możliwość dzielenia się video.";
 				PopUpManager.centerPopUp(informationPopup);
             }
 
-			private function areSettingsSet():Boolean {
-				log('areSettingsSet: true');
-				return true;
+			public function log(string:String):void {
+				if (settingsConst.debug) {
+					debugText += string + "\n";
+					trace(string);
+				}
 			}
         ]]>
     </fx:Script>
 	<s:navigators>
-		<s:ViewNavigator width="100%" height="100%" label="Podziel się!" firstView="views.ShareForm" />
+		<s:ViewNavigator width="100%" height="100%" label="Podziel się!" id="share" firstView="views.ShareForm" />
 		<s:ViewNavigator width="100%" height="100%" label="Ustawienia" firstView="views.Settings" />
 		<s:ViewNavigator width="100%" height="100%" label="Debug" firstView="views.Debug" />
 	</s:navigators>

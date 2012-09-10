@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+        xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+
+		title="Ładowanie ..."
+		width="100%"
+		height="100%"
+
+		creationComplete="initHandler(event);"
+		>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+        <![CDATA[
+			import flash.events.Event;
+			import flash.events.NetStatusEvent;
+			import flash.media.Video;
+			import flash.net.NetConnection;
+			import flash.net.NetStream;
+			import mx.core.UIComponent;
+			import spark.components.Group;
+
+			private var netConnection:NetConnection;
+			private var amfgateway:NetConnection;
+			private var netStream:NetStream;
+			private var entry:Object;
+
+			private function initHandler(event:Event):void{
+				setupAmfGateway();
+			}
+
+			private function setupAmfGateway():void {
+				parentApplication.log("setupAmfGateway");
+				amfgateway = new NetConnection();
+				amfgateway.addEventListener(NetStatusEvent.NET_STATUS, amfGatewayNetStatushandler);
+				amfgateway.connect(parentApplication.settingsConst.amfgateway);
+				
+				// get entry from FWM, what we get in return is Object {
+				//	'uuid': new_entry.uuid,
+				//	'server': new_entry.server.url,
+				//	'url': new_entry.get_absolute_url(),
+				// }
+				if(parentApplication.settingsConst.uuid != null) {
+					amfgateway.call(
+						"fwm.start_receiving",
+						new Responder(fwmStartReceiving, responderFault),
+						parentApplication.parameters.uuid
+					);
+				} else
+					parentApplication.log("UUID parameter is not set!");
+			}
+
+			private function amfGatewayNetStatushandler(event:NetStatusEvent):void {
+				parentApplication.log("getNetStatus");
+				parentApplication.log("kod połączenia: " + event.info.code);
+			}
+
+			private function fwmStartReceiving(result:Object):void {
+				parentApplication.log("fmwStartReceiving");
+	            if (result == null) {
+					// TO DO panel
+					parentApplication.log("Something is wrong on AMFgateway");
+				} else {
+					entry = result;
+					setupNetConnectionAndStream();
+				}
+	        }
+
+			private function responderFault(error:*):void {
+	            parentApplication.log("Remoting error:");
+	            for (var d:String in error) {
+					parentApplication.log(error[d]);
+	            }
+			}
+
+			private function setupNetConnectionAndStream():void {
+				parentApplication.log("setupNetConnectionAndStream");
+				netConnection = new NetConnection();
+				netConnection.maxPeerConnections = 30;
+				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnectionStatusHandler);
+				netConnection.connect(entry.server);
+			}
+
+			private function netConnectionStatusHandler(event:NetStatusEvent):void{
+				parentApplication.log("netConnectionStatusHandler");
+				switch(event.info.code){
+					case "NetConnection.Connect.Success":
+						parentApplication.log("połączono z serwerem!");
+						setupStream();
+						break;
+					default:
+						parentApplication.log("kod połączenia: " + event.info.code);
+				}
+			}
+
+			private function setupStream():void {
+				parentApplication.log("setupStream");
+				parentApplication.log(entry.uuid);
+				parentApplication.log(entry.server);
+				parentApplication.log(entry.url);
+
+				var groupspec:GroupSpecifier = new GroupSpecifier(entry.uuid);
+				groupspec.serverChannelEnabled = true;
+				groupspec.multicastEnabled = true;
+
+				netStream = new NetStream(netConnection, groupspec.groupspecWithAuthorizations());
+				netStream.addEventListener(NetStatusEvent.NET_STATUS, netConnectionStatusHandler);
+
+				netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
+				function asyncErrorHandler(event:AsyncErrorEvent):void {
+					// ignore asyncErrors
+				}
+
+				// multicast
+				netStream.multicastAvailabilitySendToAll = true;
+				netStream.multicastPushNeighborLimit = 30;
+				netStream.multicastRelayMarginDuration = 5;
+				netStream.multicastWindowDuration = 30;
+
+				netStream.videoReliable = false;
+				netStream.audioReliable = true;
+
+				netStream.play("multicast");
+				
+				// show share view, with parent in data object
+				navigator.pushView(views.Receive, {
+						'netStream' : netStream
+					}
+				);
+			}
+		]]>
+    </fx:Script>
+	
+	<s:VGroup height="100%" width="100%" gap="10" verticalAlign="middle">
+		<s:HGroup  width="100%" gap="10" horizontalAlign="center">
+			<mx:SWFLoader id="loader" source="@Embed(source='../../img/loader.swf')" scaleX="2" scaleY="2" />
+		</s:HGroup>
+	</s:VGroup>
+</s:View>

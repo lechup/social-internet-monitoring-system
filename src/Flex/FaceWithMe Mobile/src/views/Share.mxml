@@ -2,15 +2,15 @@
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
         xmlns:s="library://ns.adobe.com/flex/spark"
 		xmlns:mx="library://ns.adobe.com/flex/mx"
-		xmlns:mc="components.*" 
+		xmlns:mc="com.facewithme.components.*" 
 
 		title="Podziel się"
 		width="100%"
 		height="100%"
 		styleName="bgBlack"
 
-		creationComplete="initViewHandler(event);"
-		resize="resizeViewHandler(event);"
+		resize="resizeHandler(event);"
+		backKeyPressed="backKeyPressedHandler(event);"
 		>
 	
 	<fx:Declarations>
@@ -19,159 +19,37 @@
 	
 	<fx:Script>
         <![CDATA[
-			import data.BroadcastData;
-			import components.CameraDisplay;
-
+			import com.facewithme.components.CameraDisplay;
+			import flash.events.AsyncErrorEvent;
+			import flash.events.Event;
+			import flash.events.KeyboardEvent;
+			import flash.events.MouseEvent;
+			import flash.events.NetStatusEvent;
+			import flash.events.TimerEvent;
+			import flash.media.Camera;
+			import flash.media.Microphone;
 			import flash.net.GroupSpecifier;
 			import flash.net.NetConnection;
 			import flash.net.NetStream;
-
- 			import flash.events.MouseEvent;
-			import flash.events.Event;
-			import flash.events.TimerEvent;
-			import flash.events.AsyncErrorEvent;
-			import flash.events.NetStatusEvent;
-
-			import mx.events.ResizeEvent;
-
+			import flash.net.Responder;
 			import flash.utils.Timer;
-
-			import flash.media.Camera;
-			import flash.media.Microphone;
-
-			private var netConnection:NetConnection;
-			private var netStream:NetStream;
-			
-			private var camera:Camera;
-			private var microphone:Microphone;
-			private const SERVER:String = "rtmfp://108.59.252.39/2ad53ba05ab0437da544-8adb73046434";
-
-			protected function initViewHandler(event:Event):void {
-				setupCamera();
-
-				// if camera exists and we have rights to read from it
-				if ((camera != null) && (!camera.muted))
-					setupMicrophone();
-					setupNetConnectionAndStream();
-			}
-
-			private function cameraDebugTimerHandler(event:TimerEvent):void {
-				var debug:String = "";
-				debug += "activityLevel: " + camera.activityLevel + "\n";
-				debug += "bandwidth: " + camera.bandwidth + "\n";
-				debug += "currentFPS: " + camera.currentFPS + "\n";
-				debug += "fps: " + camera.fps + "\n";
-				debug += "keyFrameInterval: " + camera.keyFrameInterval + "\n";
-				debug += "loopback: " + camera.loopback + "\n";
-				//debug += "motionLevel: " + camera.motionLevel + "\n";
-				//debug += "motionTimeout: " + camera.motionTimeout + "\n";
-				debug += "quality: " + camera.quality + "\n";
-			}
-
-			private function setupMicrophone():void {
-				microphone = Microphone.getEnhancedMicrophone();
-			}
-
-			private function setupCamera():void {
-				// log set camera
-				parentApplication.log("Wybrana kamera: " +
-					parentApplication.cameraOptions.getItemAt(
-						parentApplication.settings.get("cameraIndex", 0)
-					)
-				);
-
-				// get proper camera
-				camera = Camera.getCamera(
-					new String(
-						parentApplication.settings.get("cameraIndex", 0)
-					)
-				);
-
-				// does camera really exists?
-				if (camera != null) {
-					// do we have rights for capturing from camera?
-					if (!camera.muted) {
-						// prepare camera
-						cameraDisplay.camera = camera;
-						setCameraMode();
-
-						// add camera debug
-						//var cameraDebugTimer:Timer = new Timer(1000); 
-						//cameraDebugTimer.addEventListener(TimerEvent.TIMER, cameraDebugTimerHandler);
-						//cameraDebugTimer.start();
-					}
-					else
-						parentApplication.log("User doesn't allow application to read data from camera!");
-				} else
-					parentApplication.log("Camera doesn't exists or it is used by other application...");
-			}
-
-			private function setCameraMode():void {
-				// get currentMode
-				var currentMode:Object = parentApplication.qualityOptions.getItemAt(parentApplication.settings.get("qualityIndex", 2));
-
-				parentApplication.log("currentCameraMode, set: " + currentMode.width + "x" + currentMode.height);
-
-				// set quality of streaming
-				// we indicate that FMS should adjust quality to available banwidth
-				camera.setQuality(0, 80);
-
-				// set the mode of camera!
-				camera.setMode(
-					currentMode.width,
-					currentMode.height,
-					30
-				);
-
-				parentApplication.log("currentCameraMode, after set: " + camera.width + "x" + camera.height);
-			}
+			import mx.effects.easing.Back;
+			import mx.events.FlexEvent;
+			import mx.events.ResizeEvent;
+			import spark.components.ViewNavigator;
+			import spark.events.IndexChangeEvent;
+			import spark.events.ViewNavigatorEvent;
 
 			private function detachCamera():void {
-				camera = null;
-				netStream.attachCamera(null);
-				//netStream.close();
-				//netStream.dispose();
+				parentApplication.log("detachCamera");
+				parentApplication.camera = null;
+				parentApplication.netStream.attachCamera(null);
 			}
 
-			private function setupNetConnectionAndStream():void {
-				netConnection = new NetConnection();
-				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
-				netConnection.connect(SERVER);
-			}
-
-			private function netStatusHandler(event:NetStatusEvent):void{
-				switch(event.info.code){
-					case "NetConnection.Connect.Success":
-						parentApplication.log("połączono z serwerem!");
-						setupStream();
-						break;
-					default:
-						parentApplication.log("kod połączenia: " + event.info.code);
-				}
-			}
-
-			private function setupStream():void{
-				var groupspec:GroupSpecifier = new GroupSpecifier("myGroup/multicastOne");
-				groupspec.serverChannelEnabled = true;
-				groupspec.multicastEnabled = true;
-
-				netStream = new NetStream(netConnection, groupspec.groupspecWithAuthorizations());
-				netStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
-				netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
-				function asyncErrorHandler(event:AsyncErrorEvent):void {
-					// ignore asyncErrors
-				}
-
-				// audio
-				netStream.audioReliable = true;
-				netStream.attachAudio(microphone);
-
-				// video
-				netStream.videoReliable = false;
-				netStream.attachCamera(camera);
-
-				// publish
-				netStream.publish("multicast");
+			private function detachMicrophone():void {
+				parentApplication.log("detachMicrophone");
+				parentApplication.microphone = null;
+				parentApplication.netStream.attachAudio(null);
 			}
 
 			private function setCameraDisplayDimensions():void {
@@ -179,35 +57,54 @@
 				cameraDisplay.height = this.height;
 			}
 
-			protected function resizeViewHandler(event:ResizeEvent):void {
-				setupCamera();
+			private function resizeHandler(event:ResizeEvent):void {
+				//parentApplication.setCameraMode();
 				setCameraDisplayDimensions();
+				cameraDisplay.camera = parentApplication.camera;
 			}
 
-			protected function togglePauseButtonClickHandler(event:MouseEvent):void {
-				if (netStream != null)
-					netStream.togglePause();
-			}
-
-			protected function stopButtonClickHandler(event:MouseEvent):void {
+			private function stopBroadcasting(navigator:ViewNavigator = null):void {
+				// stop capturing video and audio
 				detachCamera();
-				navigator.popView();
+				detachMicrophone();
+
+				// send info to AMF, remove netstream and close connection
+				parentApplication.stopBroadcasting();
+				
+				// move to first view
+				if (this.navigator != null)
+					this.navigator.popToFirstView();
+				else if(navigator != null)
+					navigator.popToFirstView();
 			}
 			
-			protected function plusButtonClickHandler(event:MouseEvent):void {
+			private function stopButtonClickHandler(event:MouseEvent):void {
+				stopBroadcasting();
+			}
+
+			private function plusButtonClickHandler(event:MouseEvent):void {
 				var currentQualityIndex:int = parentApplication.settings.get("qualityIndex", 2);
-				if (currentQualityIndex < parentApplication.qualityOptions.length-1) {
+				if (currentQualityIndex < parentApplication.settingsConst.qualityOptions.length - 1) {
 					parentApplication.settings.set("qualityIndex", currentQualityIndex + 1);
-					setCameraMode();
+					parentApplication.setCameraMode();
 				}
 			}
 
-			protected function minusButtonClickHandler(event:MouseEvent):void {
+			private function minusButtonClickHandler(event:MouseEvent):void {
 				var currentQualityIndex:int = parentApplication.settings.get("qualityIndex", 2);
 				if (currentQualityIndex > 0) {
 					parentApplication.settings.set("qualityIndex", currentQualityIndex - 1);
-					setCameraMode();
+					parentApplication.setCameraMode();
 				}
+			}
+
+			private function backKeyPressedHandler(event:FlexEvent):void {
+				// stop broadcasting
+				stopBroadcasting();
+				
+				// do not go back second time
+				// cancel default event bahaviour
+				event.preventDefault();
 			}
 		]]>
     </fx:Script>
@@ -222,8 +119,6 @@
 			click="plusButtonClickHandler(event);" />
 		<s:Button icon="@Embed(source='../../img/icons/Minus.png')"
 			click="minusButtonClickHandler(event);" />
-		<s:Button icon="@Embed(source='../../img/icons/Player Pause.png')" id="playPauseButton"
-			click="togglePauseButtonClickHandler(event);" />
 	</s:actionContent>
 	
 	<s:VGroup verticalAlign="middle" height="100%" width="100%">

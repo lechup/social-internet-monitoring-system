@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009"
-        xmlns:s="library://ns.adobe.com/flex/spark" 
+        xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx"		
 
 		title="Ustawienia"
 		width="100%" height="100%"
@@ -26,7 +27,7 @@
 			import mx.events.CloseEvent;
 			import mx.managers.PopUpManager;
 
-			import components.SettingsPopup;
+			import com.facewithme.components.SettingsPopup;
 			import spark.events.PopUpEvent;
 
 			protected function initViewHandler(event:Event):void {
@@ -73,7 +74,11 @@
 	
 	<s:Scroller width="100%" height="100%">
 		<s:VGroup width="100%" id="settingsForm" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="20" gap="10">
-			<s:Label styleName="justify" width="100%">Na tej zakładce wypełnij ustawienia swojego konta FaceWithMe.COM. Dopiero po uzupełnieniu pól będziesz mógł używać zakładki "Podziel się".</s:Label>
+			<mx:Text styleName="justify" width="100%">
+				<mx:htmlText>
+					<![CDATA[Na tej zakładce wypełnij ustawienia swojego konta FaceWithMe.COM. Dopiero po uzupełnieniu pól będziesz mógł używać zakładki "Podziel się".]]>
+				</mx:htmlText>
+			</mx:Text>
 
 			<s:Label styleName="fieldName" width="100%" paddingTop="10">Login*:</s:Label>
 			<s:TextInput id="login" width="100%" />
@@ -95,11 +100,6 @@
 			<s:HGroup horizontalAlign="center" width="100%">
 				<s:Label>Jeżeli nie masz jeszcze konta</s:Label>
 				<s:Label click="registerButtonClickHandler(event);" styleName="link">załóż go!</s:Label>
-			</s:HGroup>
-
-			<s:Label styleName="fieldName">Domyślna kamera:</s:Label>
-			<s:HGroup width="100%" gap="10">
-				<s:SpinnerList width="50%" typicalItem="20" height="100" id="default_camera" textAlign="center" dataProvider="{parentApplication.cameraOptions}" />
 			</s:HGroup>
 		</s:VGroup>
 	 </s:Scroller>
