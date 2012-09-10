@@ -23,6 +23,9 @@
 		<link rel="shortcut icon" href="{{STATIC_URL}}core/ico/favicon.ico">
 	</head>
 	<body>
+		<div id="modal-button-close-bottom">
+			<button class="btn" onclick="javascript: close_parent_modal('#modal');"><i class="icon-remove-circle"></i> Zamknij</button>
+		</div>
 		<div class="container-fluid">
       		<div class="row-fluid">
       			<div class="span12">
@@ -37,6 +40,16 @@
 		{% block js_include_external %}
 		{% endblock %}
 		{% block js_include %}
+			<script>
+				// if not in iframe, redirect to home and open modal with iframed content
+				if (self === top) {
+					window.location = self.location.protocol + '//' + self.location.host + '/?modal=' + self.location.pathname;
+				}
+				
+				function close_parent_modal(id) {
+					top.$(id).modal('hide');
+				}
+			</script>
 		{% endblock %}
 	</body>
 </html>

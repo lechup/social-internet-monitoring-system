@@ -439,10 +439,10 @@
 
 @media (min-width: 1200px) {
   .facewithme-modal {
-    top: 19%;
-    left: 19%;
-    width: 60%;
-    height: 60%;
+    top: 10%;
+    left: 5%;
+    width: 90%;
+    height: 80%;
   }
 }
 
@@ -916,7 +916,11 @@
 }
 
 @media (max-width: 767px) {
-  
+  .facewithme-container-fluid {
+    width: auto !important;
+    margin-right: -20px;
+    margin-left: -20px;
+  }
 }
 
 @media (max-width: 979px) {

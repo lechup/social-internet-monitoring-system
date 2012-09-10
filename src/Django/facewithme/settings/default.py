@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     
     'registration',
     'bootstrapform',
+    'gravatar',
     'south',
 )
 
@@ -87,5 +88,8 @@ STATIC_URL = '/static/'
 
 # registration
 ACCOUNT_ACTIVATION_DAYS = 2
+
+# django-gravatar
+GRAVATAR_DEFAULT_IMAGE = 'mm'
 
 # APPS SETTINGS #########################################

@@ -7,6 +7,7 @@ South
 # project specific
 django-registration
 django-bootstrap-form
+django-gravatar
 pyamf
 pygeoip
 

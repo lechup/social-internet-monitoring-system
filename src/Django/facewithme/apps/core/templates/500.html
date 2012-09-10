@@ -1,5 +1,14 @@
-{% extends "base.html" %}
+{% extends "base_modal.html" %}
 
-{% block content %}
-500 : Internal server error
+{% block title %}
+	Błąd 500 - wewnętrzny błąd serwera!
+{% block %}
+
+{% block title_error %}
+	Błąd 500!
+{% block %}
+
+{% block content_error %}
+	<p>Informatycy dostali wszystkie potrzebne informację na temat wystąpienia błędu. Serdecznie przepraszają i zapraszają za jakiś czas -- może uda im się do tego czasu naprawić systm.</p>
+	<small class="pull-right">Zespół FaceWithMe.COM</small>
 {% endblock %}

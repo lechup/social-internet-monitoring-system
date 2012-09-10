@@ -5643,8 +5643,22 @@ a.badge:hover {
   padding: 0;
 }
 
-.facewithme-container-fluid {
-  width: auto !important;
-  margin-right: -20px;
-  margin-left: -20px;
+.facewithme-stream-list-item hr {
+  margin: 3px 0 3px 0;
+}
+
+.facewithme-stream-list-item h3 {
+  margin: 0;
+}
+
+#stream-list-categories-ul {
+  height: 40px;
+  margin: 10px 0;
+  vertical-align: middle;
+}
+
+#modal-button-close-bottom {
+  position: fixed;
+  right: 1em;
+  bottom: 0.25em;
 }

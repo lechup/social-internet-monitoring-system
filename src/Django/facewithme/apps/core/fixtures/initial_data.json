@@ -1,26 +1,10 @@
 [
     {
-        "pk": "5304a443-7b2b-435b-bbcf-37c699070b56", 
-        "model": "core.entry", 
-        "fields": {
-            "title": "To jest m\u00f3j testowy stream", 
-            "coordinates": null, 
-            "server": 1, 
-            "start": "2012-08-21T22:14:36.242", 
-            "user": null, 
-            "is_public": true, 
-            "slug": "to-jest-moj-testowy-stream", 
-            "categories": [
-                3
-            ]
-        }
-    }, 
-    {
         "pk": 5, 
         "model": "core.category", 
         "fields": {
             "name": "Gry", 
-            "value": "game"
+            "slug": "game"
         }
     }, 
     {
@@ -28,7 +12,7 @@
         "model": "core.category", 
         "fields": {
             "name": "Film", 
-            "value": "movie"
+            "slug": "movie"
         }
     }, 
     {
@@ -36,7 +20,7 @@
         "model": "core.category", 
         "fields": {
             "name": "Inne", 
-            "value": "others"
+            "slug": "others"
         }
     }, 
     {
@@ -44,7 +28,7 @@
         "model": "core.category", 
         "fields": {
             "name": "Sport", 
-            "value": "sport"
+            "slug": "sport"
         }
     }, 
     {
@@ -52,7 +36,7 @@
         "model": "core.category", 
         "fields": {
             "name": "Muzyka", 
-            "value": "music"
+            "slug": "music"
         }
     }, 
     {

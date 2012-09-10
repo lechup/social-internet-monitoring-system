@@ -18,7 +18,7 @@ def get_server():
         server = None
     return server
 
-class Entry(models.Model):
+class Stream(models.Model):
     uuid = models.CharField(
         max_length = 36,
         primary_key = True,
@@ -54,16 +54,30 @@ class Entry(models.Model):
     # GIS
     coordinates = gis_models.PointField(null = True, blank = True)
     objects = gis_models.GeoManager()
+    
+    def get_x(self):
+        if (self.coordinates.get_x() >= 0):
+            return '%4.f E' % self.coordinates.get_x()
+        else:
+            return '%4.f W' % abs(self.coordinates.get_x())
+
+
+    def get_y(self):
+        if (self.coordinates.get_y() >= 0):
+            return '%4.f N' % self.coordinates.get_y()
+        else:
+            return '%4.f S' % abs(self.coordinates.get_y())
+
 
     @models.permalink
     def get_absolute_url(self):
         if self.is_public:
-            return ('core:receivingview', (), {
+            return ('core-receivingview', (), {
                     'slug': self.slug
                 }
             )
         else:
-            return ('core:receivingprivateview', (), {
+            return ('core-receivingprivateview', (), {
                     'uuid': self.uuid,
                     'slug': self.slug
                 }
@@ -72,7 +86,7 @@ class Entry(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slughifi(self.title)
-        return super(Entry, self).save(*args, **kwargs)
+        return super(Stream, self).save(*args, **kwargs)
 
 
     def __unicode__(self):
@@ -81,8 +95,21 @@ class Entry(models.Model):
 
 class Category(models.Model):
     name = models.CharField(u'nazwa', max_length=100)
-    value = models.CharField(u'wartość', max_length=100, default="")
-    
+    slug = models.SlugField(
+        default = "",
+        max_length = 100,
+        editable = False,
+        unique = True
+    )
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('core-stream_list_category', (self.slug), {})
+
+    def save(self, *args, **kwargs):
+        self.slug = slughifi(self.name)
+        return super(Category, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return u'%s' % (self.name)
 

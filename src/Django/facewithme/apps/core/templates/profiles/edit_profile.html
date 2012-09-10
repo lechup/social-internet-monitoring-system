@@ -1,0 +1,16 @@
+{% extends "profiles/base.html" %}
+
+{% load bootstrap %}
+{% block title %}Edytuj profil{% endblock %}
+{% block content %}
+	<form method="post" action="" class="form-horizontal">
+	  	<legend>Edytuj profil użytkownika</legend>
+		{% csrf_token %}
+		{{form|bootstrap}}
+	  	<div class="control-group">
+		    <div class="controls">
+		      <button type="submit" class="btn">Zmień!</button>
+		    </div>
+	    </div>
+	</form>
+{% endblock %}

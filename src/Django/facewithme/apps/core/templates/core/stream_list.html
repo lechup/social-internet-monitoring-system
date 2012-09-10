@@ -1,0 +1,59 @@
+{% extends "modal_base.html" %}
+{% load gravatar %}
+
+{% block content %}
+
+	<div class="row-fluid">
+		<div class="span5">
+			<h1>Lista streamów</h1>
+			{% if selected_category %}<small class="small">kategoria <span class="label">{{selected_category.name}}</span></small>{% endif %}
+		</div>
+		<div class="span7">
+			<ul class="nav nav-pills pull-right" id="stream-list-categories-ul">
+					<li class="disabled"><a>Kategorie:</a></li>
+					<li><a href="{% url core-stream_list %}">Wszystkie</a></li>
+			  {% for category in categories_list %}
+				  <li {% if selected_category and category.slug == selected_category.slug %}class="active" {% endif %}>
+				    <a href="{% url core-stream_list_category category.slug %}">{{ category.name }}</a>
+				  </li>
+			  {% endfor %}
+			</ul>
+		</div>
+	</div>
+	
+	{% for stream in stream_list %}
+		<div class="facewithme-stream-list-item">
+			<div class="row-fluid">
+				<div class="span10">
+					<h3>Title</h3>
+				</div>
+				<div class="span2">
+					<h3 class="pull-right">
+						<a href=""><span class="label label-success"><i class="icon-eye-open"></i> Zobacz &gt;&gt;</span></a>
+					</h3>
+				</div>
+			</div>
+			<hr>
+			<div class="row-fluid">
+				<div class="span6">
+					{% if stream.user %}
+						<img src="{% gravatar_for_user stream.user 20 %}" alt="Profil {{ user }}" /> {{ user }}
+					{% endif %}
+				</div>
+				<div class="span6">
+					<div class="pull-right">
+						kategoria <span class="label">{{stream.category.name}}&nbsp;</span>
+						{% if stream.coordinates %}
+							miejsce <span class="label label-warning">{{stream.get_x}}</span> <span class="label label-warning">{{stream.get_y}}</span>
+						{% endif %}
+						start <span class="label">{{stream.start}}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	
+	{% if is_paginated %}
+		asdad
+	{% endif %}
+{% endblock %}

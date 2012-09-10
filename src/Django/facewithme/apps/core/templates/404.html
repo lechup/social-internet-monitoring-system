@@ -1,5 +1,14 @@
-{% extends "base.html" %}
+{% extends "base_modal.html" %}
 
-{% block content %}
-404 : Page does not exists
+{% block title %}
+	Błąd 404 - nie znaleziono strony!
+{% block %}
+
+{% block title_error %}
+	Błąd 404!
+{% block %}
+
+{% block content_error %}
+	<p>Niestety nie udało nam się znaleźć strony o podanym adresie. Jak jesteś pewny, że strona powinna istnieć - daj nam o tym znać!</p>
+	<small class="pull-right">Zespół FaceWithMe.COM</small>
 {% endblock %}

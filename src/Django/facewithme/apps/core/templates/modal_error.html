@@ -1,0 +1,9 @@
+{% extends "modal_base.html" %}
+{% block title %}Błąd!{% endblock %}
+
+{% block content %}
+	<form method="post" class="form-horizontal">
+	  	<legend>{% block title_error %} {% endblock %}</legend>
+		{% block error %}<p><span class="label label-error">Błąd:</span> {% block content_error %} {% endblock %}</p>{% endblock %}
+	</form>
+{% endblock %}
