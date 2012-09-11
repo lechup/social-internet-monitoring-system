@@ -48,7 +48,7 @@
 					amfgateway.call(
 						"fwm.start_receiving",
 						new Responder(fwmStartReceiving, responderFault),
-						parentApplication.parameters.uuid
+						parentApplication.settingsConst.uuid
 					);
 				} else
 					parentApplication.log("UUID parameter is not set!");

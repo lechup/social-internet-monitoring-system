@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+		xmlns:s="library://ns.adobe.com/flex/spark"
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		width="100%" height="100%"
+		creationComplete="init()"
+		resize="resizeHandler(event)"
+		>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+
+	<fx:Script>
+		<![CDATA[
+			import flash.events.ContextMenuEvent;
+			import flash.events.Event;
+			import flash.events.NetStatusEvent;
+			import flash.media.Video;
+			import flash.net.NetConnection;
+			import flash.net.NetStream;
+			import flash.ui.ContextMenuItem;
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.core.UIComponent;
+			import spark.components.Group;
+			import flash.events.Event;
+			import flash.media.Video;
+			import mx.events.ResizeEvent;
+
+			[Bindable]
+			private var debugText:String = "";
+			private var settings:Object = {
+				'amfgateway' : 'http://facewithme.com/amf/',
+				'debug' : true,
+				'uuid' : null
+			};
+			private var netConnection:NetConnection;
+			private var amfgateway:NetConnection;
+			private var netStream:NetStream;
+			private var entry:Object;
+			private var video:Video;
+
+			public function log(string:String):void {
+				if (settings.debug) {
+					debugText = debugText + string + "\n";
+				}
+			}
+			public function init():void {
+			// set debug menu in context menu
+				// hide context menu
+				contextMenu.hideBuiltInItems();
+				var customItem:ContextMenuItem = new ContextMenuItem("FaceWithMe Debug View");
+				contextMenu.customItems.push(customItem);
+				customItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, debugViewToggleHandler);
+			//
+			
+			// get parameters from flashVars
+				var params:Object = FlexGlobals.topLevelApplication.parameters;
+				if (params.hasOwnProperty('amfgateway')) {
+					settings['amfgateway'] = params.amfgateway;
+				}
+				if (params.hasOwnProperty('uuid')) {
+					settings['uuid'] = params.uuid;
+				}
+			//
+			
+			// start amfgateway
+				setupAmfGateway();
+			//
+			}
+			
+			private function debugViewToggleHandler(event:ContextMenuEvent) : void{
+				Alert.show(debugText, "Debug information:");
+			}
+
+			private function setupAmfGateway():void {
+				log("setupAmfGateway");
+				amfgateway = new NetConnection();
+				amfgateway.addEventListener(NetStatusEvent.NET_STATUS, amfGatewayNetStatushandler);
+				amfgateway.connect(settings.amfgateway);
+				
+				// get entry from FWM, what we get in return is Object {
+				//	'uuid': new_entry.uuid,
+				//	'server': new_entry.server.url,
+				//	'url': new_entry.get_absolute_url(),
+				// }
+				if(settings.uuid != null) {
+					amfgateway.call(
+						"fwm.start_receiving",
+						new Responder(fwmStartReceiving, responderFault),
+						settings.uuid
+					);
+				} else
+					log("UUID parameter is not set!");
+			}
+
+			private function amfGatewayNetStatushandler(event:NetStatusEvent):void {
+				log("getNetStatus");
+				log("kod połączenia: " + event.info.code);
+			}
+
+			private function fwmStartReceiving(result:Object):void {
+				log("fmwStartReceiving");
+	            if (result == null) {
+					// TO DO panel
+					log("Something is wrong on AMFgateway");
+				} else {
+					entry = result;
+					setupNetConnectionAndStream();
+				}
+	        }
+
+			private function responderFault(error:*):void {
+	            log("Remoting error:");
+	            for (var d:String in error) {
+					log(error[d]);
+	            }
+			}
+
+			private function setupNetConnectionAndStream():void {
+				log("setupNetConnectionAndStream");
+				netConnection = new NetConnection();
+				netConnection.maxPeerConnections = 30;
+				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnectionStatusHandler);
+				netConnection.connect(entry.server);
+			}
+
+			private function netConnectionStatusHandler(event:NetStatusEvent):void{
+				log("netConnectionStatusHandler");
+				switch(event.info.code){
+					case "NetConnection.Connect.Success":
+						log("połączono z serwerem!");
+						setupStream();
+						break;
+					default:
+						log("kod połączenia: " + event.info.code);
+				}
+			}
+
+			private function setupStream():void {
+				log("setupStream");
+				log(entry.uuid);
+				log(entry.server);
+				log(entry.url);
+
+				var groupspec:GroupSpecifier = new GroupSpecifier(entry.uuid);
+				groupspec.serverChannelEnabled = true;
+				groupspec.multicastEnabled = true;
+
+				netStream = new NetStream(netConnection, groupspec.groupspecWithAuthorizations());
+				netStream.addEventListener(NetStatusEvent.NET_STATUS, netConnectionStatusHandler);
+
+				netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
+				function asyncErrorHandler(event:AsyncErrorEvent):void {
+					// ignore asyncErrors
+				}
+
+				// multicast
+				netStream.multicastAvailabilitySendToAll = true;
+				netStream.multicastPushNeighborLimit = 30;
+				netStream.multicastRelayMarginDuration = 5;
+				netStream.multicastWindowDuration = 30;
+
+				netStream.videoReliable = false;
+				netStream.audioReliable = true;
+
+				netStream.play("multicast");
+				
+				// show proper view
+				setVideoDimensions();
+				views.selectedChild = receive;
+			}
+
+			private function setVideoDimensions():void {
+				log('setVideoDimensions');
+				if (video == null) {
+					video = new Video(320, 240);
+					video.attachNetStream(netStream);
+				}
+
+				video.width = width;
+				video.height = height;
+				videoComponent.addChild(video);
+			}
+
+			private function resizeHandler(event:ResizeEvent):void {
+				log('resizeHandler');
+				if ((views != null) && (views.selectedChild == receive)) {
+					setVideoDimensions();
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<mx:ViewStack id="views"
+		width="100%"
+		height="100%">
+
+		<mx:Canvas id="loader"
+			width="100%"
+			height="100%">
+
+			<s:VGroup height="100%" width="100%" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" verticalAlign="middle">
+				<s:HGroup  width="100%" horizontalAlign="center">
+					<mx:SWFLoader id="swf_loader" source="@Embed(source='../img/loader.swf')" scaleX="2" scaleY="2" />
+				</s:HGroup>
+			</s:VGroup>
+		</mx:Canvas>
+
+		<mx:Canvas id="receive"
+		    width="100%"
+		    height="100%"
+			backgroundColor="#000000">
+			
+			<s:VGroup verticalAlign="middle" width="100%" height="100%">
+				<s:HGroup horizontalAlign="center" width="100%" height="100%">
+					<mx:UIComponent id="videoComponent" width="100%" height="100%" />
+				</s:HGroup>
+			</s:VGroup>
+		</mx:Canvas>
+	</mx:ViewStack>
+</s:Application>

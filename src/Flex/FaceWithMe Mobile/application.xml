@@ -61,4 +61,5 @@
 	Android manifest documentation:
 	http://developer.android.com/guide/topics/manifest/manifest-intro.html
 	-->
+  <allowBrowserInvocation>false</allowBrowserInvocation>
 </application>

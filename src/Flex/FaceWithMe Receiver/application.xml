@@ -8,7 +8,6 @@
   <android>
     <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
 	<uses-permission android:name="android.permission.INTERNET" />
-	<uses-feature android:required="true" android:name="android.hardware.touchscreen.multitouch" />
 </manifest>]]></manifestAdditions>
   </android>
   <iPhone>
@@ -38,7 +37,8 @@
     <!--<aspectRatio>landscape</aspectRatio>-->
     <renderMode>auto</renderMode>
     <systemChrome>standard</systemChrome>
-    <autoOrients>false</autoOrients>
+    <transparent>false</transparent>
+    <autoOrients>true</autoOrients>
   </initialWindow>
   <icon>
     <image48x48>icons/icon_48.png</image48x48>
@@ -58,4 +58,5 @@
 	http://developer.android.com/guide/topics/manifest/manifest-intro.html
 	-->
   <allowBrowserInvocation>true</allowBrowserInvocation>
+  <customUpdateUI>true</customUpdateUI>
 </application>
