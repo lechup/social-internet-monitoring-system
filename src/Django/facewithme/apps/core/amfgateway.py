@@ -38,7 +38,7 @@ def start_broadcasting(request, title, is_public, coordinates = [], categories =
         new_stream = Stream.objects.create(**stream)
         new_stream.save()
         # add categories
-        for category in Category.objects.filter(value__in = list(categories)):
+        for category in Category.objects.filter(slug__in = list(categories)):
             new_stream.categories.add(category)
         return {
             'uuid': new_stream.uuid,
