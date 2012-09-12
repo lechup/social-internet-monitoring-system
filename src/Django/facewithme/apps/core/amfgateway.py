@@ -64,14 +64,14 @@ def stop_broadcasting(request, uuid):
 
 def start_receiving(request, uuid):
     try:
-        Stream = Stream.objects.get(uuid = uuid)
+        stream = Stream.objects.get(uuid = uuid)
     except ObjectDoesNotExist:
         return None
 
     return {
-        'uuid': Stream.uuid,
-        'server': Stream.server.url,
-        'url': Stream.get_absolute_url(),
+        'uuid': stream.uuid,
+        'server': stream.server.url,
+        'url': stream.get_absolute_url(),
     }
 
 
@@ -81,13 +81,13 @@ def stop_receiving(request, uuid):
 
 def update_coordinates(request, uuid, lng, lat):
     try: 
-        Stream = Stream.objects.get(uuid = uuid)
+        stream = Stream.objects.get(uuid = uuid)
     except ObjectDoesNotExist:
         return False
     else:
-        Stream.coordinates.x = lng
-        Stream.coordinates.y = lat
-        Stream.save()
+        stream.coordinates.x = lng
+        stream.coordinates.y = lat
+        stream.save()
         return True
 
 
