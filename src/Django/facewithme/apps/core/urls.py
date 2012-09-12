@@ -1,12 +1,12 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic import TemplateView
 
-from apps.core.views import ReceivingView, ReceivingPrivateView, StreamListView
+from apps.core.views import StreamReceivePrivateView, StreamReceivePublicView, StreamListView
 
 urlpatterns = patterns('',
-    url(r'^is_private/$', TemplateView.as_view(template_name = 'core/is_private,html'), name = 'core-stream_is_private'),
+    url(r'^is_private/$', TemplateView.as_view(template_name = 'stream/is_private,html'), name = 'core-stream_is_private'),
     url(r'^list/$', StreamListView.as_view(), name = 'core-stream_list'),
     url(r'^list/([\-\w]+)/$', StreamListView.as_view(), name = 'core-stream_list_category'),
-    url(r'^receiving/(?P<slug>[\-\w]+)/$', ReceivingView.as_view(), name = 'core-stream_receiving'),
-    url(r'^receiving/(?P<slug>[\-\w]+)/(?P<uuid>[_\-\w]+)/$', ReceivingPrivateView.as_view(), name = 'core-stream_receiving_private'),
+    url(r'^receive/(?P<slug>[\-\w]+)/$', StreamReceivePublicView.as_view(), name = 'core-stream_item_receive_public'),
+    url(r'^receive/(?P<slug>[\-\w]+)/(?P<uuid>[_\-\w]+)/$', StreamReceivePrivateView.as_view(), name = 'core-stream_item_receive_private'),
 )

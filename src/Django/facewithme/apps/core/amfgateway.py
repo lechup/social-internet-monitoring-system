@@ -1,4 +1,4 @@
-from django.http import Http404
+# -*- coding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
@@ -19,7 +19,7 @@ def start_broadcasting(request, title, is_public, coordinates = [], categories =
     if not title or len(title) < 5:
         return None
     
-    Stream = {
+    stream = {
         'title' : title,
         'is_public' : is_public,
         'user' : None
@@ -28,22 +28,22 @@ def start_broadcasting(request, title, is_public, coordinates = [], categories =
     # check for username and password
     if username and password:
         try:
-            Stream['user'] = User.objects.get(username = username, password = password)
+            stream['user'] = User.objects.get(username = username, password = password)
         except ObjectDoesNotExist:
             return None
     
     slug = slughifi(title)
     # if slug is unique?
     if Stream.objects.filter(slug = slug).count() == 0:
-        new_Stream = Stream.objects.create(**Stream)
-        new_Stream.save()
+        new_stream = Stream.objects.create(**stream)
+        new_stream.save()
         # add categories
         for category in Category.objects.filter(value__in = list(categories)):
-            new_Stream.categories.add(category)
+            new_stream.categories.add(category)
         return {
-            'uuid': new_Stream.uuid,
-            'server': new_Stream.server.url,
-            'url': new_Stream.get_absolute_url(),
+            'uuid': new_stream.uuid,
+            'server': new_stream.server.url,
+            'url': new_stream.get_absolute_url(),
         }
     else:
         return None

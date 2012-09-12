@@ -41,3 +41,10 @@ build:
 	@echo "Thanks for using Bootstrap,"
 	@echo "<3 @mdo and @fat\n"
 
+
+watch:
+	@echo "\n${HR}"
+	@echo "Watching directory ./custom/, for *.less file changes!"
+	@echo "${HR}"
+	@echo "\n"
+	@watchmedo shell-command -c "make" ./custom/

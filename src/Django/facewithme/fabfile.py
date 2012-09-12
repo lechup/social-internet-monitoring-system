@@ -60,8 +60,8 @@ def get_requirements():
 @task
 def deploy():
     git_pull()
-    get_static()
     get_requirements()
+    get_static()
     sync_db()
     migrate()
     restart_server()

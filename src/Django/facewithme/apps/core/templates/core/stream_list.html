@@ -6,12 +6,11 @@
 	<div class="row-fluid">
 		<div class="span5">
 			<h1>Lista streamów</h1>
-			{% if selected_category %}<small class="small">kategoria <span class="label">{{selected_category.name}}</span></small>{% endif %}
 		</div>
 		<div class="span7">
-			<ul class="nav nav-pills pull-right" id="stream-list-categories-ul">
-					<li class="disabled"><a>Kategorie:</a></li>
-					<li><a href="{% url core-stream_list %}">Wszystkie</a></li>
+			<ul class="nav nav-pills pull-right" id="facewithme-stream-list-categories">
+				<li class="disabled"><a>Kategorie:</a></li>
+				<li{% if not selected_category %} class="active"{% endif %}><a href="{% url core-stream_list %}">Wszystkie</a></li>
 			  {% for category in categories_list %}
 				  <li {% if selected_category and category.slug == selected_category.slug %}class="active" {% endif %}>
 				    <a href="{% url core-stream_list_category category.slug %}">{{ category.name }}</a>
@@ -22,38 +21,63 @@
 	</div>
 	
 	{% for stream in stream_list %}
-		<div class="facewithme-stream-list-item">
+		<div class="facewithme-stream-item">
 			<div class="row-fluid">
-				<div class="span10">
-					<h3>Title</h3>
+				<div class="span6">
+					<h3>{{stream.title|truncatechars:35}} <a href="{{stream.get_absolute_url}}" class="btn btn-success btn-mini">&gt;</a></h3>
 				</div>
-				<div class="span2">
-					<h3 class="pull-right">
-						<a href=""><span class="label label-success"><i class="icon-eye-open"></i> Zobacz &gt;&gt;</span></a>
-					</h3>
+				<div class="span6">
+					<div class="facewithme-stream-item-categories">
+						{% with categories=stream.categories.all %}
+							{% if categories|length > 0 %}
+								<small class="muted">kategoria</small> 
+								{% for category in categories %}
+									<a class="btn btn-info btn-mini" href="{{ category.get_absolute_url }}">{{category.name}}</a>
+								{% endfor %}
+							{% endif %}
+						{% endwith %}
+						<a href="{{stream.get_absolute_url}}" class="btn btn-success btn-mini">&gt;</a>
+					</div>
 				</div>
 			</div>
 			<hr>
 			<div class="row-fluid">
-				<div class="span6">
+				<div class="span12">
 					{% if stream.user %}
 						<img src="{% gravatar_for_user stream.user 20 %}" alt="Profil {{ user }}" /> {{ user }}
 					{% endif %}
-				</div>
-				<div class="span6">
-					<div class="pull-right">
-						kategoria <span class="label">{{stream.category.name}}&nbsp;</span>
-						{% if stream.coordinates %}
-							miejsce <span class="label label-warning">{{stream.get_x}}</span> <span class="label label-warning">{{stream.get_y}}</span>
-						{% endif %}
-						start <span class="label">{{stream.start}}</span>
-					</div>
+					<span class="pull-right">
+						<small class="muted">start</small> <span class="label">{{stream.start|time:"H:i"}}</span>
+					</span>
+					{% if stream.coordinates %}
+						<small class="muted">miejsce</small> <a href=""><span class="label label-warning">{{stream.get_x}}</span> <span class="label label-warning">{{stream.get_y}}</a></span>
+					{% endif %}
 				</div>
 			</div>
 		</div>
 	{% endfor %}
 	
 	{% if is_paginated %}
-		asdad
+		<div class="pagination pagination-centered">
+		  <ul>
+			{% if page_obj.has_previous %}
+				<li><a href="">««</a></li>
+				<li><a href="?page={{ page_obj.previous_page_number  }}">«</a></li>
+        	{% endif %}
+        	{% for num_page in paginator.page_range %}
+        		{% if num_page == page_obj.number  %}
+		        	<li class="disabled"><a href="">{{ page_obj.number }}</a></li>
+		        {% else %}
+		        	<li><a href="?page={{ num_page }}">{{num_page}}</a></li>
+		        {% endif %}
+        	{% endfor %}
+
+	        {% if page_obj.has_next %}
+			    <li><a href="?page={{ page_obj.next_page_number }}">»</a></li>
+			    <li><a href="?page={{ page_obj.num_pages }}">»»</a></li>
+	        {% endif %}
+
+		  </ul>
+		</div>
 	{% endif %}
 {% endblock %}

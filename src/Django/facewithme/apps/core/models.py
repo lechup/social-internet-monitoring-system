@@ -52,9 +52,12 @@ class Stream(models.Model):
     categories = models.ManyToManyField('Category')
     is_public = models.BooleanField(default = True)
     # GIS
-    coordinates = gis_models.PointField(null = True, blank = True)
+    coordinates = gis_models.PointField(null = True, blank = True, default = None)
     objects = gis_models.GeoManager()
-    
+
+    class Meta:
+        ordering = ['-start']
+
     def get_x(self):
         if (self.coordinates.get_x() >= 0):
             return '%4.f E' % self.coordinates.get_x()
@@ -72,12 +75,12 @@ class Stream(models.Model):
     @models.permalink
     def get_absolute_url(self):
         if self.is_public:
-            return ('core-receivingview', (), {
+            return ('core-stream_item_receive_public', (), {
                     'slug': self.slug
                 }
             )
         else:
-            return ('core-receivingprivateview', (), {
+            return ('core-stream_item_receive_private', (), {
                     'uuid': self.uuid,
                     'slug': self.slug
                 }
@@ -104,7 +107,7 @@ class Category(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('core-stream_list_category', (self.slug), {})
+        return ('core-stream_list_category', (self.slug,), {})
 
     def save(self, *args, **kwargs):
         self.slug = slughifi(self.name)

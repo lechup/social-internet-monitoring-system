@@ -17,3 +17,5 @@ ipython
 django-debug-toolbar
 fabric
 factory_boy
+# src/bootstrap/ + make watchdog
+watchdog

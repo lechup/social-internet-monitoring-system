@@ -4,6 +4,9 @@
 {% block content %}
 	<form method="post" class="form-horizontal">
 	  	<legend>{% block title_error %} {% endblock %}</legend>
-		{% block error %}<p><span class="label label-error">Błąd:</span> {% block content_error %} {% endblock %}</p>{% endblock %}
+		<blockquote>
+		  {% block error %}<p><span class="label label-error">Błąd:</span> {% block content_error %} {% endblock %}</p>{% endblock %}
+		  <small>Zespół <cite title="http://facewithme.com">FaceWithMe.COM</cite></small>
+		</blockquote>		
 	</form>
 {% endblock %}

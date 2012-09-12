@@ -1,31 +1,29 @@
 var map;
 
 $(document).ready(function() {
-	// window resize event
+// window resize event
 	resizeWindowHandler();
 	$(window).resize(resizeWindowHandler);
-    
-    // map and geolocation
-    initializeMap();    
-
-	var resizeWindowHandlerActive = false;
-	var resizeWindowHandlerMaxHeight = getMapHeight();
 	function resizeWindowHandler() {
 		// when resizing window, adjust map height to current viewport
-		$('#map').height(getMapHeight());
-		google.maps.event.trigger(map, 'resize');
+		$('#map_canvas').height(getMapHeight());
 	}
 	function getMapHeight() {
 		return $(window).height()-$('#navbar').height();
 	}
+    
+// map
+    initializeMap();    
+
 	function initializeMap() {
 		var mapOptions = {
+			streetViewControl : false,
+			center: new google.maps.LatLng(0, 0),
 			zoom: 5,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			center: new google.maps.LatLng(0, 0)
+			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 	
-		map = new google.maps.Map(document.getElementById('map'), mapOptions);
+		map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 		getLatLng(getLatLngHandler);
 	}
 	
@@ -36,39 +34,39 @@ $(document).ready(function() {
 			map.panTo(pos);
 		}
 	}
+
+	function getLatLng(callback) {
+		if (navigator && navigator.geolocation) {
+		// try to use HTML5 geolocation
+			navigator.geolocation.getCurrentPosition(function(pos) {
+			// suceess callback
+				callback({
+					'lat' : pos.coords.latitude,
+					'lng' : pos.coords.longitude
+				});
+			}, function(error) {
+			// error callback
+			// eg. user forbids to get location by the browser
+				getGeoIPLatLng(callback);
+			});
+		}
+		else {		
+		// if no HTML5 gelolocation available,
+		// fallback to MaxMind GeoIP
+			getGeoIPLatLng(callback);
+		}
+		
+		function getGeoIPLatLng(callback) {
+		// helper function, loading MaxMind JS GeoIP and returning lat/lng ...
+			callback({
+				'lat' : geoip_latitude(),
+				'lng' : geoip_longitude()
+			});
+		}
+	}
 });
 
 function modal(iframe_src) {
 	$('#modal-iframe').attr('src', iframe_src);
 	$('#modal').modal();
-}
-
-function getLatLng(callback) {
-	if (navigator && navigator.geolocation) {
-	// try to use HTML5 geolocation
-		navigator.geolocation.getCurrentPosition(function(pos) {
-		// suceess callback
-			callback({
-				'lat' : pos.coords.latitude,
-				'lng' : pos.coords.longitude
-			});
-		}, function(error) {
-		// error callback
-		// eg. user forbids to get location by the browser
-			getGeoIPLatLng(callback);
-		});
-	}
-	else {		
-	// if no HTML5 gelolocation available,
-	// fallback to MaxMind GeoIP
-		getGeoIPLatLng(callback);
-	}
-	
-	function getGeoIPLatLng(callback) {
-	// helper function, loading MaxMind JS GeoIP and returning lat/lng ...
-		callback({
-			'lat' : geoip_latitude(),
-			'lng' : geoip_longitude()
-		});
-	}
 }
