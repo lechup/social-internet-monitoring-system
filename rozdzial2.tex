@@ -199,7 +199,9 @@ Po rozmowie z klientem, na podstawie ,,głównego zadania systemu'' oraz innych 
 \subsection{Architektura}
 \label{sec:EtapIawArchitektura}
 
-W tym rozdziale umieszczona zostanie wstępna architektura systemu. Jako, że technologie, które zostaną wykorzystane są ,,nowe'' zarówno dla całej grupy projektowej jak i same w sobie, będziemy potrzebowali prototypu systemu.
+Jako początek rozważań architektury systemu proponuje się skorzystać z elementów metody ATAM (Architecture tradeoff analysis method). Pełna metoda ATAM 
+
+W tym rozdziale umieszczona zostanie wstępna architektura systemu. Jako, że technologie, które zostaną wykorzystane są ,,nowe'' zarówno dla całej grupy projektowej jak i same w sobie, będzie potrzebny prototyp systemu.
 
 Docelowy system będzie się składał z interfejsu webowego, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń (responsive webdesign). Wszystkie stream'y będą umieszczone w bazie PostgreSQL z rozszerzeniem GIS, dzięki czemu możliwe będzie zapisanie lokalizacji stream'u.
 
@@ -207,12 +209,14 @@ Za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika bę
 
 Zasada działania sieci P2P, będzie wymuszała udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream.
 
-\subsection{Technologie}
-\label{sec:EtapIawTechnologie}
-
-\begin{description}
-    \item[Responsive Webdesign] opis r wd
-\end{description}
-
+\subsection{Usability Tree}
+\subsection{Proponowana architektura systemu}
+\subsection{Technologia}
+\subsection{Ryzyka/wrażliwości systemu}
+% - Architektura (tutaj coś o ATAM i uzasadnienie dlaczego tylko ograniczam się do 2 elementów)
+%-- Usability Tree
+%-- Proponowana architektura systemu (dekompozycja na screenshotach + opis)
+%-- Technologie (tutaj opis dlaczego akurat te - powiązanie z specyfikacją wymagań)
+%-- Ryzyka/wrażliwości systemu z taką architekturą i taką technologią
 \newpage
 %---------------------------------------------------------------------------
