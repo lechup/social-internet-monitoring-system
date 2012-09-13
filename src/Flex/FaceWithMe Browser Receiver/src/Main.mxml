@@ -4,7 +4,6 @@
 		xmlns:mx="library://ns.adobe.com/flex/mx"
 		width="100%" height="100%"
 		creationComplete="init()"
-		resize="resizeHandler(event)"
 		>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
@@ -180,7 +179,8 @@
 
 				video.width = width;
 				video.height = height;
-				videoComponent.addChild(video);
+				if (videoComponent != null)
+					videoComponent.addChild(video);
 			}
 
 			private function resizeHandler(event:ResizeEvent):void {
@@ -210,7 +210,7 @@
 		<mx:Canvas id="receive"
 		    width="100%"
 		    height="100%"
-			backgroundColor="#000000">
+			backgroundColor="#000000" resize="resizeHandler(event)">
 			
 			<s:VGroup verticalAlign="middle" width="100%" height="100%">
 				<s:HGroup horizontalAlign="center" width="100%" height="100%">
