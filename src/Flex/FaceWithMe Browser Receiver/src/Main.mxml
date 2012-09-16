@@ -15,6 +15,7 @@
 			import flash.events.Event;
 			import flash.events.NetStatusEvent;
 			import flash.media.Video;
+			import flash.net.GroupSpecifier;
 			import flash.net.NetConnection;
 			import flash.net.NetStream;
 			import flash.ui.ContextMenuItem;
@@ -42,6 +43,7 @@
 			public function log(string:String):void {
 				if (settings.debug) {
 					debugText = debugText + string + "\n";
+					trace(string);
 				}
 			}
 			public function init():void {
@@ -120,72 +122,123 @@
 				log("setupNetConnectionAndStream");
 				netConnection = new NetConnection();
 				netConnection.maxPeerConnections = 30;
-				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netConnectionStatusHandler);
+				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 				netConnection.connect(entry.server);
 			}
 
-			private function netConnectionStatusHandler(event:NetStatusEvent):void{
-				log("netConnectionStatusHandler");
+			private function netStatusHandler(event:NetStatusEvent):void{
+				log("netStatusHandler");
 				switch(event.info.code){
 					case "NetConnection.Connect.Success":
 						log("połączono z serwerem!");
 						setupStream();
+						break;
+					case "NetStream.Connect.Success":
+						playStream();
 						break;
 					default:
 						log("kod połączenia: " + event.info.code);
 				}
 			}
 
+			private function playStream():void {
+				log("playStream");
+				netStream.play("multicast");
+				views.selectedChild = receive;
+				setVideoDimensions();
+			}
+			
 			private function setupStream():void {
 				log("setupStream");
-				log(entry.uuid);
-				log(entry.server);
-				log(entry.url);
 
-				var groupspec:GroupSpecifier = new GroupSpecifier(entry.uuid);
-				groupspec.serverChannelEnabled = true;
-				groupspec.multicastEnabled = true;
+				if (netStream == null) {
+					var groupspec:GroupSpecifier = new GroupSpecifier(entry.uuid);
+					groupspec.serverChannelEnabled = true;
+					groupspec.multicastEnabled = true;
 
-				netStream = new NetStream(netConnection, groupspec.groupspecWithAuthorizations());
-				netStream.addEventListener(NetStatusEvent.NET_STATUS, netConnectionStatusHandler);
+					netStream = new NetStream(netConnection, groupspec.groupspecWithAuthorizations());
+					// check if P2P is enabled and if yes continue to
+					// playStream
+					netStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 
-				netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
-				function asyncErrorHandler(event:AsyncErrorEvent):void {
-					// ignore asyncErrors
+					netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
+					function asyncErrorHandler(event:AsyncErrorEvent):void {
+						// ignore asyncErrors
+					}
+					
+					// multicast
+					netStream.multicastAvailabilitySendToAll = true;
+					netStream.multicastPushNeighborLimit = 30;
+					netStream.multicastRelayMarginDuration = 5;
+					netStream.multicastWindowDuration = 30;
+
+					netStream.videoReliable = false;
+					netStream.audioReliable = true;
 				}
-
-				// multicast
-				netStream.multicastAvailabilitySendToAll = true;
-				netStream.multicastPushNeighborLimit = 30;
-				netStream.multicastRelayMarginDuration = 5;
-				netStream.multicastWindowDuration = 30;
-
-				netStream.videoReliable = false;
-				netStream.audioReliable = true;
-
-				netStream.play("multicast");
 				
-				// show proper view
-				setVideoDimensions();
-				views.selectedChild = receive;
+				// we continue to playStream thanks to
+				// groupspec.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler)
 			}
 
 			private function setVideoDimensions():void {
 				log('setVideoDimensions');
 				if (video == null) {
-					video = new Video(320, 240);
+					video = new Video();
 					video.attachNetStream(netStream);
+					log('video.width: ' + video.width);
+					log('video.height: ' + video.height);
 				}
 
-				video.width = width;
-				video.height = height;
-				if (videoComponent != null)
-					videoComponent.addChild(video);
+				if (width > height)
+					fitVideoToHeight(width, height);
+				else
+					fitVideoToWidth(width, height);
+
+				//video.width = width;//getRemoteVideoDisplayWrapperWidth();
+				//video.height = height;//getRemoteVideoDisplayWrapperHeight();
+				//video.width = remoteVideoDisplayWrapper.width;
+				//video.height = remoteVideoDisplayWrapper.height;
+				if (remoteVideoWrapper != null) {
+					updateRemoteVideoWrapper();
+					remoteVideoWrapper.removeChildAt(0);
+					remoteVideoWrapper.addChildAt(video, 0);
+				}
+			}
+
+			private function updateRemoteVideoWrapper():void {
+				if (remoteVideoWrapper != null) {
+					remoteVideoWrapper.width = video.width;
+					remoteVideoWrapper.height = video.height;
+				}
+			}
+			
+			private function fitVideoToHeight(containerWidth:Number, containerHeight:Number):void {
+				log('fitVideoToHeight');
+				var newWidth:Number = containerHeight / video.height * video.width;
+				video.width = newWidth;
+				video.height = containerHeight;
+				log('newWidth: ' + video.width);
+				log('newHeight: ' + video.height);	
+				if (newWidth > containerWidth) {
+					fitVideoToWidth(containerWidth, containerHeight);
+				}
+			}
+
+			private function fitVideoToWidth(containerWidth:Number, containerHeight:Number):void {
+				log('fitVideoToWidth');
+				var newHeight:Number = containerWidth / video.width * video.height;
+				video.width = containerWidth;
+				video.height = newHeight;
+				log('newWidth: ' + video.width);
+				log('newHeight: ' + video.height);
+				if (newHeight > containerHeight) {
+					fitVideoToHeight(containerWidth, containerHeight);
+				}
 			}
 
 			private function resizeHandler(event:ResizeEvent):void {
-				log('resizeHandler');
 				if ((views != null) && (views.selectedChild == receive)) {
+					log('resizeHandler');
 					setVideoDimensions();
 				}
 			}
@@ -212,9 +265,9 @@
 		    height="100%"
 			backgroundColor="#000000" resize="resizeHandler(event)">
 			
-			<s:VGroup verticalAlign="middle" width="100%" height="100%">
-				<s:HGroup horizontalAlign="center" width="100%" height="100%">
-					<mx:UIComponent id="videoComponent" width="100%" height="100%" />
+			<s:VGroup width="100%" height="100%" verticalAlign="middle">
+				<s:HGroup horizontalAlign="center" width="100%">
+					<mx:VideoDisplay id="remoteVideoWrapper" />
 				</s:HGroup>
 			</s:VGroup>
 		</mx:Canvas>
