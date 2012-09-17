@@ -22,40 +22,55 @@
 			import mx.controls.Alert;
 			import mx.core.FlexGlobals;
 			import mx.core.UIComponent;
+			import mx.effects.effectClasses.ZoomInstance;
 			import spark.components.Group;
 			import flash.events.Event;
 			import flash.media.Video;
 			import mx.events.ResizeEvent;
 
+		// zmienna do przechowywania tekstu wyświetlanego w menu DEBUG
 			[Bindable]
 			private var debugText:String = "";
+		//
+		
+		// obiekt ustawień
 			private var settings:Object = {
 				'amfgateway' : 'http://facewithme.com/amf/',
 				'debug' : true,
-				'uuid' : null
+				'uuid' : 'e50fd431-1ad1-488a-a9dd-376c6ebc64a3'
 			};
+		//
+		
+		// zmienne potrzebne do nawiązania połączenia i wyświetlenia video
 			private var netConnection:NetConnection;
 			private var amfgateway:NetConnection;
 			private var netStream:NetStream;
 			private var entry:Object;
 			private var video:Video;
+		//
 
+		// funkcja do logowania zdarzeń na zakładce DEBUG
 			public function log(string:String):void {
 				if (settings.debug) {
 					debugText = debugText + string + "\n";
 					trace(string);
 				}
 			}
+		//
+		
+		// inicjalizacja aplikacji
 			public function init():void {
-			// set debug menu in context menu
-				// hide context menu
+			// menu kontekstowe (pod prawym przyciskiem myszy)
+				// usuń domyślne wpisy
 				contextMenu.hideBuiltInItems();
-				var customItem:ContextMenuItem = new ContextMenuItem("FaceWithMe Debug View");
+				// dodaj wpis menu kontekstowym
+				var customItem:ContextMenuItem = new ContextMenuItem("Debug FaceWithMe Browser Receiver...");
 				contextMenu.customItems.push(customItem);
 				customItem.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT, debugViewToggleHandler);
 			//
 			
-			// get parameters from flashVars
+			// pobierz parametry z flashVars (zmienne przekazywane z HTML)
+			// i nadpisz domyślne wartości adresu amfgateway i uuid
 				var params:Object = FlexGlobals.topLevelApplication.parameters;
 				if (params.hasOwnProperty('amfgateway')) {
 					settings['amfgateway'] = params.amfgateway;
@@ -64,28 +79,33 @@
 					settings['uuid'] = params.uuid;
 				}
 			//
-			
-			// start amfgateway
+
+			// ustaw połączenie z bramą AMF
 				setupAmfGateway();
 			//
 			}
 			
-			private function debugViewToggleHandler(event:ContextMenuEvent) : void{
+			// funkcja wykonywana po naciśnięciu "Debug FaceWithMe Browser Receiver..."
+			// w menu kontekstowym
+			private function debugViewToggleHandler(event:ContextMenuEvent) : void {
 				Alert.show(debugText, "Debug information:");
 			}
 
+			// funckja ustawiająca połączenie z bramą AMF
 			private function setupAmfGateway():void {
 				log("setupAmfGateway");
-				amfgateway = new NetConnection();
-				amfgateway.addEventListener(NetStatusEvent.NET_STATUS, amfGatewayNetStatushandler);
+
+				if (amfgateway == null)
+					amfgateway = new NetConnection();
 				amfgateway.connect(settings.amfgateway);
-				
-				// get entry from FWM, what we get in return is Object {
-				//	'uuid': new_entry.uuid,
-				//	'server': new_entry.server.url,
-				//	'url': new_entry.get_absolute_url(),
-				// }
-				if(settings.uuid != null) {
+				startReceivingAmfGateway();
+			}
+
+			// rozpocznij pobieranie streamu video
+			private function startReceivingAmfGateway():void {
+				if (settings.uuid != null) {
+					// pobierz wpis z AmfGateway przy pomocy uuid i
+					// zdalnie wywołanej funkcji fwm.start_receiving
 					amfgateway.call(
 						"fwm.start_receiving",
 						new Responder(fwmStartReceiving, responderFault),
@@ -95,44 +115,48 @@
 					log("UUID parameter is not set!");
 			}
 
-			private function amfGatewayNetStatushandler(event:NetStatusEvent):void {
-				log("getNetStatus");
-				log("kod połączenia: " + event.info.code);
-			}
-
+			// obsłuż poprawne wywołanie zdalnej funkcji fwm.start_receiving
 			private function fwmStartReceiving(result:Object):void {
 				log("fmwStartReceiving");
 	            if (result == null) {
-					// TO DO panel
-					log("Something is wrong on AMFgateway");
+					log("Response is BAD. Something is wrong...");
 				} else {
 					entry = result;
+					// przejdź do konfigurowania streamu
 					setupNetConnectionAndStream();
 				}
 	        }
 
+			// obsłuż błąd wywołania zdalnej funkcji fwm.start_receiving
 			private function responderFault(error:*):void {
-	            log("Remoting error:");
+	            log("Remote error:");
+				// wypisz dokładny błąd który wystąpił zdalnie
 	            for (var d:String in error) {
 					log(error[d]);
 	            }
 			}
 
+			// ustaw połączenie i stream
 			private function setupNetConnectionAndStream():void {
 				log("setupNetConnectionAndStream");
-				netConnection = new NetConnection();
-				netConnection.maxPeerConnections = 30;
-				netConnection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+				if (netConnection == null) {
+					netConnection = new NetConnection();
+					netConnection.maxPeerConnections = 30;
+					netConnection.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+				}
 				netConnection.connect(entry.server);
 			}
 
+			// funkcja wywoływana po nawiązaniu połączenia z serwerem RTMFP
 			private function netStatusHandler(event:NetStatusEvent):void{
 				log("netStatusHandler");
-				switch(event.info.code){
+				switch(event.info.code) {
+					// po prawidłowym połączeniu ustaw stream
 					case "NetConnection.Connect.Success":
 						log("połączono z serwerem!");
 						setupStream();
 						break;
+					// po podłączeniu do streamu wyświetl go i odtwórz
 					case "NetStream.Connect.Success":
 						playStream();
 						break;
@@ -141,13 +165,7 @@
 				}
 			}
 
-			private function playStream():void {
-				log("playStream");
-				netStream.play("multicast");
-				views.selectedChild = receive;
-				setVideoDimensions();
-			}
-			
+			// funckja ustawiająca stream
 			private function setupStream():void {
 				log("setupStream");
 
@@ -157,13 +175,12 @@
 					groupspec.multicastEnabled = true;
 
 					netStream = new NetStream(netConnection, groupspec.groupspecWithAuthorizations());
-					// check if P2P is enabled and if yes continue to
-					// playStream
+					// sprawdzenie czy jest włączona obsługa sieci ze wspomaganiem równorzędnym
+					// tutaj też wymuszamy jego pokazanie, NetGroup.Connect.Reject oznacza brak uprawnień
 					netStream.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
-
 					netStream.addEventListener(AsyncErrorEvent.ASYNC_ERROR, asyncErrorHandler);
 					function asyncErrorHandler(event:AsyncErrorEvent):void {
-						// ignore asyncErrors
+						// ignoruj błędy
 					}
 					
 					// multicast
@@ -175,13 +192,22 @@
 					netStream.videoReliable = false;
 					netStream.audioReliable = true;
 				}
-				
-				// we continue to playStream thanks to
-				// groupspec.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler)
 			}
 
+			// funkcja wykonywana po poprawnym połączeniu się ze streamem
+			private function playStream():void {
+				log("playStream");
+				netStream.play("multicast");
+				views.selectedChild = receive;
+				setVideoDimensions();
+			}
+
+			// funkcja ustawiająca video oraz
+			// dopasowująca jego wymiary do wymiarów animacji flash
 			private function setVideoDimensions():void {
 				log('setVideoDimensions');
+				
+				// ustaw obiekt video
 				if (video == null) {
 					video = new Video();
 					video.attachNetStream(netStream);
@@ -189,15 +215,14 @@
 					log('video.height: ' + video.height);
 				}
 
+				// dopasuj szerokość / wysokość
+				// do aktualnych rozmiarów aplikacji
 				if (width > height)
 					fitVideoToHeight(width, height);
 				else
 					fitVideoToWidth(width, height);
 
-				//video.width = width;//getRemoteVideoDisplayWrapperWidth();
-				//video.height = height;//getRemoteVideoDisplayWrapperHeight();
-				//video.width = remoteVideoDisplayWrapper.width;
-				//video.height = remoteVideoDisplayWrapper.height;
+				// zaktualizuj wrapper video
 				if (remoteVideoWrapper != null) {
 					updateRemoteVideoWrapper();
 					remoteVideoWrapper.removeChildAt(0);
@@ -205,13 +230,16 @@
 				}
 			}
 
+			// zaktualizuj wymiary wrapper'a obiektu wideo
+			// potrzebny do ustawienia środku
 			private function updateRemoteVideoWrapper():void {
 				if (remoteVideoWrapper != null) {
 					remoteVideoWrapper.width = video.width;
 					remoteVideoWrapper.height = video.height;
 				}
 			}
-			
+
+			// dopasuj do wysokości ekranu, zachowując proporcje wideo
 			private function fitVideoToHeight(containerWidth:Number, containerHeight:Number):void {
 				log('fitVideoToHeight');
 				var newWidth:Number = containerHeight / video.height * video.width;
@@ -224,6 +252,7 @@
 				}
 			}
 
+			// dopasuj do szerokości ekranu, zachowując proporcje wideo
 			private function fitVideoToWidth(containerWidth:Number, containerHeight:Number):void {
 				log('fitVideoToWidth');
 				var newHeight:Number = containerWidth / video.width * video.height;
@@ -236,6 +265,8 @@
 				}
 			}
 
+			// funkcja wykonywana przy zmianie rozmiaru okna aplikacji
+			// np. w momencie rozszerzenia kontenera HTML w którym dołączamy plik SWF
 			private function resizeHandler(event:ResizeEvent):void {
 				if ((views != null) && (views.selectedChild == receive)) {
 					log('resizeHandler');
