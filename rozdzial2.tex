@@ -136,7 +136,7 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
     
     \begin{tests}
         \item{
-            Użytkownik tylko po podaniu istniejacego loginu oraz pasującego do niego hasła
+            Użytkownik tylko po podaniu istniejącego loginu oraz pasującego do niego hasła
             zostaje zalogowany i przeniesiony na oglądaną przed logowaniem stronę.
         }
         \item{
@@ -194,23 +194,112 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
 \section{Analiza wymagań}
 \label{sec:EtapIaw}
 
-Po rozmowie z klientem, na podstawie ,,głównego zadania systemu'' oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań (więcej w \namedref{sec:ZMTOzwinnaAnalizaWymagan}). 
+Po rozmowie z klientem, na podstawie ,,głównego zadania systemu'' oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań (więcej w \namedref{sec:ZMTOzwinnaAnalizaWymagan}).
 
-\subsection{Architektura}
-\label{sec:EtapIawArchitektura}
+Zgodnie z założeniami ,,XP'' (więcej \namedref{sec:ZMTOzalozenia}), wszystkie ustalenia sporządzone w tej fazie mogą ulec zmianie na każdym późniejszym etapie prowadzenia projektu. Zwinna analiza wymagań nie zamyka możliwości późniejszej zmiany technologii, architektury czy dowolnego z elementów wspomagających projekt.
 
-Jako początek rozważań architektury systemu proponuje się skorzystać z elementów metody ATAM (Architecture tradeoff analysis method). Pełna metoda ATAM 
+Celem tego etapu jest stworzenie wstępnej architektury systemu, przetestowanie wydajności technologii -- najczęściej przy użyciu prototypu systemu.
 
-W tym rozdziale umieszczona zostanie wstępna architektura systemu. Jako, że technologie, które zostaną wykorzystane są ,,nowe'' zarówno dla całej grupy projektowej jak i same w sobie, będzie potrzebny prototyp systemu.
+Jako początek rozważań architektury systemu skorzystano z elementów metody Architecture Tradeoff Analysis Method -- ,,Drzewo użyteczności'' oraz ,,Ryzyka i nie ryzyka'' -- szczegóły metody można poznać w \cite{Kaz2000}.
 
-Docelowy system będzie się składał z interfejsu webowego, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń (responsive webdesign). Wszystkie stream'y będą umieszczone w bazie PostgreSQL z rozszerzeniem GIS, dzięki czemu możliwe będzie zapisanie lokalizacji stream'u.
+Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą ilość dokumentacji, z której metodyki zwinne chcą rezygnować (\namedref{sec:ZMTOzalozenia}).
 
-Za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt Flash. Do rozproszenia ruchu i stworzenia systemu niezależnego od jakości połączenia sieciowego osoby udostępniającej obraz będą wykorzystane połączenia P2P wbudowane od wersji 10.1 we Flash'a.
+\subsection{Drzewo użyteczności (ATAM Usability Tree)}
+\label{sec:EtapIdrzewoUzytecznosci}
 
-Zasada działania sieci P2P, będzie wymuszała udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream.
+\begin{packed_item}
+    \item{
+        \textbf{WYDAJNOŚĆ}
+        \begin{packed_item}
+            \item{
+                Opóźnienie transmisji danych
+                \begin{packed_item}
+                    \item{opóźnienie wideo dostosowane do aktualnej przepustowości łącza, jak najmniejsze}
+                    \item{brak lub minimalne opóźnienia transmisji audio}
+                \end{packed_item}
+            }
+            \item{
+                Ilość użytkowników
+                \begin{packed_item}
+                    \item{Liniowa zależność ilość użytkowników używających system od zużywanych zasobów}
+                    \item{Minimalna ilość użytkowników aktywnie poruszających się po stronie -- 1000 osób}
+                    \item{Minimalna ilość użytkowników oglądających jeden strumień wideo -- 100 osób}
+                \end{packed_item}
+            }
+        \end{packed_item}
+    }
+    \item{
+        \textbf{MODYFIKOWALNOŚĆ}
+        \begin{packed_item}
+            \item{Zarządzanie użytkownikami}
+            \item{Zarządzanie dostępnymi streamami}
+            \item{Zarządzanie kategoriami streamów}
+            \item{Aktualizacja i dystrybucja oprogramowania mobilnego}
+            \item{Łatwa modyfikacja wyglądu strony}
+        \end{packed_item}
+    }
+    \item{
+        \textbf{DOSTĘPNOŚĆ}
+        \begin{packed_item}
+            \item{Dostępność całej usługi na poziomie 99,9\% rocznie}
+            \item{Dostępność usługi na urządzenia mobilne (tablety, telefony)}
+            \item{Dostępność usługi na desktopy}
+        \end{packed_item}
+    }
+    \item{
+        \textbf{SKALOWALNOŚĆ}
+        \begin{packed_item}
+            \item{Odporność na geometryczną ,,nagłą popularyzację''}
+            \item{Liniowa zależność ilość użytkowników/zużywane zasoby}
+        \end{packed_item}
+    }
+    \item{
+        \textbf{BEZPIECZEŃSTWO}
+        \begin{packed_item}
+            \item{
+                System logowania
+            }
+            \item{
+                Stream publiczny/prywatny
+            }
+            \item{
+                Szyfrowanie
+                \begin{packed_item}
+                    \item{wymagane szyfrowanie transmisji wideo}
+                    \item{wymagane szyfrowanie transmisji audio}
+                    \item{wymagane szyfrowanie transmisji http i każdej innej transmisji danych poza system}
+                \end{packed_item}
+            }
+        \end{packed_item}
+    }
+\end{packed_item}
 
-\subsection{Usability Tree}
-\subsection{Proponowana architektura systemu}
+\subsection{Wstępna architektura systemu}
+
+Docelowy system będzie się składał z \textbf{Interfejsu WWW}, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń. Wszystkie stream'y będą umieszczone w relacyjnej \textbf{Bazie danych} z rozszerzeniem GIS, dzięki czemu możliwe będzie łatwe zapisanie lokalizacji stream'u.
+
+Po stronie komputerów stacjonarnych, za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt SWF \textbf{Adobe Flash Player}. W przypadku urządzeń mobilnych, do przygotowania aplikacji obsługującej zarówno iPhone'a jak i Androida wykorzystany zostanie otwarty framework Adobe Flex i jego mobilne wsparcie w postaci \textbf{Adobe AIR for Mobile}.
+
+Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu połączenia sieciowego -- osoby udostępniającej stream -- będą wykorzystane sieci ze wspomaganiem równorzędnym wbudowane w Adobe Flash Platform. Zasada działania sieci P2P, wymusza udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream. Firma Adobe nazywa tę technologię \textbf{Multicast/P2P Multicast}, niżej przedstawione są schematy pokazujące różnicę pomiędzy transmisją Unicast, a P2P Multicast. \footnote{informacje dotyczące technologii Adobe oraz obrazki zostały pobrane z \cite{TomKrcha2010ME} oraz \cite{KevinTow2010}}
+
+\begin{center}
+    \includegraphics[width=\textwidth]{img/adobe-p2p-unicast.jpg}
+    \captionof{figure}{Adobe Flash Platform Unicast -- wszystko zależne od przepustowości jednego elementu źródłowego, serwera plików}
+\end{center}
+
+\begin{center}
+    \includegraphics[width=\textwidth]{img/adobe-p2p-multicast.jpg}
+    \captionof{figure}{Adobe Flash Platform P2P Multicast -- obciążenie rozłożone na całość sieci ze wspomaganiem równorzędnym}
+\end{center}
+
+\newpage
+Jako, że technologie, które zostaną wykorzystane są nowe dla całej ,,grupy projektowej'', będzie potrzebny prototyp systemu. Niżej przedstawiono schematy pokazujące powiązanie pomiędzy poszczególnymi elementami systemu:
+
+\begin{center}
+    \includegraphics[width=\textwidth]{diagramy/architektura.png}
+    \captionof{figure}{Wstępna architektura systemu.}
+\end{center}
+
 \subsection{Technologia}
 \subsection{Ryzyka/wrażliwości systemu}
 % - Architektura (tutaj coś o ATAM i uzasadnienie dlaczego tylko ograniczam się do 2 elementów)
