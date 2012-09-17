@@ -28,6 +28,7 @@ $(document).ready(function() {
 	}
 	
 	function getLatLngHandler(pos) {
+	// function run after finding current position
 		if (pos.lat && pos.lng) {
 			pos = new google.maps.LatLng(pos.lat, pos.lng);
 			map.setZoom(10);	
@@ -36,8 +37,12 @@ $(document).ready(function() {
 	}
 
 	function getLatLng(callback) {
+		getGeoIPLatLng(callback);
+		// apart from anything
+		// localize through GeoIP
+		
 		if (navigator && navigator.geolocation) {
-		// try to use HTML5 geolocation
+		// try to use HTML5 geolocation - it's better than GeoIP
 			navigator.geolocation.getCurrentPosition(function(pos) {
 			// suceess callback
 				callback({
@@ -45,16 +50,10 @@ $(document).ready(function() {
 					'lng' : pos.coords.longitude
 				});
 			}, function(error) {
-			// error callback
-			// eg. user forbids to get location by the browser
-				getGeoIPLatLng(callback);
+				// do nothing because we are already GeoIP'ed
 			});
 		}
-		else {		
-		// if no HTML5 gelolocation available,
-		// fallback to MaxMind GeoIP
-			getGeoIPLatLng(callback);
-		}
+
 		
 		function getGeoIPLatLng(callback) {
 		// helper function, loading MaxMind JS GeoIP and returning lat/lng ...

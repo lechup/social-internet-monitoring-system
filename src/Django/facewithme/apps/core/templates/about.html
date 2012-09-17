@@ -1,9 +1,117 @@
 {% extends "modal_information.html" %}
 
 {% block title_information %}
-	O projekcie FaceWithMe.COM
+	O FaceWithMe.COM
 {% endblock %}
 
-{% block content_information %}
-	FaceWithMe.COM jest to projekt stworzony jako jeden z elementów <a href="https://github.com/lechup/social-internet-monitoring-system/blob/master/praca.pdf?raw=true" target="_blank">pracy magisterskiej</a> "Społecznościowy System Monitoringu" pisanej przez Leszka Piątka pod nadzorem <a href="http://home.agh.edu.pl/~ernst/" target="_blank">dr inż. Sebastiana Ernsta</a>. Serwis ma w prosty sposób umożliwiać dzielenie się aktualnym streamem wideo z nieograniczoną liczbą użytkowników w sieci. 
+{% block information %}
+	<p class="lead">FaceWithMe.COM jest to projekt stworzony jako prototyp systemu opisanego w <a href="https://github.com/lechup/social-internet-monitoring-system/blob/master/praca.pdf?raw=true" target="_blank">pracy magisterskiej</a> <strong>Społecznościowy System Monitoringu</strong> pisanej przez <a href="mailto:lpiatek@gmail.com">Leszka Piątka</a> pod nadzorem <a href="http://home.agh.edu.pl/~ernst/" target="_blank">dr inż. Sebastiana Ernsta</a>.</p>
+	<p>System ma umożliwiać w prosty sposób dzielenie się aktualnym streamem wideo z nieograniczoną liczbą użytkowników w sieci. Projekt nie powstał by, gdyby nie szereg oprogramowania darmowego oprogramowania. Na szczególne wyróżnienie zasługują:</p>
+	<ul class="thumbnails">
+		<li class="span2">
+			<div class="thumbnail">
+				<img src="{{STATIC_URL}}core/img/logos/django.jpg" alt="">
+				<div class="caption">
+					<h3>Django</h3>
+					<p>
+						Framework napisany w Python'ie, umożliwiający proste i szybkie tworzenie stron internetowych.
+					</p>
+					<p>
+						<a href="http://www.postgresql.org/" target="_blank"  class="btn">Strona WWW</a>
+					</p>
+				</div>
+			</div>
+		</li>
+		<li class="span2">
+			<div class="thumbnail">
+				<img src="{{STATIC_URL}}core/img/logos/bootstrap.jpg" alt="">
+				<div class="caption">
+					<h3>Bootstrap</h3>
+					<p>
+						Framework do tworzenia interfejsu WWW, napisany w <a href="http://lesscss.org" target="_blank">LESS</a>, kompilujący się do CSS.
+					</p>
+					<p>
+						<a href="http://www.postgresql.org/" target="_blank"  class="btn">Strona WWW</a>
+					</p>
+				</div>
+			</div>
+		</li>
+		<li class="span2">
+			<div class="thumbnail">
+				<img src="{{STATIC_URL}}core/img/logos/postgresql.jpg" alt="">
+				<div class="caption">
+					<h3>PostgreSQL + PostGIS</h3>
+					<p>
+						Serwer relacyjnej bazy danych z rozszerzeniem GIS (dzięki PostGIS), umożliwiający przechowywanie i szybki dostęp do wszelkich danych.
+					</p>
+					<p>
+						<a href="http://www.postgresql.org/" target="_blank"  class="btn">Strona WWW</a>
+					</p>
+				</div>
+			</div>
+		</li>
+		<li class="span2">
+			<div class="thumbnail">
+				<img src="{{STATIC_URL}}core/img/logos/google-maps-api.jpg" alt="">
+				<div class="caption">
+					<h3>Google Maps JavaScript API</h3>
+					<p>
+						Bilbioteka JavaScript umożliwiająca rozszerzenie aplikacji o interaktywną mapę i szereg funkcjonalności z mapą związanych.
+					</p>
+					<p>
+						<a href="https://developers.google.com/maps/documentation/javascript/" target="_blank" class="btn">Strona WWW</a>
+					</p>
+				</div>
+			</div>
+		</li>
+		<li class="span2">
+			<div class="thumbnail">
+				<img src="{{STATIC_URL}}core/img/logos/flashdevelop.jpg" alt="">
+				<div class="caption">
+					<h3>Flash Develop</h3>
+					<p>
+						Jedyne darmowe IDE wspierające tworzenie aplikacji z wykorzystaniem otwartego Adobe Flex'a. Umożliwia tworzenie aplikacji mobilnych na Androida z wykorzystaniem AIR for Mobile.
+					</p>
+					<p>
+						<a href="http://flashdevelop.org" target="_blank"  class="btn">Strona WWW</a>
+					</p>
+				</div>
+			</div>
+		</li>
+		<li class="span2">
+			<div class="thumbnail">
+				<div class="caption">
+					<h3>Cumulus</h3>
+					<p>	
+						Serwer RTMFP umożliwiający nawiązywanie połączeń P2P za pomocą Flash'a.  
+					</p>
+					<p>
+						<a href="https://github.com/OpenRTMFP/Cumulus" target="_blank" class="btn">Strona WWW</a>
+					</p>
+				</div>
+			</div>
+		</li>
+	</ul>
+	<ul class="thumbnails">
+		<li class="span2">
+			<div class="thumbnail">
+				<img src="{{STATIC_URL}}core/img/logos/adobe-flash-platform.jpg" alt="">
+				<div class="caption">
+					<h3>Adobe Flash Platform</h3>
+					<p>
+						Adobe AIR, Flash, Flex, czyli trójka wzajmenie uzupełniających się technologii pozwalająca tworzyć aplikacje niezależne od platformy.
+					</p>
+					<p>
+						To dzięki Flash'owi mamy P2P w przeglądarce wspierające streaming video oraz dzięki niemu przechwytywany jest obraz z kamery.
+					</p>
+					<p>	
+						AIR for mobile udostepnia możliwość stworzenia oprogramowania na urządzenia mobilne niezależne od platformy - iOS (iPad, iPhone), oraz Android. 
+					</p>
+					<p>
+						<a href="http://www.adobe.com/pl/products/flex.html" target="_blank" class="btn">Strona WWW</a>
+					</p>
+				</div>
+			</div>
+		</li>
+	</ul>
 {% endblock %}
