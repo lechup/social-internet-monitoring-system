@@ -196,13 +196,11 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
 
 Po rozmowie z klientem, na podstawie ,,głównego zadania systemu'' oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań (więcej w \namedref{sec:ZMTOzwinnaAnalizaWymagan}).
 
-Zgodnie z założeniami ,,XP'' (więcej \namedref{sec:ZMTOzalozenia}), wszystkie ustalenia sporządzone w tej fazie mogą ulec zmianie na każdym późniejszym etapie prowadzenia projektu. Zwinna analiza wymagań nie zamyka możliwości późniejszej zmiany technologii, architektury czy dowolnego z elementów wspomagających projekt.
-
 Celem tego etapu jest stworzenie wstępnej architektury systemu, przetestowanie wydajności technologii -- najczęściej przy użyciu prototypu systemu.
 
-Jako początek rozważań architektury systemu skorzystano z elementów metody Architecture Tradeoff Analysis Method -- ,,Drzewo użyteczności'' oraz ,,Ryzyka i nie ryzyka'' -- szczegóły metody można poznać w \cite{Kaz2000}.
+Jako początek rozważań architektury systemu skorzystano z elementów metody Architecture Tradeoff Analysis Method -- ,,Drzewo użyteczności'' -- szczegóły metody można poznać w \cite{Kaz2000}.
 
-Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą ilość dokumentacji, z której metodyki zwinne chcą rezygnować (\namedref{sec:ZMTOzalozenia}).
+Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą ilość dokumentacji, z której metodyki zwinne chcą rezygnować. Dodatkowo zgodnie z założeniami ,,XP'' (więcej \namedref{sec:ZMTOzalozenia}), wszystkie ustalenia sporządzone w tej fazie mogą ulec zmianie na każdym późniejszym etapie prowadzenia projektu. Zwinna analiza wymagań nie zamyka możliwości późniejszej zmiany technologii, architektury czy dowolnego z elementów wspomagających projekt.
 
 \subsection{Drzewo użyteczności (ATAM Usability Tree)}
 \label{sec:EtapIdrzewoUzytecznosci}
@@ -280,7 +278,7 @@ Docelowy system będzie się składał z \textbf{Interfejsu WWW}, odpowiedzialne
 
 Po stronie komputerów stacjonarnych, za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt SWF \textbf{Adobe Flash Player}. W przypadku urządzeń mobilnych, do przygotowania aplikacji obsługującej zarówno iPhone'a jak i Androida wykorzystany zostanie otwarty framework Adobe Flex i jego mobilne wsparcie w postaci \textbf{Adobe AIR for Mobile}.
 
-Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu połączenia sieciowego -- osoby udostępniającej stream -- będą wykorzystane sieci ze wspomaganiem równorzędnym wbudowane w Adobe Flash Platform. Zasada działania sieci P2P, wymusza udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream. Firma Adobe nazywa tę technologię \textbf{Multicast/P2P Multicast}, niżej przedstawione są schematy pokazujące różnicę pomiędzy transmisją Unicast, a P2P Multicast. \footnote{informacje dotyczące technologii Adobe oraz obrazki zostały pobrane z \cite{TomKrcha2010ME} oraz \cite{KevinTow2010}}
+Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu połączenia sieciowego -- osoby udostępniającej stream -- będą wykorzystane sieci ze wspomaganiem równorzędnym wbudowane w Adobe Flash Platform. Zasada działania sieci P2P, wymusza udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream. Firma Adobe nazywa tę technologię \textbf{Multicast/P2P Multicast}, niżej przedstawione są schematy pokazujące różnicę pomiędzy transmisją Unicast, a P2P Multicast. \footnote{informacje dotyczące technologii Adobe oraz obrazki zostały pobrane z \cite{TomKrcha2010ME} oraz \cite{MattKauf2009}}
 
 \begin{center}
     \includegraphics[width=\textwidth]{img/adobe-p2p-unicast.jpg}
@@ -293,19 +291,242 @@ Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu 
 \end{center}
 
 \newpage
-Jako, że technologie, które zostaną wykorzystane są nowe dla całej ,,grupy projektowej'', będzie potrzebny prototyp systemu. Niżej przedstawiono schematy pokazujące powiązanie pomiędzy poszczególnymi elementami systemu:
+Jako, że część technologie, które zostaną wykorzystane są nowe dla całej ,,grupy projektowej'', będzie potrzebny prototyp systemu. Niżej przedstawiono schematy pokazujące powiązanie pomiędzy poszczególnymi elementami systemu:
 
 \begin{center}
     \includegraphics[width=\textwidth]{diagramy/architektura.png}
     \captionof{figure}{Wstępna architektura systemu.}
 \end{center}
 
+\newpage
 \subsection{Technologia}
-\subsection{Ryzyka/wrażliwości systemu}
-% - Architektura (tutaj coś o ATAM i uzasadnienie dlaczego tylko ograniczam się do 2 elementów)
-%-- Usability Tree
-%-- Proponowana architektura systemu (dekompozycja na screenshotach + opis)
-%-- Technologie (tutaj opis dlaczego akurat te - powiązanie z specyfikacją wymagań)
-%-- Ryzyka/wrażliwości systemu z taką architekturą i taką technologią
+W tym rozdziale umieszczono informacje o tym jakie technologie oraz dlaczego zostały wybrane do realizacji poszczególnych elementów systemu.
+
+\begin{minipage}{\textwidth}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{img/logos/adobe-flash-platform.jpg}
+    \end{center}
+    \subsubsection{Adobe Flash Platform}
+    \begin{packed_item}
+        \item{\textbf{Adobe Flash Player} -- Framework z otwartym kodem źródłowym umożliwiający tworzenie aplikacji w środowiskach Adobe AIR oraz Adobe Flash Player.}
+        \item{\textbf{Adobe Flash Player} --  Środowisko dostępne we wszystkich desktopowych przeglądarkach i niektórych mobilnych (Android). Służy do odtwarzania animacji SWF. Pozwala wykorzystać szereg klas Flex'a niebędących częścią Adobe AIR.}
+        \item{\textbf{Adobe AIR} -- Środowisko dostępne na szereg platform (Windows, Android, iOS) umożliwiające tworzenie aplikacji mobilnych jak i desktopowych niezależnie od platformy docelowej.}
+    \end{packed_item}
+
+    Wybranie tej technologii było koniecznością już na samym początku -- stąd jej obecność w architekturze systemu. Wynika bezpośrednio ze specyfikacji wymagań. Jest to jedyne rozwiązanie umożliwiające aktualnie:
+    \begin{packed_item}
+        \item{nadawanie ,,peer to peer'' streamu wideo z przeglądarki/urządzenia mobilnego}
+        \item{odbiór transmisji ,,peer to peer'' streamu wideo z przeglądarki/urządzenia mobilnego}
+        \item{nadawanie ,,peer to peer'' streamu wideo z urządzenia mobilnego}
+        \item{odbiór transmisji ,,peer to peer'' streamu na urządzeniu mobilnym}
+        \item{skalowalność na poziomie miliona klientów w sieci ,,peer to peer'' dla pojedynczego streamu (więcej w~\cite{MattKauf2009})}
+        \item{tworzenie aplikacji na iOS oraz Android'a z jednego źródła}
+    \end{packed_item}
+
+    Wady:
+    \begin{packed_item}
+        \item{komunikacja losowym, ,,wysokim'' portem UDP może generować problemy z korporacyjnymi firewall'ami}
+        \item{wymagana instalacja wtyczki do przeglądarki (w Google Chrome/Chromium jest instalowana automatycznie alternatywna wersja)}
+        \item{żadna z technologii Adobe nie jest dostępna na iOS oraz na wszelkich urządzeniach firmy Apple (Adobe Flash Player, Adobe AIR)}
+        \item{w przypadku programów IPA dla urządzeń firmy Apple, aplikacja wykorzystująca Adobe AIR for Mobile dołącza wykorzystywane biblioteki Adobe AIR do samej aplikacji, umożliwiając w ten sposób jej uruchomienie na ww. urządzeniach}
+    \end{packed_item}
+
+    Alternatywy:
+    \begin{packed_item}
+        \item{plugin JAVY dla przeglądarek, samodzielna implementacja P2P, transmisji}
+        \item{websockets dostępne w specyfikacji HTML5, niestety aktualnie nie wspierane oficjalnie przez żadną z przeglądarek}
+    \end{packed_item}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+    \subsubsection{Cumulus}
+    Darmowa oraz otwarta, bo udostępniona na licencji GPL, implementacja serwera RTMFP (Real Time Media Flow Protocol). W systemie jest on nieodzowny do odkrywania listy potencjalnych peer'ów posiadających źródło stream'ów.
+
+    Zalety:
+    \begin{packed_item}
+        \item{wbudowana obsługa P2P ,,rendez-vous'', czyli zbierania i udostępniania informacji na temat dostępnych peer'ów dla danego stream'u}
+        \item{możliwość rozsyłania stream'u wideo na żywo}
+        \item{otwartość oraz darmowość}
+        \item{możliwość pisania rozszerzeń serwera za pomocą języka LUA}
+        \item{wbudowana obsługa komunikacji AMF (Action Message Format): pull, push, RPC}
+        \item{przewidziana skalowalność oraz zarządzanie obciążeniem za pomocą CumulusEdge}
+        \item{łatwa konfiguracja oraz instalacja}
+        \item{wieloplatformowość}
+        \item{aktywna grupa dyskusyjna}
+    \end{packed_item}
+
+    Wady:
+    \begin{packed_item}
+        \item{brak wbudowanej obsługi ,,zwykłego'' protokołu RTMP (Real Time Messaging Protocol), jako alternatywnego źródła streamu w przypadku blokady firewall po stronie klienta}
+    \end{packed_item}
+
+    Alternatywy:
+    \begin{packed_item}
+        \item{brak alternatyw otwartych}
+        \item{darmowy i ograniczony dostęp do Adobe Cirrus za pomocą klucza developerskiego (\url{http://labs.adobe.com/technologies/cirrus/})}
+        \item{Adobe Flash Media Interactive Server 4.5 -- koszt około 5 900 EURO za licencję}
+    \end{packed_item}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{img/logos/django.jpg}
+    \end{center}
+    \subsubsection{Django}
+    Framework napisany w Python'ie, umożliwiający proste i szybkie tworzenie stron internetowych. W systemie stworzony zostanie za jego pomocą Interfejs WWW, będący centrum wymiany informacji i możliwości przeglądania streamów. \url{http://djangoproject.com}
+
+    Zalety Django:
+    \begin{packed_item}
+        \item{wbudowany/automatyczny panel admina}
+        \item{wbudowany ORM dla PostgreSQL, MySQL, SQLite}
+        \item{wbudowane wsparcie dla baz danych z rozszerzeniem GIS -- geodjango}
+        \item{wbudowana obsługa testów jednostkowych}
+        \item{obszerna baza bibliotek Python'a -- np. PyAMF do połączeń Adobe Flash / Django; Fabric do deployowania gotowej aplikacji}
+        \item{tworzony z myślą, DRY -- Don't Repeat Yourself}
+        \item{bardzo dobra dokumentacja}
+        \item{napisany w Pythonie}
+        \item{skalowalny do rozmiarów Disqus, Instagram czy Pinterest}
+    \end{packed_item}
+
+    Wady Django:
+    \begin{packed_item}
+        \item{wymaga odpowiedniego hostingu / trudny w deployowaniu}
+        \item{konieczność poznania Pythona}
+    \end{packed_item}
+
+    Alternatywy dla Django:
+    \begin{packed_item}
+        \item{wszystkie większe frameworki web'owe pokroju Zend, Pylons}
+    \end{packed_item}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{img/logos/jquery.jpg}
+    \end{center}
+    \subsubsection{jQuery}
+    Biblioteka JavaScript tworząca wspólne API dla wszystkich przeglądarek służące do: przechodzenia i wybierania elementów z drzewa dokumentu HTML, tworzenia animacji, interakcji AJAX oraz zarządzania zdarzeniami. W systemie jest dokładnie w tych celach wykorzystywana.
+
+    Zalety:
+    \begin{packed_item}
+        \item{zajmuje jedynie 31KB}
+        \item{zgodny z CSS3}
+        \item{API wspólne dla wszystkich przeglądarek: IE 6.0+, FF 10+, Safari 5.0+, Opera, Chrome}
+        \item{dobra dokumentacja i przykłady}
+        \item{duża popularność}
+    \end{packed_item}
+
+    Wady:
+    \begin{packed_item}
+        \item{dalej jest to ten sam poczciwy JavaScript}
+        \item{nie jest to framework, a jedynie biblioteka}
+    \end{packed_item}
+
+    Alternatywy:
+    \begin{packed_item}
+        \item{mootools \url{http://mootools.net}}
+        \item{prototype \url{http://prototypejs.org/}}
+        \item{dojo \url{http://dojotoolkit.org}}
+    \end{packed_item}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{img/logos/bootstrap.jpg}
+    \end{center}
+    \subsubsection{Bootstrap}
+Framework do tworzenia interfejsu WWW, napisany w LESS, kompilujący się do CSS. Dodatkowo za pomocą jQuery, umożliwia skorzystanie z wielu niestandardowych komponentów, czy też animacji. Za jego pomocą zostanie stworzony layout na potrzebny systemu, dostosowany do obsługi urządzeń mobilnych zachowując przy tym jedno źródło. \url{http://twitter.github.com/bootstrap/}
+
+    Zalety:
+    \begin{packed_item}
+        \item{wbudowana obsługa responsywności -- klasy CSS zależne do szerokości ekranu}
+        \item{wbudowany reset stylów CSS, tak aby przeglądarki wyświetlały w taki sam sposób wszystkie komponenty HTML'a (marginesy, paddingi)}
+        \item{formatowanie domyślne standardowych tagów HTML}
+        \item{wbudowane klasy pomocnicze do typografii}
+        \item{wbudowane komponenty rozszerzające tagi HTML}
+        \item{wbudowany, dwunasto-kolumnowy grid}
+        \item{rozszerzalny dzięki jQuery o dodatkowe możliwości (animacje, dodatkowe komponenty)}
+        \item{zbudowany za pomocą LESS (\url{http://lesscss.org}) -- duże ułatwienie przy pisaniu kodu CSS m.in. poprzez: zmienne, zagnieżdżenia oraz ,,mix-in'y''}
+        \item{bardzo dobra dokumentacja oraz przykłady}
+    \end{packed_item}
+
+    Wady:
+    \begin{packed_item}
+        \item{aby skorzystać trzeba znać CSS i poznać LESS}
+        \item{pliki źródłowe LESS trzeba kompilować do CSS, co jest dosyć uciążliwe}
+        \item{raz wykorzystany stanie się podstawą przy większości projektów web'owych}
+    \end{packed_item}
+
+    Alternatywy:
+    \begin{packed_item}
+        \item{nie znaleziono technologii, która mogła by być porównana na każdej płaszczyźnie z bootstrapem, większość rozwiązań trzeba rozszerzać o to co jest gotowe dla }
+    \end{packed_item}
+\end{minipage}
+
+
+\begin{minipage}{\textwidth}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{img/logos/flashdevelop.jpg}
+    \end{center}
+    \subsubsection{FlashDevelop}
+    Jedyne otwarte i darmowe IDE współpracujące z Adobe Flash Platform (wykorzystujące SDK Flex'a), umożliwiające tworzenie aplikacji z wykorzystaniem Adobe Flash Platform. Wszystkie części systemu związane z technologią Adobe zostaną przygotowane za pomocą tego IDE \url{http://flashdevelop.org}
+    
+    Zalety:
+    \begin{packed_item}
+        \item{otwartość oraz darmowość}
+        \item{gotowe szablony aplikacji Flex/AIR/AIR for Mobile}
+        \item{zaawansowane podpowiadanie kodu (,,code completion'')}
+        \item{możliwość pobrania i instalacji Flex SDK z poziomu aplikacji}
+        \item{wbudowany Flash debugger}
+    \end{packed_item}
+
+    Wady:
+    \begin{packed_item}
+        \item{dostępna jest jedynie wersja na platformę Windows}
+        \item{szczątkowa dokumentacja}
+        \item{wymaga podstawowej znajomości technologii Adobe}
+    \end{packed_item}
+
+    Alternatywy:
+    \begin{packed_item}
+        \item{brak alternatyw darmowych}
+        \item{Flash Builder Premium 4.6, koszt to ,,jedyne'' ~639 EURO za pełną licencję jednostanowiskową}
+    \end{packed_item}
+\end{minipage}
+
+
+\begin{minipage}{\textwidth}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{img/logos/postgresql.jpg}
+    \end{center}
+    \subsubsection{PostgreSQL}
+    Serwer obiektowo-relacyjnej bazy danych, umożliwiający przechowywanie i szybki dostęp do wszelkich danych. Jest rozwijany od ponad 15 lat. Jego sprawdzona przez ten czas architektura potwierdza jego opinię, jako serwera niezawodnego, utrzymującego spójność i poprawność danych. W projekcie jest podstawowym mechanizmem składowania danych. \url{http://www.postgresql.org}
+
+    Zalety:
+    \begin{packed_item}
+        \item{otwartość oraz darmowość}
+        \item{niezawodność, stabilność}
+        \item{wydajność}
+        \item{wbudowane narzędzia do tworzenia backupu danych -- pg\_dump}
+        \item{dostępne narzędzia do replikacji oraz zarządzania obciążeniem np. pgpool2 -- ważne w przypadku skalowalności}
+        \item{dostępne rozszerzenie GIS (Geographic Information System) w postaci PostGIS \url{http://postgis.refractions.net/}}
+        \item{wieloplatformowośc}
+    \end{packed_item}
+
+    Wady:
+    \begin{packed_item}
+        \item{stosunkowo długie otwieranie nowego połączenia}
+        \item{mniejsza popularność w pakietach hostingowych niż MySQL'a}
+        \item{rozsiana dokumentacja}
+    \end{packed_item}
+
+    Alternatywy:
+    \begin{packed_item}
+        \item{MySQL \url{http://www.mysql.com}}
+        \item{SQLite \url{http://www.sqlite.org}}
+    \end{packed_item}
+\end{minipage}
+
+
 \newpage
 %---------------------------------------------------------------------------
