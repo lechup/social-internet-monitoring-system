@@ -298,6 +298,18 @@ Jako, że część technologie, które zostaną wykorzystane są nowe dla całej
     \captionof{figure}{Wstępna architektura systemu.}
 \end{center}
 
+\begin{minipage}{\textwidth}
+    \begin{description}
+        \item[Interfejs WWW]{Centralny interfejs użytkownika z systemem, umożliwia przeglądanie stream'ów z poziomu przeglądarki WWW, implementuje design dostosowywany do szerokości ekranu urządzenia na którym się go przegląda. Współpracuje z wszystkimi nowoczesnymi przeglądarkami WWW. Udostępnia API do komunikacji z aplikacją mobilną czy samym obiektem SWF.}
+        \item[Baza Danych]{Centralne miejsce składowania wszystkich danych przechowywanych w systemie. Umożliwia szybkie wyszukiwanie, jest bezpośrednio połączona z Interfejsem WWW, który przez swoje API udostępnia przechowywane przez nią dane.}
+        \item[Browser Receiver]{Aplikacja Adobe Flash Player, umożliwiająca dołączenie do stream'u wideo nadawanego przez Browser Broadcaster lub Mobile Broadcaster.}
+        \item[Browser Broadcaster]{Aplikacja Adobe Flash Player, umożliwiająca nadawanie stream'u wideo bezpośrednio z przeglądarki.}
+        \item[Mobile Receiver]{Aplikacja mobilna Adobe AIR for Mobile, umożliwiająca odbieranie stream'u wideo nadawanego przez Mobile Broadcaster lub Browser Broadcaster z poziomu urządzenia wspierającego iOS lub Android'a.}
+        \item[Mobile Broadcaster]{Aplikacja mobilna Adobe AIR for Mobile, umożliwiająca nadawanie stream'u wideo z poziomu urządzenia wspierającego iOS lub Android'a.}
+        \item[Serwer RTMFP]{Serwer przechowujący informację na temat listy osób biorących udział w transmisji wideo stream'ów. Dzięki niemu pokonujemy niefiltrowany NAT. Łączą się z nim wszystkie aplikacje Broadcaster oraz Receiver.}
+    \end{description}
+\end{minipage}
+
 \newpage
 \subsection{Technologia}
 W tym rozdziale umieszczono informacje o tym jakie technologie oraz dlaczego zostały wybrane do realizacji poszczególnych elementów systemu.
