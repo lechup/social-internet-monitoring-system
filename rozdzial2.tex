@@ -516,7 +516,7 @@ Framework do tworzenia interfejsu WWW, napisany w LESS, kompilujący się do CSS
     Wady:
     \begin{packed_item}
         \item{stosunkowo długie otwieranie nowego połączenia}
-        \item{mniejsza popularność w pakietach hostingowych niż MySQL'a}
+        \item{mniejsza popularność i dostępność w pakietach hostingowych niż MySQL'a}
         \item{rozsiana dokumentacja}
     \end{packed_item}
 
@@ -524,9 +524,60 @@ Framework do tworzenia interfejsu WWW, napisany w LESS, kompilujący się do CSS
     \begin{packed_item}
         \item{MySQL \url{http://www.mysql.com}}
         \item{SQLite \url{http://www.sqlite.org}}
+        \item{Oracle \url{http://www.oracle.com}}
+        \item{MicroSoft SQL Server \url{http://www.microsoft.com/sqlserver/en/us/default.aspx}}
     \end{packed_item}
 \end{minipage}
 
+\begin{minipage}{\textwidth}
+    \begin{center}
+        \includegraphics[width=0.5\textwidth]{img/logos/google-maps-api.jpg}
+    \end{center}
+    \subsubsection{Google Maps Javascript API}
+    Jest darmową biblioteką Javascript pozwalającą na umieszczenie Mapy Google na własnej stronie internetowej. Dostarcza API zawierające szereg metod pozwalających na zarządzanie obiektem mapy oraz na dodawanie zawartości do Map Google. Łączy się też z wieloma darmowymi usługami dostępnymi od firmy Google.
+    
+    W projektowanym systemie będzie ona wykorzystywana do prezentacji stream'ów posiadających lokalizację oraz umożliwiała wyszukiwanie informacji.
+
+    Zalety:
+    \begin{packed_item}
+        \item{biblioteka jest darmowa}
+        \item{biblioteka działa z większością używanych dzisiaj przeglądarek (IE 7.0+ (Windows), Firefox 3.0+ (Windows, Mac OS X, Linux), Safari 4+ (Mac OS X, iOS), Chrome (Windows, Mac OS X, Linux), Android, BlackBerry 6, Dolfin 2.0+ (Samsung Bada))}
+        \item{biblioteka dostosowana jest do mobilnych urządzeń -- zarówno pod względem prędkości jak i wyglądu oraz interfejsu użytkownika}
+        \item{łączy się z usługą wyszukiwania lokalizacji i udostępnia dane dotyczące położenia danej lokalizacji}
+        \item{bardzo dobra dokumentacja}
+        \item{bardzo dobre przykłady wykorzystania API}
+        \item{popularność rozwiązania}
+    \end{packed_item}
+
+    Wady:
+    \begin{packed_item}
+        \item{brak usługi geolokalizacji po adresie IP}
+    \end{packed_item}
+
+    Alternatywy:
+    \begin{packed_item}
+        \item{Nokia Maps API for JavaScript \url{http://api.maps.nokia.com/en/overview.html}}
+        \item{Bing Maps AJAX \url{http://www.bingmapsportal.com/isdk/ajaxv7}}
+    \end{packed_item}
+\end{minipage}
+
+\begin{minipage}{\textwidth}
+    \subsubsection{Inne technologie}
+    Przy tworzeniu systemu skorzysta się również również z kilku mniejszych narzędzi, czy też bibliotek wartych wymienienia:
+    \begin{packed_item}
+        \item{MaxMind GeoIP Lite (\url{http://www.maxmind.com/app/geolite}) -- Biblioteka udostępniająca bazę IP mapowaną do nazwy lokalizacji i położenia za pomocą prostego API.}
+        \item{GIT (\url{http://git-scm.com}) -- Darmowy i otwarty, rozproszony system kontroli wersji.}
+        \item{GitHub (\url{http://github.com}) -- Serwis udostępniający darmowe miejsce na zdalne repozytorium GIT'a -- dla projektów o otwartym kodzie źródłowym.}
+        \item{fabric (\url{http://fabfile.org}) -- Biblioteka i narzędzie linii komend umożliwiające pisanie skryptów automatycznie wykonywanych poprzez SSH na zdefiniowanych hostach. Umożliwia stworzenie procesu automatycznej aktualizacji systemu np. z aktualnego repozytorium.}
+        \item{factory\_boy (\url{https://github.com/rbarrois/factory\_boy}) -- Biblioteka umożliwiająca w prosty sposób tworzenie fabryk do modelów danych. Bardzo pomocna przy tworzeniu testów jednostkowych i generowaniu danych do ich przeprowadzenia potrzebnych.}
+        \item{south (\url{http://south.aeracode.org}) -- Aplikacja Django umożliwiająca proste zarządzanie procesem migracji bazy danych. Dotyczy to zarówna struktury jak i samych danych.}
+        \item{virtualenv (\url{http://pypi.python.org/pypi/virtualenv}) -- Narzędzie do tworzenia odizolowanych środowisk Python'owych, umożliwia równoległe uruchomienie kilku wersji Pythona z własną kolekcją bibliotek.}
+        \item{Proxmox (\url{http://pve.proxmox.com/wiki/Main_Page}) -- Dystrybucja Debiana umożliwiająca wirtualizację na poziomie KVM oraz OpenVZ.}
+        \item{Ubuntu Server (\url{http://ubuntu.com}) -- Jedna z popularniejszych dystrybucjy Debiana, w projekcie wykorzystywana jako podstawowa dla wszystkich maszyn wirtualnych.}
+        \item{Cherokee (\url{http://www.cherokee-project.com}) -- Silnik serwera WWW z graficznym interfejsem zarządzania, pozwalający na udostępnianie zawartości statycznej (obrazki, strony HTML), treści dynamicznej, w szczególności Python'a (Django) za pomocą kontenera uWSGI.}
+        \item{Dia (\url{}) -- Otwarte oprogramowanie umożliwiające tworzenie diagramów. Wszystkie diagramy w pracy zostały wykonane za jego pomocą.}
+    \end{packed_item}
+\end{minipage}
 
 \newpage
 %---------------------------------------------------------------------------
