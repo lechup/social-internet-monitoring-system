@@ -1,25 +1,68 @@
 \chapter{Implementacja prototypu systemu}
 \label{cha:ImplementacjaPrototypu}
 
-\subsection{Co udało się zaimplementować}
+\section{Co udało się zaimplementować}
+
+Prototyp systemu dostępny jest on-line pod adresem \url{http://facewithme.com}. Przy tworzeniu prototypu systemu skupiono się na 4 elementach systemu (szczegóły architektury znajdują się \namedref{sec:EtapIwstepnaArchitekturaSystemu}):
+\begin{packed_item}
+    \item{Interfejs WWW}
+    \item{baza danych}
+    \item{serwer RTMFP}
+    \item{Mobile Broadcaster}
+    \item{Browser Receiver}
+\end{packed_item}
+
+Dzięki wybraniu ww. elementów udało się stworzyć system zdolny do przetestowania transmisji wideo pomiędzy Mobile Broadcaster, a Browser Receiver, za pomocą technologii Adobe P2P Multicast. Interfejs WWW, umożliwia dodatkowo ładną prezentację oraz wyszukiwanie streamów w zadanej lokalizacji czy też personalizację ustawień. Niżej przedstawiono listę elementów systemu wraz z funkcjami jakie udalo się zaimplementować.
+
+\large{\textbf{Interfejs WWW}}
+\begin{packed_item}
+    \item{system rejestracji użytkownika (\url{http://facewithme.com/accounts/register})}
 
 
 
-\subsection{Co do poprawy}
+    \item{system logowania użytkownika (\url{http://facewithme.com/accounts/login})}
+    \item{panel administracyjny do zarządzania stream'ami, kategoriami i użytkownikami (\url{http://facewithme.com/admin})}
+    \item{interaktywną mapę prezentującą stream'y (\url{http://facewithme.com})}
+    \item{funkcję automatycznej lokalizacji użytkownika i ustawienie pozycji mapy zgodnie z nią (\url{http://facewithme.com})}
+    \item{listowanie wszystkich streamów nadawanych w systemie z podziałem na kategorie  (\url{http://facewithme.com/stream/list})}
+\end{packed_item}
 
-\subsection{Testowanie}
+\section{Co trzeba usprawnić}
 
-\subsection{Dokumentacja}
+Przy implementacji prototypu systemu, nie skupiano się na sprawach pobocznych jak interfejs czy komunikacja z użytkownikiem. Głównie kierowano się intencją przetestowania w praktyce działania technologii Adobe P2P Multicast. Dlatego też system wymaga znacznej ilości poprawek zanim może zącząć być wykorzystywany publicznie. Przygotowany prototyp traktować można jako bazę wyjściową do zapoznania się z działaniem i wydajnością technologii. Główne braki systemu to:
 
-\subsection{Kod źródłowy}
+\begin{packed_item}
+    \item{brak szyfrowania połączeń HTTP pomiędzy użytkownikiem a systemem, dotyczy także logowania}
+    \item{brak jakiejkolwiek autoryzacji serwera RTMFP, jest dostępny publicznie}
+    \item{brak zabezpieczenia publicznego/prywatnego streamu wideo}
+    \item{brak całego Mobile Receiver'a}
+    \item{brak całego Browser Broadcaster'a}
+    \item{panel DEBUG w Mobile Broadcasterz'e}
+    \item{brak obrotu komponentu kamery względem obrócenia urządzenia w Mobile Broadcasterz'e}
+    \item{brak automatycznego usuwania stream'u z Interfejsu WWW w przypadku nieoczekiwanego przerwania działania Mobile Broadcaster'a}
+    \item{brak komunikatów skierowanych do użytkownika Mobile Broadcaster'a, informujących o stanie lub błędach aplikacji}
+    \item{brak wyłączania trybu czuwania}
+\end{packed_item}
 
-\subsection{Wydajność P2P w Adobe Flash Platform}
 
-\subsection{Bezpieczeństwo}
+\section{Dokumentacja}
+Zgodnie z filozofią ,,zwinnej metodyki'' (szczegóły \namedref{sec:ZMTOzalozenia}), dokumentacja projektu sprowadza się do opisu architektury oraz komentarzy kodu, testów oraz komentarzy do testów. Unika się tworzenia bazy wiedzy, która najczęściej jest po pewnym czasie nieaktualizowana.
 
-\subsection{Pomysły na rozwój}
+Aby uruchomić system z kodu źródłowego należy skonfigurować 
 
-\subsection{Wnioski}
+\section{Testowanie}
+
+Tutaj jak i na jakich urządzeniach / przeglądarkach było testowane...
+
+\section{Kod źródłowy}
+
+\section{Bezpieczeństwo}
+
+\section{Wydajność P2P w Adobe Flash Platform}
+
+\section{Pomysły na rozwój}
+
+\section{Wnioski}
 
 
 \newpage
