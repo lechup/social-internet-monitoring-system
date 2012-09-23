@@ -58,7 +58,7 @@
 			}
 
 			private function resizeHandler(event:ResizeEvent):void {
-				//parentApplication.setCameraMode();
+				parentApplication.setCameraMode();
 				setCameraDisplayDimensions();
 				cameraDisplay.camera = parentApplication.camera;
 			}

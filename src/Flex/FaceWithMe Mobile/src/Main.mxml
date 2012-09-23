@@ -26,12 +26,17 @@
 			import mx.utils.ObjectProxy;
 			import spark.events.IndexChangeEvent;
 
-			public var netConnection:NetConnection;
-			public var netStream:NetStream;
-			public var camera:Camera;
-			public var microphone:Microphone;
-			public var entry:Object;	
-			public var settings:SettingsData = new SettingsData();
+		// zmienne potrzebne do streamingu wideo
+			public var netConnection:NetConnection; // połączenie do streamu
+			public var netStream:NetStream; // stream
+			public var camera:Camera; // aktualna kamera
+			public var microphone:Microphone; // mikrofon
+			private var amfgateway:NetConnection; // połączenie do amfGateway
+			public var entry:Object; // obiekt streamu pobrany z amfGateway
+			public var settings:SettingsData = new SettingsData(); // obiekt ustawień aplikacji zapisywanych e EncryptedLocalStorage
+		//
+
+		// obiekt przechowujący domyślne ustawienia aplikacji
 			private const _settingsConst:Object = {
 				'amfgateway' : 'http://facewithme.com/amf/',
 				'debug' : true,
@@ -45,10 +50,14 @@
 			};
 			[Bindable]
 			public var settingsConst:ObjectProxy = new ObjectProxy(_settingsConst);
+		//
+		
+		// zmienna przechowująca tekst debug
 			[Bindable]
 			public var debugText:String = "";
-			private var amfgateway:NetConnection;
+		//
 
+		// ustaw kamerę
 			public function setupCamera():void {
 				log("setupCamera");
 
@@ -83,13 +92,6 @@
 					// TODO INFO PANEL
 					log("There is no camera!");
 				}
-			}
-			
-			public function isCamera():Boolean {
-				if (camera != null && !camera.muted)
-					return true;
-				else
-					return false;
 			}
 
 			public function setupMicrophone():void {
