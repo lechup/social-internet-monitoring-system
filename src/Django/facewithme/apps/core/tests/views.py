@@ -8,7 +8,7 @@ class ViewsTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.server = ServerFactory.create()
-        self.stream_list = StreamFactory.create_batch(15)
+        self.stream_list = StreamFactory.create_batch(10)
 
     def test_core_stream_list(self):
         response = self.client.get(reverse('core-stream_list'))
@@ -17,8 +17,8 @@ class ViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # check if view response contains title of first 5 items
-        for i in range(0, len(self.stream_list)/2):
-            self.assertContains(response, self.stream_list[i].title)
+        for i in self.stream_list[-3:]:
+            self.assertContains(response, i.title)
 
     def test_core_about(self):
         response = self.client.get(reverse('core-about'))
