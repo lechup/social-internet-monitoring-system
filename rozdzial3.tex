@@ -102,7 +102,7 @@ Dzięki wybraniu ww. elementów udało się stworzyć system zdolny do przetesto
 
 \section{Co wymaga usprawnienia}
 
-Przy implementacji prototypu systemu, nie skupiano się na sprawach pobocznych jak interfejs czy komunikacja z użytkownikiem. Głównie kierowano się intencją przetestowania w praktyce działania technologii Adobe P2P Multicast. Dlatego też system wymaga znacznej ilości poprawek zanim może zacząć być wykorzystywany publicznie. Przygotowany prototyp traktować można jako bazę wyjściową do zapoznania się z działaniem i wydajnością technologii. Główne braki prototypu systemu to:
+Przy implementacji prototypu systemu, nie skupiano się na sprawach pobocznych jak interfejs czy komunikacja z użytkownikiem. Głównie kierowano się intencją przetestowania w praktyce działania technologii Adobe P2P Multicast'ing. Dlatego też system wymaga znacznej ilości poprawek zanim może zacząć być wykorzystywany publicznie. Przygotowany prototyp traktować można jako bazę wyjściową do zapoznania się z działaniem i wydajnością technologii. Główne braki prototypu systemu to:
 
 \begin{packed_item}
     \item{brak szyfrowania połączeń HTTP pomiędzy użytkownikiem a systemem, dotyczy także logowania}
@@ -179,13 +179,169 @@ Bardzo ważnym aspektem docelowego systemu powinno być bezpieczeństwo. Niżej 
     \item{Serwer RTMFP (Cumulus), nie udostępnia żadnego sposobu na autoryzację połączeń. Najprostszym sposobem na ograniczenie wykorzystania przez nieautoryzowanych użytkowników jest sprawdzanie \texttt{swfUrl} połączającego się klienta za pomocą rozszerzenia serwera wykorzystującego zdarzenie \texttt{onConnection} (szczegóły w dokumentacji Cumulus \url{https://github.com/OpenRTMFP/Cumulus/wiki/Server-Application,-API})}
 \end{packed_item}
 
-\section{Wydajność P2P Multicast w Adobe Flash Platform}
+\newpage
+\section{Wydajność P2P Multicast'ing w Adobe Flash Platform}
 
-\section{Pomysły na rozwój}
+W tym rozdziale chciano poruszyć temat związany z wydajnością transmisji wideo za pomocą technologii P2P Multicast'ing. Kryterium jakie chcemy sprawdzać to opóźnienie transmisji wideo względem obrazu oryginalnego oraz jego płynność. Opóźnienie jest wyrażone w sekundach. Płynność określono jako jedną z możliwości:
+\begin{packed_item}
+    \item{obraz całkowicie płynny -- obraz zachowuje płynność ciągle}
+    \item{obraz płynny -- obraz od czasu do czasu wstrzymuje się, większą część czasu jest płynny}
+    \item{obraz skaczący -- obraz nie jest płynny, posiada natomiast więcej niż jedną klatkę na sekundę}
+    \item{obraz poklatkowy -- obraz nie jest całkowicie płynny, posiada mniej niż jedną klatkę na sekundę}
+    \item{obraz nieczytelny -- obraz pojawia się we fragmentach, wyświetlają się pomniejsze}
+\end{packed_item}
 
+Środowisko testowe składa się z dwóch komputerów klientów, na których uruchomiono przeglądarkę Google Chrome i włączono Browser Receiver dla stream'u udostępnianego przez Mobile Broadcaster uruchomionego na Adobe AIR 3.4.0.254/Android 3.2/Samsung Galaxy Tab 10.1. Aplikacja mobilna wysyłanie stream'u wideo przeprowadza za pomocą łącza ADSL (połączenie WiFi przez router) o parametrach faktycznych 8 Mb/s pobieranie, 1 Mb/s wysyłanie danych. Alternatywnym połączeniem Mobile Broadcaster'a jest darmowy internet od Aero2 w technologii HSPA/HSPA+ o parametrach faktycznych 0.5 Mb/s pobieranie, 0.4 Mb/s wysyłanie danych. Komputery klienckie są połączone do tej samej sieci LAN, korzystającej z wcześniej wymienionego łącza ADSL. Test prędkości łącz został wykonany za pomocą serwisu \url{http://speedtest.net}.
+
+Wpływ na badane kryteria mają parametry:
+\begin{packed_item}
+    \item{Rozdzielczość obrazu w transmisji wideo, która jest przekazywana.}
+    \item{Ilość klientów uczestniczących w transmisji P2P Multicast.}
+\end{packed_item}
+
+Tabela przedstawiająca płynność transmisji oglądanej na ekranie Browser Receiver'a, względem rozdzielczości przesyłanego strumienia w pikselach. Dla dwóch włączonych Browser Reveiver'ów, po jednej instancji per komputer klient:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        & 80x60px & 160x120px & 320x240px & 640x480px \\
+        \hline
+        ADSL
+        &
+        obraz całkowicie płynny 
+        &
+        obraz całkowicie płynny
+        &
+        obraz płynny
+        &
+        obraz skaczący
+        \\
+        \hline
+        Aero2
+        &
+        obraz płynny
+        &
+        obraz poklatkowy
+        &
+        obraz nieczytelny
+        &
+        obraz nieczytelny
+        \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Tabela przedstawiająca opóźnienie transmisji oglądanej na ekranie Browser Receiver'a, względem rozdzielczości przesyłanego strumienia w pikselach. Dla dwóch włączonych Browser Reveiver'ów, po jednej instancji per komputer klient:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        & 80x60px & 160x120px & 320x240px & 640x480px \\
+        \hline
+        ADSL
+        &
+        opóźnienie 0s
+        &
+        opóźnienie 0s
+        &
+        opóźnienie 0,1s
+        &
+        opóźnienie 0-1s \\
+        \hline
+        Aero2
+        &
+        opóźnienie 0,1-0,5s
+        &
+        opóźnienie 2-3s
+        &
+        opóźnienie 4-5s
+        &
+        opóźnienie ~40s \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+Tabela przedstawiająca płynność transmisji oglądanej na ekranie Browser Receiver'a, względem rozdzielczości przesyłanego strumienia w pikselach. Dla sześciu włączonych Browser Reveiver'ów, po trzy instancje per komputer klient:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        & 80x60px & 160x120px & 320x240px & 640x480px \\
+        \hline
+        ADSL
+        &
+        obraz całkowicie płynny 
+        &
+        obraz płynny
+        &
+        obraz płynny
+        &
+        obraz poklatkowy
+        \\
+        \hline
+        Aero2
+        &
+        obraz płynny
+        &
+        obraz poklatkowy
+        &
+        obraz poklatkowy
+        &
+        obraz nieczytelny
+        \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Tabela przedstawiająca opóźnienie transmisji oglądanej na ekranie Browser Receiver'a, względem rozdzielczości przesyłanego strumienia w pikselach. Dla sześciu włączonych Browser Reveiver'ów, po trzy instancje per komputer klient:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        & 80x60px & 160x120px & 320x240px & 640x480px \\
+        \hline
+        ADSL
+        &
+        opóźnienie 0s
+        &
+        opóźnienie 0-0,3s
+        &
+        opóźnienie 0-0,5s
+        &
+        opóźnienie 0,5-2s \\
+        \hline
+        Aero2
+        &
+        opóźnienie 0-3s
+        &
+        opóźnienie 30s
+        &
+        opóźnienie 35s
+        &
+        opóźnienie 45s \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\newpage
 \section{Wnioski}
 
 W tym rozdziale zaprezentowane są wnioski powstałe podczas implementacji prototypu systemu.
+
+\begin{packed_item}
+    \item{Im gorsze połączenie Mobile Broadcast'era tym gorsza możliwa jakość przesyłu wideo.}
+    \item{Im gorsze połączenie Mobile Broadcast'era, a ilość Browser Reveicer'ów większa tym lepsza płynność transmisji wideo.}
+    \item{Im lepsze połączenie Mobile Broadcast'era tym lepsza możliwa jakość przesyłu wideo.}
+    \item{Im więcej klientów Browser Reveiver'a podłączone do stream'u tym większe możliwe opóźnienie.}
+    \item{Aby stworzyć aplikację na iOS za pomocą Adobe AIR for Mobile należy posiadać Apple Developer Account.}
+    \item{Adobe P2P Multicast'ing działa i wydaje się sensowną technologią do wdrożenia projektowanego systemu.}
+    \item{Aby publicznie udostępnić system należy sporo rzeczy poprawić, w szczególności popracować nad bezpieczeństwem systemu.}
+    \item{Wszystkie wykorzystane przy implementacji prototypu technologie spełniają swoją powierzoną rolę.}
+    \item{Istnieje ryzyko stworzenia systemu służącego do permanentnej inwigilacji...}
+    \item{Metodyka ,,XP'' ma duże szanse powodzenia przy prowadzeniu szybko zmieniającego się projektu przy udziale niedużej grupy projektowej.}
+    \item{Przygotowywanie ekranów do kart wymagań za pomocą programu graficznego jest pracochłonną czynnością, dużo lepiej powinny sprawdzić odręczne szkice i ,,cyfryzacja'' za pomocą zdjęć np. telefonem komórkowym.}
+\end{packed_item}
 
 \newpage
 %---------------------------------------------------------------------------
