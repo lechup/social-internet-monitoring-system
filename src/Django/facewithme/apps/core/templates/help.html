@@ -1,0 +1,29 @@
+{% extends "modal_information.html" %}
+
+{% block title_information %}
+	Pomoc
+{% endblock %}
+
+{% block content_information %}
+	Niżej znajdują się informacje mogące pomóc w rozwiązaniu problemów z systemem. 
+{% endblock %}
+
+{% block information_extend %}
+	<ul class="unstyled">
+  		<li>
+  			<h3>Stream, który chcemy oglądać nie ładuje się</h3>
+  			<ol>
+  				<li>
+  					<h5>Upewnij się, że masz zainstalowanego Flash Playera w wersji conajmniej 10.1</h5>
+  					<p><span class="label label-warning">Google Chrome / Chromium</span> Jeżeli używasz Chrome możesz pominąć ten punkt!</p> 
+  					<p>Wejdź na <a href="http://www.adobe.com/software/flash/about/" target="_blank">stronę testową</a> i sprawdź czy wyświetla się poprawnie oraz czy masz najnowszą wersję wtyczki. Jeżeli nie to <a href="http://get.adobe.com/pl/flashplayer/" target="_blank">zainstaluj najnowszą wersję wtyczki</a>!</p>
+  				</li>
+  				<li>
+  					<h5>Upewnij się, że włączona jest obsługa sieci ze wspomaganiem równorzędnym</h5>
+  					<p>Wejdź na <a href="http://www.macromedia.com/support/documentation/pl/flashplayer/help/settings_manager09.html" target="_blank">stronę ustawień Flash Playera</a> i sprawdź czy masz ustawienia dla <strong>facewithme.com</strong> zgodne z obrazkiem poniżej. Jeżeli nie to popraw je!</p>
+  					<img src="{{STATIC_URL}}core/img/faq/ustawienia_sieci_ze_wspomaganiem_rownorzednym.jpg" />
+  				</li>
+  			</ol>
+  		</li>
+	</ul> 
+{% endblock %}

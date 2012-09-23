@@ -5,7 +5,7 @@ W ostatnich latach można zauważyć gwałtowny rozwój rozwój infrastruktury i
 
 Wszechobecność i dostępność ,,wielkiej pajęczyny'' powoduje, że coraz częściej korzysta się z niej nie tylko za pomocą komputerów czy laptopów. Nowe ,,gadżety'' takie jak tablety, smartphone'y czy netbook'i stają się nowym interfejsem pomiędzy siecią, a użytkownikiem. Szacuje się, że do roku 2015 większość użytkowników Internetu będzie korzystała właśnie z takich urządzeń mobilnych. Wtedy również, 40\% światowej populacji (2,7 miliarda osób) będzie już korzystała z dobrodziejstw dostępu do ,,natychmiastowej informacji''. \footnote{Dane w oparciu o  artykuł \cite{Kim11}}
 
-Zwiększenie szybkości dostępu do Internetu umożliwiło stworzenie technologii pozwalających na transmisję strumieniową danych audio/wideo. Takie serwisy jak YouTube, Vimeo czy MetaCafe już od 2005 roku umożliwiają użytkownikom wysyłanie i udostępnianie swoich nagrań online. Niestety żaden z tych serwisów nie umożliwia udostępniania strumienia danych wideo w czasie rzeczywistym. Dopiero w 2007 roku powstał Bambuser oraz Qik. Serwisy te jak i technologie, które wdrożyły, pozwalają dzielić się strumieniem audio/video -- wykorzystując do tego jedynie telefon komórkowy lub kamerę podłączoną do komputera.
+Zwiększenie szybkości dostępu do Internetu umożliwiło stworzenie technologii pozwalających na transmisję strumieniową danych audio/wideo. Takie serwisy jak YouTube, Vimeo czy MetaCafe już od 2005 roku umożliwiają użytkownikom wysyłanie i udostępnianie swoich nagrań online. Niestety żaden z tych serwisów nie umożliwiał udostępniania strumienia danych wideo w czasie rzeczywistym. Dopiero w 2007 roku powstał Bambuser oraz Qik. W tym roku, dosłownie parę miesięcy temu firma Google połączyła usługę YouTube z Google+ Hangouts umożliwiając równoczesne nadawanie ,,na żywo''. Wszystkie serwisy te jak i technologie, które wdrożyły, pozwalają dzielić się strumieniem audio/video -- wykorzystując do tego jedynie telefon komórkowy lub kamerę podłączoną do komputera.
 
 Naturalną koleją rzeczy wydaje się wykorzystanie Internetu celem stworzenia gigantycznego systemu monitoringu. Można sobie wyobrazić system do którego podłączono istniejącą infrastrukturę kamer CCTV i udostępniono ich strumień video online, tak aby każdy obywatel mógł monitorować to co się dzieje w jego okolicy. System można by było rozszerzyć o kamery podłączane przez użytkowników lub ich najnowocześniejsze ,,gadżety'' czyli tablety czy smartphone'y. Tak właśnie autor niniejszej pracy wyobraża sobie ,,Społecznościowy, internetowy system monitoringu''.
 
@@ -19,12 +19,16 @@ Głównym celem pracy jest stworzenie specyfikacji oraz analizy wymagań systemu
 
 Bazując na pracy starszych kolegów (\cite{JakMich06}), jak i doświadczeniu w zwinnym specyfikowaniu systemu doktorantów (\cite{Mad09}), podpierając się literaturą fachową (\cite{Bec99}) autor chce zaproponować swoją ,,zwinną specyfikację i analizę wymagań''. W szczególności pokazać jej zalety oraz wady względem podejścia konwencjonalnego. Uwypuklić przypadki, w których metodyki zwinne nie są dobrym rozwiązaniem.
 
-Dodatkowym celem pracy jest implementacja ograniczonego prototypu specyfikowanego systemu -- dokładniej doprowadzenie do stanu ,,Utrzymanie i konserwacja'' -- (więcej \namedref{sec:ZMTOcykl}). Tak, aby przetestować na konkretnym przykładzie zaproponowane rozwiązanie.
+Dodatkowym, najbardziej czasochłonnym celem pracy, jest implementacja ograniczonego prototypu specyfikowanego systemu.
 
 \section{Zawartość pracy}
 \label{sec:zawartoscPracy}
 
-\todo
+W pierwszym rozdziale pracy opisano teorię związaną ze ,,zwinną'' metodyką tworzenia oprogramowania. Umieszczono jej wady, zalety oraz wyszczególniono kiedy nie należy stosować metodyk zwinnych. Tutaj znalazło się również miejsce na opisanie idealnego cyklu życia idealnego ,,zwinnego'' projektu oraz autorską propozycję przeprowadzania akwizycji i analizy wymagań takiego przedsięwzięcia.
+
+Kolejny rozdział pracy poświęcony jest akwizycji i analizie wymagań tytułowego ,,Społecznościowego systemu monitoringu''. W tej części pracy znajdują się więc takie elementu jak karty wymagań, ekrany, wstępna architektura systemu czy opis technologii proponowanych do zastosowania. Przy realizacji ww. elementów zastosowano zaproponowaną i określoną w rozdziale pierwszym metodykę.
+
+Ostatni z rozdziałów poświęcony jest najbardziej pracochłonnemu elementowi pracy -- implementacji ograniczonego prototypu systemu. Można znaleźć tutaj informacje szczegółowe na temat tego co udało się zaimplementować, z czym były problemu, jak sprawdziły się technologie i architektura wymieniona w rozdziale wcześniejszym.
 
 \newpage
 %---------------------------------------------------------------------------
@@ -123,35 +127,11 @@ Każda metodyka ma etapy w jakim może znaleźć się projekt. W tym rozdziale p
 \subsection{,,Zwinna'' specyfikacja wymagań}
 \label{cha:ZMTOzwinnaSpecyfikacjaWymagan}
 
-%Jak wspomniano \namedref{sec:celePracy} autor chce wykorzystać jak najwięcej metodyk ,,zwinnych'' przy każdym aspekcie tworzenia oprogramowania czyli także w  przypadku specyfikacji i analizy wymagań.
-%
 Do tej pory nie znaleziono idealnego, uniwersalnego rozwiązania na pobieranie wymagań od klienta. W większości przypadków trzeba pewnego czasu, aby wypracować wspólny język z klientem i nauczyć się razem z nim współpracować przy akwizycji wymagań.
 
 Podchodząc ,,zwinnie'' do projektowania systemu na początku należy pobrać od klienta tylko te wymagania, które są konieczne do osiągnięcia minimalnych celów biznesowych -- głównego zadania systemu. Wszystkie sprawy poboczne, należy oczywiście zapisywać, lecz zostawić na później, aż projekt przejdzie do etapu ,,Utrzymanie i konserwacja'' (więcej \namedref{sec:ZMTOcykl}).
 
 Celem ,,zwinnej'' specyfikacji wymagań jest stworzenie wymagań \emph{minimalnego systemu}, spełniającego \emph{wszystkie podstawowe funkcje biznesowe} zdefiniowane przez klienta, który można \emph{wdrożyć, używać i rozwijać}.
-
-%Na podstawowe dobre praktyki niekoniecznie ,,zwinnej'' inżynierii wymagań składają się między innymi\footnote{Informacje zaczerpnięte z \cite{Wol09p}}:
-
-%\begin{packed_item}
-%    \item Ocena wykonalności systemu -- przed przystąpieniem do szczegółowej akwizycji wymagań, należy sprawdzić wykonalność implementacji systemu
-%    \item Dokument specyfikacji wymagań -- istnieje jakiś dokument, który ułatwia akwizycję wymagań
-%    \begin{packed_item}
-%        \item Należy zdefiniować standardową strukturę dokumentu
-%        \item Należy wyjaśnić jak korzystać z dokumentu
-%        \item Należy załączyć podsumowanie wymagań
-%        \item Należy zadbać o czytelną strukturę dokumentu
-%        \item Należy zadbać o łatwość wprowadzania zmian w dokumencie
-%        \item Należy używać prostego i ścisłego języka
-%        \item Należy budować słownik wymienianych terminów specjalistycznych
-%    \end{packed_item}
-%    \item Pozyskiwanie wymagań -- praktyki na samym etapie pozyskiwania wymagań
-%    \begin{packed_item}
-%        \item Należy być wyczulonym na czynniki organizacyjne i polityczne
-%        \item Należy przechowywać źródła wymagań
-%        \item Należy używać celów biznesowych przy pozyskiwaniu wymagań 
-%    \end{packed_item}
-%\end{packed_item}
 
 \subsubsection{Narzędzia}
 \label{sec:ZSWnarzedzia}

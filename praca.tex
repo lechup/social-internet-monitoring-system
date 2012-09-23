@@ -11,6 +11,10 @@
 \usepackage{packed_enum}
 \usepackage{packed_item}
 \usepackage{layouts}
+\usepackage{graphicx}
+\usepackage{capt-of}
+\usepackage{caption}
+\usepackage{subcaption}
 
 % ustawienie kolorów
 \hypersetup{
@@ -96,7 +100,7 @@
 \facultyPL{Wydział Elektrotechniki, Automatyki, Informatyki i Elektroniki}
 \facultyEN{Faculty of Electrical Engineering, Automatics, Computer Science and Electronics}
 
-\acknowledgements{Serdecznie dziękuję promotorowi dr~inż.~Sebastianowi~Ernstowi za wyrozumiałość i cierpliwość.}
+\acknowledgements{Serdecznie dziękuję promotorowi dr~inż.~Sebastianowi~Ernstowi za dystans, wyrozumiałość i cierpliwość.\footnote{Rozwinięcie podziękowań znajduje się w dodatku \namedrefw{cha:dodatekB}.}}
 
 \setlength{\cftsecnumwidth}{10mm}
 
@@ -119,11 +123,10 @@
 \include{rozdzial1}
 \include{rozdzial2}
 \include{rozdzial3}
-\include{rozdzial4}
 
 \appendix
 \include{dodatekA}
-% \include{dodatekB}
+\include{dodatekB}
 
 \bibliographystyle{alpha}
 \bibliography{bibliografia}
