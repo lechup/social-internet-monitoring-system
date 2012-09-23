@@ -119,6 +119,15 @@
 
 				log("cameraMode, after set: " + camera.width + "x" + camera.height);
 			}
+	
+			// sprawdza czy kamera istnieje
+			// i czy nie jest do niej zabroniony dostęp
+			public function isCamera():Boolean {
+				if (camera != null && !camera.muted)
+					return true;
+				else
+					return false;
+			}
 
 			public function setupAmfGateway():void {
 				// jeżeli z kamerą coś nie tak...
