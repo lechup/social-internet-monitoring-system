@@ -3,15 +3,15 @@
 
 Zgodnie z cyklem życia ,,XP'' (więcej \namedref{sec:ZMTOcykl}), projekt zaczyna się od akwizycji ogólnego, głównego zadania systemu. Proponuje się w tym celu wykorzystać przygotowany szablon (więcej \namedref{sec:dodatekAsgzs}). Zawiera on nie tylko najważniejszą część, czyli ogólny opis głównego zadania systemu, ale także szereg pomocnych pytań pomagających w realizacji systemu zgodnie z oczekiwaniami klienta. Szablonu nie należy traktować jako idealnego, a raczej jako propozycję lub punkt wyjścia do rozwinięcia własnego dokumentu wykorzystywanego do akwizycji ogólnych wymagań w swoich projektach.
 
-Sformułowanie głównego zadania systemu pozwala skupić się generowaniu kart wymagań związanych z~nim, a~nie ze~sprawami pobocznymi. Pozwala na uzmysłowienie grupie projektowej jaka jest główna część systemu wokół której należy się skupić.
-
 \section{Specyfikacja wymagań}
 \label{sec:EtapIsw}
+
+Specyfikacja wymagań jest bardzo ważnym elementem w cyklu tworzenia systemu. Ewentualne niedociągnięcia w tej fazie mogą rzutować na cały projekt. Celem zwinnej specyfikacji wymagań jest stworzenie wymagań minimalnego systemu, spełniającego wszystkie podstawowe funkcje biznesowe zdefiniowane przez klienta, który można wdrożyć, używać i rozwijać -- więcej można przeczytać \namedref{cha:ZMTOzwinnaSpecyfikacjaWymagan}.
 
 \subsection{Specyfikacja głównego zadania systemu}
 \label{sec:EtapIswSGZS}
 
-Niżej przedstawiono szablon (więcej \namedref{sec:dodatekAsgzs}) wypełniony razem z klientem na jednym z pierwszych spotkań dotyczących wymagań systemu.
+Sformułowanie głównego zadania systemu pozwala skupić się generowaniu kart wymagań związanych z~nim, a~nie ze~sprawami pobocznymi. Pozwala na uzmysłowienie grupie projektowej jaka jest główna część systemu wokół której należy się skupić. Niżej przedstawiono szablon (więcej \namedref{sec:dodatekAsgzs}) wypełniony razem z klientem na jednym z pierwszych spotkań dotyczących wymagań systemu. 
 
 \begin{userstory}{Główne zadanie systemu}
 Użytkownik za pomocą smartphone'a z kamerą działającego pod systemem Android lub za pomocą przeglądarki internetowej na komputerze stacjonarnym i kamery podłączonej do niego, ma możliwość udostępnienia on-line aktualnego obrazu i dźwięku.
@@ -150,8 +150,15 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
                 \item oznaczenie pól jako błędnie wypełnionych, pole hasła pozostaje puste, pole loginu zostaje jako ostatnia wpisana wartość
             \end{packed_enum}
         }
-        \item{Użytkownik po zalogowaniu widzi zmodyfikowane menu -- na wszystkich podstronach serwisu.}
-        \scr{img/strona_glowna2.jpg}{Zmodyfikowane menu na górze}
+        \item{
+            Użytkownik po zalogowaniu widzi zmodyfikowane menu -- na wszystkich podstronach serwisu.
+            \scr{img/strona_glowna2.jpg}{Zmodyfikowane menu na górze}
+            \begin{packed_enum}
+                \item avatar pobrany z gravatar.com oraz nazwa zalogowanego użytkownika
+                \item wpis w menu przenoszący do podstrony ustawień zalogowanego użytkownika
+                \item wpis w menu przenoszący do podstrony udostępniania streamu audio/video
+            \end{packed_enum}
+        }
     \end{tests}
 \end{userstory}
 
@@ -163,11 +170,11 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
         \item {Aby udostępnić stream należy wybrać kategorię, do której ten stream ma być przypisany. Lista kategorii jest przykładową lista, administrator ma mieć możliwość modyfikowania tej listy z poziomu panelu administracyjnego.}
         \item {Jeżeli w systemie istnieje więcej niż jedna kamera, tutaj wybierana jest kamera źródłowa. Domyślnie wybraną jest pierwsza systemowa kamera.}
         \item {Możemy wybrać jakość transmisji spośród:
-            \begin{packed_item}
-                \item{wysoka -- wysoka jakość z preferencją wideo nad audio}
-                \item{średnia -- średnia jakość zarówno wideo jak audio}
-                \item{niska -- niska jakość wideo z preferencją jakości audio nad wideo}
-            \end{packed_item}
+            \begin{description}
+                \item[Wysoka] Wysoka jakość z preferencją wideo nad audio.
+                \item[Średnia] Średnia jakość zarówno wideo jak audio.
+                \item[Niska] Niska jakość wideo z preferencją jakości audio nad wideo
+            \end{description}
         }
         \item{Po kliknięciu ,,Podziel się'' na formularzu udostępniania audio/video, użytkownikowi otwiera się nowe okno przeglądarki gdzie prezentowane są dane udostępnionego streamu (krok drugi). W starym oknie użytkownik zostaje przekierowany do poprzednio odwiedzanej strony -- przed wybraniem ,,Podziel się''.}
         \item {Wybór dostępności streamu, albo publiczny -- wszyscy użytkownicy systemu mogą go oglądać/udostępniać (domyślna opcja) -- lub prywatny -- tylko posiadający link do streamu mogą go zobaczyć.}
@@ -191,19 +198,21 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
     \end{tests}
 \end{userstory}
 
-\section{Analiza wymagań}
+\section{Analiza wymagań i dobór rozwiązań}
 \label{sec:EtapIaw}
 
-Po rozmowie z klientem, na podstawie ,,głównego zadania systemu'' oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań (więcej w \namedref{sec:ZMTOzwinnaAnalizaWymagan}).
+Po rozmowie z klientem, na podstawie głównego zadania systemu oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań więcej w \namedref{sec:ZMTOzwinnaAnalizaWymagan}.
 
 Celem tego etapu jest stworzenie wstępnej architektury systemu, przetestowanie wydajności technologii -- najczęściej przy użyciu prototypu systemu.
 
-Jako początek rozważań architektury systemu skorzystano z elementów metody Architecture Tradeoff Analysis Method -- ,,Drzewo użyteczności'' -- szczegóły metody można poznać w \cite{Kaz2000}.
+Jako początek rozważań architektury systemu skorzystano z elementów metody Architecture Tradeoff Analysis Method -- Drzewo użyteczności -- szczegóły metody można poznać w \cite{Kaz2000}.
 
-Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą ilość dokumentacji, z której metodyki zwinne chcą rezygnować. Dodatkowo zgodnie z założeniami ,,XP'' (więcej \namedref{sec:ZMTOzalozenia}), wszystkie ustalenia sporządzone w tej fazie mogą ulec zmianie na każdym późniejszym etapie prowadzenia projektu. Zwinna analiza wymagań nie zamyka możliwości późniejszej zmiany technologii, architektury czy dowolnego z elementów wspomagających projekt.
+Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą ilość dokumentacji, z której metodyki zwinne chcą rezygnować. Dodatkowo zgodnie z założeniami \textit{XP} (szczegóły \namedref{sec:ZMTOzalozenia}), wszystkie ustalenia sporządzone w tej fazie mogą ulec zmianie na każdym późniejszym etapie prowadzenia projektu. Zwinna analiza wymagań nie zamyka możliwości późniejszej zmiany technologii, architektury czy dowolnego z elementów wspomagających projekt.
 
 \subsection{Drzewo użyteczności (ATAM Usability Tree)}
 \label{sec:EtapIdrzewoUzytecznosci}
+
+Niżej umieszczono \textit{Drzewo Użyteczności} metody ATAM w formie listy. Pokazuje w bardzo przejrzysty sposób najważniejsze aspekty architektury systemu.
 
 \begin{packed_item}
     \item{
@@ -263,9 +272,9 @@ Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą il
             \item{
                 Szyfrowanie
                 \begin{packed_item}
-                    \item{wymagane szyfrowanie transmisji wideo}
-                    \item{wymagane szyfrowanie transmisji audio}
-                    \item{wymagane szyfrowanie transmisji http i każdej innej transmisji danych poza system}
+                    \item{szyfrowanie transmisji wideo}
+                    \item{szyfrowanie transmisji audio}
+                    \item{szyfrowanie transmisji http i każdej innej transmisji danych poza system}
                 \end{packed_item}
             }
         \end{packed_item}
@@ -275,323 +284,346 @@ Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą il
 \subsection{Wstępna architektura systemu}
 \label{sec:EtapIwstepnaArchitekturaSystemu}
 
-Docelowy system będzie się składał z \textbf{Interfejsu WWW}, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń. Wszystkie stream'y będą umieszczone w relacyjnej \textbf{Bazie danych} z rozszerzeniem GIS, dzięki czemu możliwe będzie łatwe zapisanie lokalizacji stream'u.
+Docelowy system będzie składał się z \textbf{Interfejsu WWW}, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń. Wszystkie streamy będą umieszczone w relacyjnej \textbf{Bazie danych} z rozszerzeniem GIS, dzięki czemu możliwe będzie łatwe zapisanie lokalizacji streamu.
 
-Po stronie komputerów stacjonarnych, za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt SWF \textbf{Adobe Flash Player}. W przypadku urządzeń mobilnych, do przygotowania aplikacji obsługującej zarówno iPhone'a jak i Androida wykorzystany zostanie otwarty framework Adobe Flex i jego mobilne wsparcie w postaci \textbf{Adobe AIR for Mobile}.
+Po stronie komputerów stacjonarnych, za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt SWF \textbf{Adobe Flash Player}. W przypadku urządzeń mobilnych, do przygotowania aplikacji obsługującej zarówno iPhone'a jak i Androida wykorzystany zostanie otwarty framework Adobe Flex i jego mobilne wsparcie w postaci \textbf{Adobe AIR for Mobile} (alternatywne rozwiązania, które rozważano, opisane są \namedref{sec:EtapItechnologia}.)
 
-Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu połączenia sieciowego -- osoby udostępniającej stream -- będą wykorzystane sieci ze wspomaganiem równorzędnym wbudowane w Adobe Flash Platform. Zasada działania sieci P2P, wymusza udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream. Firma Adobe nazywa tę technologię \textbf{Multicast/P2P Multicast}, niżej przedstawione są schematy pokazujące różnicę pomiędzy transmisją Unicast, a P2P Multicast. \footnote{informacje dotyczące technologii Adobe oraz obrazki zostały pobrane z \cite{TomKrcha2010ME} oraz \cite{MattKauf2009}}
+Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu połączenia sieciowego -- osoby udostępniającej stream -- będą wykorzystane sieci ze wspomaganiem równorzędnym wbudowane w Adobe Flash Platform. Zasada działania sieci P2P wymusza udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream. Firma Adobe nazywa tę technologię \textbf{Multicast/P2P Multicast}, niżej przedstawione są schematy pokazujące różnicę pomiędzy transmisją Unicast, a P2P Multicast.
 
-\begin{center}
-    \includegraphics[width=\textwidth]{img/adobe-p2p-unicast.jpg}
-    \captionof{figure}{Adobe Flash Platform Unicast -- wszystko zależne od przepustowości jednego elementu źródłowego, serwera plików}
-\end{center}
+    \begin{center}
+        \includegraphics[width=\textwidth]{img/adobe-p2p-unicast.jpg}
+        \captionof{figure}{Przedstawienie transmisji Unicast w Adobe Flash Platform, obrazek pochodzi z \cite{TomKrcha2010ME}.}
+    \end{center}
 
-\begin{center}
-    \includegraphics[width=\textwidth]{img/adobe-p2p-multicast.jpg}
-    \captionof{figure}{Adobe Flash Platform P2P Multicast -- obciążenie rozłożone na całość sieci ze wspomaganiem równorzędnym}
-\end{center}
+    Jak widać w tym przypadku potrzebny jest serwer z łączem o odpowiedniej przepustowości, aby zapewnić ciągłość transmisji. Klienci biorący udział w transmisji nie komunikują się w żaden sposób ze sobą.
 
-\newpage
-Jako, że część technologie, które zostaną wykorzystane są nowe dla całej ,,grupy projektowej'', będzie potrzebny prototyp systemu. Niżej przedstawiono schematy pokazujące powiązanie pomiędzy poszczególnymi elementami systemu:
+    \begin{center}
+        \includegraphics[width=\textwidth]{img/adobe-p2p-multicast.jpg}
+        \captionof{figure}{Przedstawienie transmisji P2P Multicast w Adobe Flash Platform, obrazek pochodzi z \cite{TomKrcha2010ME}.}
+    \end{center}
+
+    W przypadku transmisji P2P Multicast łącza są obciążone względem swoich możliwości. Obciążenie rozłożone na całość sieci ze wspomaganiem równorzędnym. Klienci komunikują się ze sobą współdzieląc zasób.
+
+
+Decyzja o wykorzystaniu technologii Adobe Flash Platform miała bezpośredni wpływ na architekturę systemu. Alternatywy, które rozważano opisane są \namedref{sec:EtapItechnologia}.
+
+Niżej przedstawiono schemat architektury pokazujący powiązanie pomiędzy poszczególnymi, wcześniej wymienionymi, elementami systemu.
 
 \begin{center}
     \includegraphics[width=\textwidth]{diagramy/architektura.png}
     \captionof{figure}{Wstępna architektura systemu.}
 \end{center}
+\begin{description}
+    \item[Interfejs WWW]{Centralny interfejs użytkownika z systemem, umożliwia przeglądanie streamów z poziomu przeglądarki WWW, implementuje design dostosowywany do szerokości ekranu urządzenia na którym się go przegląda. Współpracuje z wszystkimi nowoczesnymi przeglądarkami WWW. Udostępnia API do komunikacji z aplikacją mobilną czy samym obiektem SWF.}
+    \item[Baza Danych]{Centralne miejsce składowania wszystkich danych przechowywanych w systemie. Umożliwia szybkie wyszukiwanie, jest bezpośrednio połączona z Interfejsem WWW, który przez swoje API udostępnia przechowywane przez nią dane.}
+    \item[Browser Receiver]{Aplikacja Adobe Flash Player, umożliwiająca dołączenie do streamu wideo nadawanego przez Browser Broadcaster lub Mobile Broadcaster.}
+    \item[Browser Broadcaster]{Aplikacja Adobe Flash Player, umożliwiająca nadawanie streamu wideo bezpośrednio z przeglądarki.}
+    \item[Mobile Receiver]{Aplikacja mobilna Adobe AIR for Mobile, umożliwiająca odbieranie streamu wideo nadawanego przez Mobile Broadcaster lub Browser Broadcaster z poziomu urządzenia wspierającego iOS lub Androida.}
+    \item[Mobile Broadcaster]{Aplikacja mobilna Adobe AIR for Mobile, umożliwiająca nadawanie streamu wideo z poziomu urządzenia wspierającego iOS lub Androida.}
+    \item[Serwer RTMFP]{Serwer przechowujący informację na temat listy osób biorących udział w transmisji wideo streamów. Dzięki niemu pokonujemy niefiltrowany NAT. Łączą się z nim wszystkie aplikacje Broadcaster oraz Receiver.}
+\end{description}
 
-\begin{minipage}{\textwidth}
-    \begin{description}
-        \item[Interfejs WWW]{Centralny interfejs użytkownika z systemem, umożliwia przeglądanie stream'ów z poziomu przeglądarki WWW, implementuje design dostosowywany do szerokości ekranu urządzenia na którym się go przegląda. Współpracuje z wszystkimi nowoczesnymi przeglądarkami WWW. Udostępnia API do komunikacji z aplikacją mobilną czy samym obiektem SWF.}
-        \item[Baza Danych]{Centralne miejsce składowania wszystkich danych przechowywanych w systemie. Umożliwia szybkie wyszukiwanie, jest bezpośrednio połączona z Interfejsem WWW, który przez swoje API udostępnia przechowywane przez nią dane.}
-        \item[Browser Receiver]{Aplikacja Adobe Flash Player, umożliwiająca dołączenie do stream'u wideo nadawanego przez Browser Broadcaster lub Mobile Broadcaster.}
-        \item[Browser Broadcaster]{Aplikacja Adobe Flash Player, umożliwiająca nadawanie stream'u wideo bezpośrednio z przeglądarki.}
-        \item[Mobile Receiver]{Aplikacja mobilna Adobe AIR for Mobile, umożliwiająca odbieranie stream'u wideo nadawanego przez Mobile Broadcaster lub Browser Broadcaster z poziomu urządzenia wspierającego iOS lub Android'a.}
-        \item[Mobile Broadcaster]{Aplikacja mobilna Adobe AIR for Mobile, umożliwiająca nadawanie stream'u wideo z poziomu urządzenia wspierającego iOS lub Android'a.}
-        \item[Serwer RTMFP]{Serwer przechowujący informację na temat listy osób biorących udział w transmisji wideo stream'ów. Dzięki niemu pokonujemy niefiltrowany NAT. Łączą się z nim wszystkie aplikacje Broadcaster oraz Receiver.}
-    \end{description}
-\end{minipage}
+\subsection{Technologia}
+\label{sec:EtapItechnologia}
+
+W tym rozdziale umieszczono informacje o tym jakie technologie oraz dlaczego zostały wybrane do realizacji poszczególnych elementów systemu. Przed przedstawieniem wybranej technologii rozważono alternatywy jeżeli takowe istniały.
+
+\subsubsection{Adobe Flash Platform}
+\label{sec:EtapItechnologiaAFP}
+
+Przed wybraniem tej technologi rozważano alternatywne rozwiązania w postaci dwóch technologii. Niżej przedstawiono je wraz z krótkim opisem wyjaśniającym dlaczego nie znalazły zastosowania w systemie.
+\begin{description}
+    \item[Widget JAVA w przeglądarce] Java jest środowiskiem programistycznym dostępnym na każdą platformę. Udostępnia możliwość uruchomienia widgetów w obrębie przeglądarki, umożliwia wykonywanie połączeń UDP oraz TCP. Nie znaleziono biblioteki umożliwiającej stworzenie jednego kodu dla urządzeń iOS oraz Android. Dodatkowo wykorzystanie JAVY wymusiłoby samodzielną implementacja P2P w transmisji wideo z poziomu przeglądarki. Ostatecznym ,,gwoździem do trumny'' tej technologii jest mała popularność oraz najczęściej blokowanie Javy w przeglądarkach.
+    \item[Websockets] Dostępne w specyfikacji HTML5 (\url{http://tools.ietf.org/html/rfc6455}), umożliwiające nawiązywanie połączeń TCP pomiędzy serwerem, a przeglądarką. Aktualnie wspierane przez  Firefox 4+, Google Chrome 16+, Opera 11+ oraz Safari 5+. Powodem na rezygnację z tej technologii jest brak obsługi pobierania strumienia wideo z kamery z poziomu przeglądarki, brak przykładów lub biblioteki poświęconej zagadnieniu P2P wykorzystującej websockets oraz brak wsparcia technologi dla przeglądarek mobilnych.
+\end{description}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/adobe-flash-platform.jpg}
+  \end{center}
+  \captionof{figure}{Logo Adobe Flash Platform, pobrane z Google Images}
+\end{wrapfigure}
+
+Platforma technologii Flash składająca się z kilku elementów. Przy odpowiednim ich wykorzystaniu umożliwia stworzenie aplikacji działających praktycznie na dowolnej platformie i dowolnej przeglądarce.
+
+\begin{description}
+    \item[Adobe Flex] Framework z otwartym kodem źródłowym umożliwiający tworzenie aplikacji w środowiskach Adobe AIR oraz Adobe Flash Player.
+    \item[Adobe Flash Player] Środowisko dostępne we wszystkich desktopowych przeglądarkach i niektórych mobilnych (Android). Służy do odtwarzania animacji SWF. Pozwala wykorzystać szereg klas Flex'a niebędących częścią Adobe AIR.
+    \item[Adobe AIR] Środowisko dostępne na szereg platform (Windows, Android, iOS) umożliwiające tworzenie aplikacji mobilnych jak i desktopowych niezależnie od platformy docelowej.
+\end{description}
+
+Wybranie tej technologii było koniecznością już na samym początku -- stąd jej obecność w architekturze systemu. Wynika bezpośrednio ze specyfikacji wymagań. Jest to jedyne rozwiązanie umożliwiające aktualnie:
+\begin{packed_item}
+    \item{Nadawanie ,,peer to peer'' streamu wideo z przeglądarki/urządzenia mobilnego.}
+    \item{Odbiór transmisji ,,peer to peer'' streamu wideo z przeglądarki/urządzenia mobilnego.}
+    \item{Nadawanie ,,peer to peer'' streamu wideo z urządzenia mobilnego.}
+    \item{Odbiór transmisji ,,peer to peer'' streamu na urządzeniu mobilnym.}
+    \item{Skalowalność na poziomie miliona klientów w sieci ,,peer to peer'' dla pojedynczego streamu (więcej w~\cite{MattKauf2009}).}
+    \item{Tworzenie aplikacji na iOS oraz Androida z jednego źródła.}
+\end{packed_item}
+
+Jak każda technologia Adobe Flash Platform ma swoje wady. Niżej przedstawiono listę najważniejszych z nich.
+\begin{packed_item}
+    \item{Komunikacja losowym, wysokim portem UDP może generować problemy z korporacyjnymi firewallami.}
+    \item{Wymagana instalacja wtyczki do przeglądarki (w Google Chrome/Chromium jest instalowana automatycznie alternatywna wersja).}
+    \item{Ograniczony support Adobe Flash Player na urządzeniach firmy Apple.}
+    \item{W przypadku programów IPA dla urządzeń firmy Apple, aplikacja wykorzystująca Adobe AIR for Mobile dołącza wykorzystywane biblioteki Adobe AIR do samej aplikacji, umożliwiając w ten sposób jej uruchomienie na ww. urządzeniach.}
+\end{packed_item}
+
 
 \newpage
-\subsection{Technologia}
-W tym rozdziale umieszczono informacje o tym jakie technologie oraz dlaczego zostały wybrane do realizacji poszczególnych elementów systemu.
+\subsubsection{Cumulus}
+Darmowa oraz otwarta, bo udostępniona na licencji GPL, implementacja serwera RTMFP (Real Time Media Flow Protocol). W systemie jest on nieodzowny do odkrywania listy potencjalnych peerów posiadających źródło streamów. Jego wykorzystanie jest praktycznie ,,wymuszone'' przez preferencję rozwiązań Open Source nad komercyjnymi rozwiązaniami np. w postaci Adobe Flash Media Interactive Server (\url{https://github.com/OpenRTMFP/Cumulus}).
 
-\begin{minipage}{\textwidth}
-    \begin{center}
-        \includegraphics[width=0.5\textwidth]{img/logos/adobe-flash-platform.jpg}
-    \end{center}
-    \subsubsection{Adobe Flash Platform}
-    \begin{packed_item}
-        \item{\textbf{Adobe Flash Player} -- Framework z otwartym kodem źródłowym umożliwiający tworzenie aplikacji w środowiskach Adobe AIR oraz Adobe Flash Player.}
-        \item{\textbf{Adobe Flash Player} --  Środowisko dostępne we wszystkich desktopowych przeglądarkach i niektórych mobilnych (Android). Służy do odtwarzania animacji SWF. Pozwala wykorzystać szereg klas Flex'a niebędących częścią Adobe AIR.}
-        \item{\textbf{Adobe AIR} -- Środowisko dostępne na szereg platform (Windows, Android, iOS) umożliwiające tworzenie aplikacji mobilnych jak i desktopowych niezależnie od platformy docelowej.}
-    \end{packed_item}
+Przed wybraniem Cumulusa jako serwera RTMFP brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[Adobe Cirrus] Darmowy i ograniczony dostęp do Adobe Cirrus za pomocą klucza developerskiego (\url{http://labs.adobe.com/technologies/cirrus/}). Nie nadaje się do wykorzystania komercyjnego, nie skaluje się ze względu na stały limit wywołań.
+    \item[Adobe Flash Media Interactive Server 4.5] Jedyną, lecz także poważną wadą tego rozwiązania jest koszt około 5 900 EURO za licencję.
+\end{description}
 
-    Wybranie tej technologii było koniecznością już na samym początku -- stąd jej obecność w architekturze systemu. Wynika bezpośrednio ze specyfikacji wymagań. Jest to jedyne rozwiązanie umożliwiające aktualnie:
-    \begin{packed_item}
-        \item{nadawanie ,,peer to peer'' streamu wideo z przeglądarki/urządzenia mobilnego}
-        \item{odbiór transmisji ,,peer to peer'' streamu wideo z przeglądarki/urządzenia mobilnego}
-        \item{nadawanie ,,peer to peer'' streamu wideo z urządzenia mobilnego}
-        \item{odbiór transmisji ,,peer to peer'' streamu na urządzeniu mobilnym}
-        \item{skalowalność na poziomie miliona klientów w sieci ,,peer to peer'' dla pojedynczego streamu (więcej w~\cite{MattKauf2009})}
-        \item{tworzenie aplikacji na iOS oraz Android'a z jednego źródła}
-    \end{packed_item}
+Poniżej przedstawiono zalety Cumulus, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Wbudowana obsługa P2P ,,rendez-vous'', czyli zbierania i udostępniania informacji na temat dostępnych peerów dla danego streamu.}
+    \item{Możliwość rozsyłania streamu wideo na żywo.}
+    \item{Otwartość oraz darmowość -- jedyna otwarta implementacja serwera RTMFP.}
+    \item{Możliwość pisania rozszerzeń serwera za pomocą języka LUA.}
+    \item{Wbudowana obsługa komunikacji AMF (Action Message Format): pull, push, RPC.}
+    \item{Przewidziana skalowalność oraz zarządzanie obciążeniem za pomocą CumulusEdge.}
+    \item{Łatwa konfiguracja oraz instalacja.}
+    \item{Wieloplatformowość.}
+    \item{Aktywna grupa dyskusyjna.}
+\end{packed_item}
 
-    Wady:
-    \begin{packed_item}
-        \item{komunikacja losowym, ,,wysokim'' portem UDP może generować problemy z korporacyjnymi firewall'ami}
-        \item{wymagana instalacja wtyczki do przeglądarki (w Google Chrome/Chromium jest instalowana automatycznie alternatywna wersja)}
-        \item{żadna z technologii Adobe nie jest dostępna na iOS oraz na wszelkich urządzeniach firmy Apple (Adobe Flash Player, Adobe AIR)}
-        \item{w przypadku programów IPA dla urządzeń firmy Apple, aplikacja wykorzystująca Adobe AIR for Mobile dołącza wykorzystywane biblioteki Adobe AIR do samej aplikacji, umożliwiając w ten sposób jej uruchomienie na ww. urządzeniach}
-    \end{packed_item}
+Jak każda z technologii, także i Cumulus ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Brak wbudowanej obsługi ,,zwykłego'' protokołu RTMP (Real Time Messaging Protocol), jako alternatywnego źródła streamu w przypadku blokady firewall po stronie klienta.}
+\end{packed_item}
 
-    Alternatywy:
-    \begin{packed_item}
-        \item{plugin JAVY dla przeglądarek, samodzielna implementacja P2P, transmisji}
-        \item{websockets dostępne w specyfikacji HTML5, niestety aktualnie nie wspierane oficjalnie przez żadną z przeglądarek}
-    \end{packed_item}
-\end{minipage}
+\newpage
+\subsubsection{Django}
+Framework napisany w Pythonie, umożliwiający proste i szybkie tworzenie stron internetowych. W systemie stworzony zostanie za jego pomocą Interfejs WWW, będący centrum wymiany informacji i możliwości przeglądania streamów. Strona domowa projektu to \url{http://djangoproject.com}.
 
-\begin{minipage}{\textwidth}
-    \subsubsection{Cumulus}
-    Darmowa oraz otwarta, bo udostępniona na licencji GPL, implementacja serwera RTMFP (Real Time Media Flow Protocol). W systemie jest on nieodzowny do odkrywania listy potencjalnych peer'ów posiadających źródło stream'ów.
+Przed wybraniem Django, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[Zend] Framework napisany w PHP, technologia nie będąca bliska autorowi pracy (\url{http://framework.zend.com}). 
+    \item[Pyramid] Framework napisany w Pythonie, mniej popularny od Django. Brak doświadczenia w wdrażaniu aplikacji Pyramid (\url{http://www.pylonsproject.org}).
+    \item[Rails] Framework napisany w Ruby. Brak doświadczenia w Ruby oraz w wdrażaniu aplikacji Rails (\url{http://rubyonrails.org}).
+\end{description}
 
-    Zalety:
-    \begin{packed_item}
-        \item{wbudowana obsługa P2P ,,rendez-vous'', czyli zbierania i udostępniania informacji na temat dostępnych peer'ów dla danego stream'u}
-        \item{możliwość rozsyłania stream'u wideo na żywo}
-        \item{otwartość oraz darmowość}
-        \item{możliwość pisania rozszerzeń serwera za pomocą języka LUA}
-        \item{wbudowana obsługa komunikacji AMF (Action Message Format): pull, push, RPC}
-        \item{przewidziana skalowalność oraz zarządzanie obciążeniem za pomocą CumulusEdge}
-        \item{łatwa konfiguracja oraz instalacja}
-        \item{wieloplatformowość}
-        \item{aktywna grupa dyskusyjna}
-    \end{packed_item}
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/django.jpg}
+  \end{center}
+  \captionof{figure}{Logo Django, pobranie ze strony projektu.}
+\end{wrapfigure}
 
-    Wady:
-    \begin{packed_item}
-        \item{brak wbudowanej obsługi ,,zwykłego'' protokołu RTMP (Real Time Messaging Protocol), jako alternatywnego źródła streamu w przypadku blokady firewall po stronie klienta}
-    \end{packed_item}
+Wykorzystując konkurencyjne frameworki dało by się również zrealizować Interfejs WWW. Poniżej przedstawiono zalety Django, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Znajomość procesu wdrażania oraz doświadczenie w zarządzaniu aplikacjami Django autora pracy.}
+    \item{Wbudowany/automatyczny panel admina.}
+    \item{Wbudowany ORM dla PostgreSQL, MySQL, SQLite.}
+    \item{Wbudowane wsparcie dla baz danych z rozszerzeniem GIS -- geodjango.}
+    \item{Wbudowana obsługa testów jednostkowych.}
+    \item{Obszerna baza bibliotek Pythona -- np. PyAMF do połączeń Adobe Flash / Django; Fabric do deployowania gotowej aplikacji.}
+    \item{Tworzony z myślą, DRY -- Don't Repeat Yourself.}
+    \item{Bardzo dobra dokumentacja.}
+    \item{Napisany w Pythonie.}
+    \item{Skalowalny do rozmiarów Disqus, Instagram czy Pinterest.}
+\end{packed_item}
 
-    Alternatywy:
-    \begin{packed_item}
-        \item{brak alternatyw otwartych}
-        \item{darmowy i ograniczony dostęp do Adobe Cirrus za pomocą klucza developerskiego (\url{http://labs.adobe.com/technologies/cirrus/})}
-        \item{Adobe Flash Media Interactive Server 4.5 -- koszt około 5 900 EURO za licencję}
-    \end{packed_item}
-\end{minipage}
+Jak każda z technologii, także i Django ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Wymaga odpowiedniego hostingu. Wymaga wiedzy i doświadczenia we wdrażaniu.}
+    \item{Konieczność poznania Pythona.}
+\end{packed_item}
 
-\begin{minipage}{\textwidth}
-    \begin{center}
-        \includegraphics[width=0.5\textwidth]{img/logos/django.jpg}
-    \end{center}
-    \subsubsection{Django}
-    Framework napisany w Python'ie, umożliwiający proste i szybkie tworzenie stron internetowych. W systemie stworzony zostanie za jego pomocą Interfejs WWW, będący centrum wymiany informacji i możliwości przeglądania streamów. \url{http://djangoproject.com}
+\newpage
+\subsubsection{jQuery}
+Biblioteka JavaScript tworząca wspólne API dla wszystkich przeglądarek służące do: przechodzenia i wybierania elementów z drzewa dokumentu HTML, tworzenia animacji, interakcji AJAX oraz zarządzania zdarzeniami. W~systemie jest dokładnie w tych celach wykorzystywana (\url{http://jquery.com}).
 
-    Zalety Django:
-    \begin{packed_item}
-        \item{wbudowany/automatyczny panel admina}
-        \item{wbudowany ORM dla PostgreSQL, MySQL, SQLite}
-        \item{wbudowane wsparcie dla baz danych z rozszerzeniem GIS -- geodjango}
-        \item{wbudowana obsługa testów jednostkowych}
-        \item{obszerna baza bibliotek Python'a -- np. PyAMF do połączeń Adobe Flash / Django; Fabric do deployowania gotowej aplikacji}
-        \item{tworzony z myślą, DRY -- Don't Repeat Yourself}
-        \item{bardzo dobra dokumentacja}
-        \item{napisany w Pythonie}
-        \item{skalowalny do rozmiarów Disqus, Instagram czy Pinterest}
-    \end{packed_item}
+Przed wybraniem jQuery, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[mootools] Jest frameworkiem JavaScriptowym, jest narzędziem zbyt poważnym do zastosowania w systemie (\url{http://mootools.net}).
+    \item[prototypeJS] Jest podobnie jak jQuery biblioteką JavaScript, mniejsza od mootools, ale wolniejsza od jQuery (\url{http://prototypejs.org}).
+    \item[dojotoolkit] Jest modularnym frameworkiem JavaScriptowym, zbyt poważnym do zastosowania w systemie (\url{http://dojotoolkit.org}).
+\end{description}
 
-    Wady Django:
-    \begin{packed_item}
-        \item{wymaga odpowiedniego hostingu / trudny w deployowaniu}
-        \item{konieczność poznania Pythona}
-    \end{packed_item}
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/jquery.jpg}
+  \end{center}
+  \captionof{figure}{Logo jQuery, pobranie ze strony projektu.}
+\end{wrapfigure}
 
-    Alternatywy dla Django:
-    \begin{packed_item}
-        \item{wszystkie większe frameworki web'owe pokroju Zend, Pylons}
-    \end{packed_item}
-\end{minipage}
+Poniżej przedstawiono zalety jQuery, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Zajmuje jedynie 31KB.}
+    \item{Zgodny z CSS3.}
+    \item{API wspólne dla wszystkich przeglądarek: IE~6.0+, FF~10+, Safari~5.0+, Opera, Chrome.}
+    \item{Dobra dokumentacja i przykłady.}
+    \item{Duża popularność.}
+\end{packed_item}
 
-\begin{minipage}{\textwidth}
-    \begin{center}
-        \includegraphics[width=0.5\textwidth]{img/logos/jquery.jpg}
-    \end{center}
-    \subsubsection{jQuery}
-    Biblioteka JavaScript tworząca wspólne API dla wszystkich przeglądarek służące do: przechodzenia i wybierania elementów z drzewa dokumentu HTML, tworzenia animacji, interakcji AJAX oraz zarządzania zdarzeniami. W systemie jest dokładnie w tych celach wykorzystywana.
+Jak każda z technologii, także i jQuery ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Dalej jest to ten sam poczciwy JavaScript.}
+    \item{Nie jest to framework, a jedynie biblioteka.}
+\end{packed_item}
 
-    Zalety:
-    \begin{packed_item}
-        \item{zajmuje jedynie 31KB}
-        \item{zgodny z CSS3}
-        \item{API wspólne dla wszystkich przeglądarek: IE 6.0+, FF 10+, Safari 5.0+, Opera, Chrome}
-        \item{dobra dokumentacja i przykłady}
-        \item{duża popularność}
-    \end{packed_item}
+\newpage
+\subsubsection{Bootstrap}
+Framework do tworzenia interfejsu WWW, napisany w LESS, kompilujący się do CSS. Dodatkowo za pomocą jQuery, umożliwia skorzystanie z wielu niestandardowych komponentów, czy też animacji. Za jego pomocą zostanie stworzony layout na potrzebny systemu, dostosowany do obsługi urządzeń mobilnych zachowując przy tym jedno źródło (\url{http://twitter.github.com/bootstrap}).
 
-    Wady:
-    \begin{packed_item}
-        \item{dalej jest to ten sam poczciwy JavaScript}
-        \item{nie jest to framework, a jedynie biblioteka}
-    \end{packed_item}
+Nie znaleziono alternatywnej technologii, która mogła by być porównana na każdej płaszczyźnie z Bootstrapem. Większość rozwiązań trzeba rozszerzać lub kompletować o to co jest gotowe i wbudowane w Bootstrap.
 
-    Alternatywy:
-    \begin{packed_item}
-        \item{mootools \url{http://mootools.net}}
-        \item{prototype \url{http://prototypejs.org/}}
-        \item{dojo \url{http://dojotoolkit.org}}
-    \end{packed_item}
-\end{minipage}
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/bootstrap.jpg}
+  \end{center}
+  \captionof{figure}{Logo Bootstrap, pobranie ze strony projektu.}
+\end{wrapfigure}
 
-\begin{minipage}{\textwidth}
-    \begin{center}
-        \includegraphics[width=0.5\textwidth]{img/logos/bootstrap.jpg}
-    \end{center}
-    \subsubsection{Bootstrap}
-Framework do tworzenia interfejsu WWW, napisany w LESS, kompilujący się do CSS. Dodatkowo za pomocą jQuery, umożliwia skorzystanie z wielu niestandardowych komponentów, czy też animacji. Za jego pomocą zostanie stworzony layout na potrzebny systemu, dostosowany do obsługi urządzeń mobilnych zachowując przy tym jedno źródło. \url{http://twitter.github.com/bootstrap/}
+Poniżej przedstawiono zalety Bootstrapa, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Wbudowana obsługa responsywności -- klasy CSS zależne do szerokości ekranu.}
+    \item{Wbudowany reset stylów CSS, tak aby przeglądarki wyświetlały w taki sam sposób wszystkie komponenty HTML'a (marginesy, paddingi).}
+    \item{Formatowanie domyślne standardowych tagów HTML.}
+    \item{Wbudowane klasy pomocnicze do typografii.}
+    \item{Wbudowane komponenty rozszerzające tagi HTML.}
+    \item{Wbudowany, dwunasto-kolumnowy grid.}
+    \item{Rozszerzalny dzięki jQuery o dodatkowe możliwości (animacje, dodatkowe komponenty).}
+    \item{Zbudowany za pomocą LESS (\url{http://lesscss.org}) -- duże ułatwienie przy pisaniu kodu CSS m.in. poprzez: zmienne, zagnieżdżenia oraz ,,mix-iny''.}
+    \item{Bardzo dobra dokumentacja oraz przykłady.}
+\end{packed_item}
 
-    Zalety:
-    \begin{packed_item}
-        \item{wbudowana obsługa responsywności -- klasy CSS zależne do szerokości ekranu}
-        \item{wbudowany reset stylów CSS, tak aby przeglądarki wyświetlały w taki sam sposób wszystkie komponenty HTML'a (marginesy, paddingi)}
-        \item{formatowanie domyślne standardowych tagów HTML}
-        \item{wbudowane klasy pomocnicze do typografii}
-        \item{wbudowane komponenty rozszerzające tagi HTML}
-        \item{wbudowany, dwunasto-kolumnowy grid}
-        \item{rozszerzalny dzięki jQuery o dodatkowe możliwości (animacje, dodatkowe komponenty)}
-        \item{zbudowany za pomocą LESS (\url{http://lesscss.org}) -- duże ułatwienie przy pisaniu kodu CSS m.in. poprzez: zmienne, zagnieżdżenia oraz ,,mix-in'y''}
-        \item{bardzo dobra dokumentacja oraz przykłady}
-    \end{packed_item}
+Jak każda z technologii, także i Bootstrap ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Aby w pełni skorzystać trzeba znać CSS i poznać LESS.}
+    \item{Pliki źródłowe LESS trzeba kompilować do CSS, co jest dosyć uciążliwe.}
+    \item{Raz wykorzystany stanie się podstawą przy większości projektów webowych.}
+\end{packed_item}
 
-    Wady:
-    \begin{packed_item}
-        \item{aby skorzystać trzeba znać CSS i poznać LESS}
-        \item{pliki źródłowe LESS trzeba kompilować do CSS, co jest dosyć uciążliwe}
-        \item{raz wykorzystany stanie się podstawą przy większości projektów web'owych}
-    \end{packed_item}
+\newpage
+\subsubsection{FlashDevelop}
+Jedyne otwarte i darmowe IDE współpracujące z Adobe Flash Platform (wykorzystujące SDK Flex'a), umożliwiające tworzenie aplikacji z wykorzystaniem Adobe Flash Platform. Wszystkie części systemu związane z technologią Adobe zostaną przygotowane za pomocą tego IDE (\url{http://flashdevelop.org}).
 
-    Alternatywy:
-    \begin{packed_item}
-        \item{nie znaleziono technologii, która mogła by być porównana na każdej płaszczyźnie z bootstrapem, większość rozwiązań trzeba rozszerzać o to co jest gotowe dla }
-    \end{packed_item}
-\end{minipage}
+Nie znaleziono alternatywnego rozwiązania darmowego pozwalającego na porównanie z FlashDevelop. Flash Builder Premium 4.6, jest oryginalnym i polecanym przez Adobe rozwiązaniem. Koszt to ,,jedyne'' ~639 EURO za pełną licencję jednostanowiskową.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/flashdevelop.jpg}
+  \end{center}
+  \captionof{figure}{Logo FlashDevelop, pobranie ze strony projektu.}
+\end{wrapfigure}
+
+Poniżej przedstawiono zalety FlashDevelop, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Otwartość oraz darmowość.}
+    \item{Gotowe szablony aplikacji Adobe Flex/AIR/AIR for Mobile.}
+    \item{Zaawansowane podpowiadanie kodu (,,code completion'').}
+    \item{Możliwość pobrania i instalacji  Adobe Flex SDK z poziomu aplikacji.}
+    \item{Wbudowany Flash debugger.}
+\end{packed_item}
+
+Jak każde z rozwiązań, także i FlashDevelop ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Dostępna jest jedynie wersja na platformę Windows.}
+    \item{Szczątkowa dokumentacja.}
+    \item{Wymaga podstawowej znajomości technologii Adobe, aby odnaleźć się w interfejsie i zacząć projekt.}
+\end{packed_item}
 
 
-\begin{minipage}{\textwidth}
-    \begin{center}
-        \includegraphics[width=0.5\textwidth]{img/logos/flashdevelop.jpg}
-    \end{center}
-    \subsubsection{FlashDevelop}
-    Jedyne otwarte i darmowe IDE współpracujące z Adobe Flash Platform (wykorzystujące SDK Flex'a), umożliwiające tworzenie aplikacji z wykorzystaniem Adobe Flash Platform. Wszystkie części systemu związane z technologią Adobe zostaną przygotowane za pomocą tego IDE \url{http://flashdevelop.org}
-    
-    Zalety:
-    \begin{packed_item}
-        \item{otwartość oraz darmowość}
-        \item{gotowe szablony aplikacji Flex/AIR/AIR for Mobile}
-        \item{zaawansowane podpowiadanie kodu (,,code completion'')}
-        \item{możliwość pobrania i instalacji Flex SDK z poziomu aplikacji}
-        \item{wbudowany Flash debugger}
-    \end{packed_item}
+\newpage
+\subsubsection{PostgreSQL}
+Serwer obiektowo-relacyjnej bazy danych, umożliwiający przechowywanie i szybki dostęp do wszelkich danych. Jest rozwijany od ponad 15 lat. Jego sprawdzona przez ten czas architektura potwierdza jego opinię, jako serwera niezawodnego, utrzymującego spójność i poprawność danych. W projekcie jest podstawowym mechanizmem składowania danych (\url{http://www.postgresql.org}).
 
-    Wady:
-    \begin{packed_item}
-        \item{dostępna jest jedynie wersja na platformę Windows}
-        \item{szczątkowa dokumentacja}
-        \item{wymaga podstawowej znajomości technologii Adobe}
-    \end{packed_item}
+Przed wybraniem PostgreSQL, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[MySQL] Najpopularniejsza relacyjna baza danych. Posiada wbudowane rozszerzenie GIS, jest wspierana przez ORM Django. Szybka, lecz nie tak niezawodna jak PostgreSQL.  (\url{http://www.mysql.com}).
+    \item[SQLite] Relacyjna baza danych umożliwiająca przechowywanie bazy w pliku. Posiada ograniczone transakcje oraz rozszerzenie GIS, jest wspierana przez ORM Django. Mało wydaja dla aplikacji wielowątkowych (\url{http://www.sqlite.org}).
+\end{description}
 
-    Alternatywy:
-    \begin{packed_item}
-        \item{brak alternatyw darmowych}
-        \item{Flash Builder Premium 4.6, koszt to ,,jedyne'' ~639 EURO za pełną licencję jednostanowiskową}
-    \end{packed_item}
-\end{minipage}
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/postgresql.jpg}
+  \end{center}
+  \captionof{figure}{Logo PostgreSQL, pobranie ze strony projektu.}
+\end{wrapfigure}
+
+Poniżej przedstawiono zalety PostgreSQL, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Otwartość oraz darmowość.}
+    \item{Niezawodność, stabilność.}
+    \item{Duża wydajność.}
+    \item{Wbudowane narzędzia do tworzenia backupu danych -- pg\_dump.}
+    \item{Dostępne narzędzia do replikacji oraz zarządzania obciążeniem np. pgpool2 -- ważne w przypadku skalowalności.}
+    \item{Dostępne rozszerzenie GIS (Geographic Information System) w postaci PostGIS (\url{http://postgis.refractions.net}).}
+    \item{Możliwość uruchomienia na wielu platformach.}
+\end{packed_item}
+
+Jak każde z rozwiązań, także i PostgreSQL ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Stosunkowo długie otwieranie nowego połączenia.}
+    \item{Mniejsza popularność i dostępność w pakietach hostingowych niż MySQL'a.}
+\end{packed_item}
+
+\newpage
+\subsubsection{Google Maps Javascript API}
+Jest darmową biblioteką Javascript pozwalającą na umieszczenie Mapy Google na własnej stronie internetowej. Dostarcza API zawierające szereg metod pozwalających na zarządzanie obiektem mapy oraz na dodawanie zawartości do Map Google. Łączy się też z wieloma darmowymi usługami dostępnymi od firmy Google  (\url{https://developers.google.com/maps/documentation/javascript}).
+
+W projektowanym systemie będzie ona wykorzystywana do prezentacji streamów posiadających lokalizację oraz umożliwiała wyszukiwanie informacji.
+
+Przed wybraniem Google Maps Javascript API, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[OpenLayers] Całkowicie darmowa i otwarta biblioteka wraz z serwerem map, umożliwiająca wyświetlanie interaktywnej mapy na stronie internetowej. Wolniejsza i z mniej dopracowanym interfejsem względem rozwiązania od Google (\url{http://openlayers.org}).
+    \item[Nokia Maps API for JavaScript] Zaawansowana biblioteka JavaScript do wyświetlania map Ovi. Stosunkowo nieduże ograniczenia jeżeli chodzi o ilość zapytań -- 1 milion w wersji Trial. Reszta opcji płatna lub do uzgodnienia z Nokia (\url{http://api.maps.nokia.com/en/overview.html}).
+    \item[Bing Maps AJAX] Biblioteka JavaScript umożliwiająca skorzystanie z map http://www.bing.com/maps . Korzysta z map dostarczanych przez Nokia, udostępniają własne API. Gorszy interfejs oraz aktualność map i zdjęć satelitarnych niż w przypadku rozwiązania od Google (\url{http://www.bingmapsportal.com/isdk/ajaxv7}).
+\end{description}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+  \begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/google-maps-api.jpg}
+  \end{center}
+  \captionof{figure}{Logo Google Developers, odpowiedzialnego za Google Maps JavaScript API, pobranie ze strony projektu.}
+\end{wrapfigure}
 
 
-\begin{minipage}{\textwidth}
-    \begin{center}
-        \includegraphics[width=0.5\textwidth]{img/logos/postgresql.jpg}
-    \end{center}
-    \subsubsection{PostgreSQL}
-    Serwer obiektowo-relacyjnej bazy danych, umożliwiający przechowywanie i szybki dostęp do wszelkich danych. Jest rozwijany od ponad 15 lat. Jego sprawdzona przez ten czas architektura potwierdza jego opinię, jako serwera niezawodnego, utrzymującego spójność i poprawność danych. W projekcie jest podstawowym mechanizmem składowania danych. \url{http://www.postgresql.org}
+Poniżej przedstawiono zalety Google Maps Javascript API, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Biblioteka jest darmowa.}
+    \item{Biblioteka działa z większością używanych dzisiaj przeglądarek (IE 7.0+ (Windows), Firefox 3.0+ (Windows, Mac OS X, Linux), Safari 4+ (Mac OS X, iOS), Chrome (Windows, Mac OS X, Linux), Android, BlackBerry 6, Dolfin 2.0+ (Samsung Bada)).}
+    \item{Biblioteka dostosowana jest do mobilnych urządzeń -- zarówno pod względem prędkości jak i wyglądu oraz interfejsu użytkownika.}
+    \item{Łączy się z usługą wyszukiwania lokalizacji i udostępnia dane dotyczące położenia danej lokalizacji.}
+    \item{Bardzo dobra dokumentacja.}
+    \item{Bardzo dobre przykłady wykorzystania API.}
+    \item{Dokładność map.}
+    \item{Popularność rozwiązania.}
+\end{packed_item}
 
-    Zalety:
-    \begin{packed_item}
-        \item{otwartość oraz darmowość}
-        \item{niezawodność, stabilność}
-        \item{wydajność}
-        \item{wbudowane narzędzia do tworzenia backupu danych -- pg\_dump}
-        \item{dostępne narzędzia do replikacji oraz zarządzania obciążeniem np. pgpool2 -- ważne w przypadku skalowalności}
-        \item{dostępne rozszerzenie GIS (Geographic Information System) w postaci PostGIS \url{http://postgis.refractions.net/}}
-        \item{wieloplatformowośc}
-    \end{packed_item}
+Jak każde z rozwiązań, także i Google Maps Javascript API ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Brak usługi geolokalizacji po adresie IP.}
+\end{packed_item}
 
-    Wady:
-    \begin{packed_item}
-        \item{stosunkowo długie otwieranie nowego połączenia}
-        \item{mniejsza popularność i dostępność w pakietach hostingowych niż MySQL'a}
-        \item{rozsiana dokumentacja}
-    \end{packed_item}
 
-    Alternatywy:
-    \begin{packed_item}
-        \item{MySQL \url{http://www.mysql.com}}
-        \item{SQLite \url{http://www.sqlite.org}}
-        \item{Oracle \url{http://www.oracle.com}}
-        \item{MicroSoft SQL Server \url{http://www.microsoft.com/sqlserver/en/us/default.aspx}}
-    \end{packed_item}
-\end{minipage}
+\newpage
+\subsubsection{Inne technologie}
+Przy tworzeniu systemu skorzysta się również również z kilku mniejszych narzędzi, czy też bibliotek wartych wymienienia. Niżej przedstawiono ich listę.
 
-\begin{minipage}{\textwidth}
-    \begin{center}
-        \includegraphics[width=0.5\textwidth]{img/logos/google-maps-api.jpg}
-    \end{center}
-    \subsubsection{Google Maps Javascript API}
-    Jest darmową biblioteką Javascript pozwalającą na umieszczenie Mapy Google na własnej stronie internetowej. Dostarcza API zawierające szereg metod pozwalających na zarządzanie obiektem mapy oraz na dodawanie zawartości do Map Google. Łączy się też z wieloma darmowymi usługami dostępnymi od firmy Google.
-    
-    W projektowanym systemie będzie ona wykorzystywana do prezentacji stream'ów posiadających lokalizację oraz umożliwiała wyszukiwanie informacji.
-
-    Zalety:
-    \begin{packed_item}
-        \item{biblioteka jest darmowa}
-        \item{biblioteka działa z większością używanych dzisiaj przeglądarek (IE 7.0+ (Windows), Firefox 3.0+ (Windows, Mac OS X, Linux), Safari 4+ (Mac OS X, iOS), Chrome (Windows, Mac OS X, Linux), Android, BlackBerry 6, Dolfin 2.0+ (Samsung Bada))}
-        \item{biblioteka dostosowana jest do mobilnych urządzeń -- zarówno pod względem prędkości jak i wyglądu oraz interfejsu użytkownika}
-        \item{łączy się z usługą wyszukiwania lokalizacji i udostępnia dane dotyczące położenia danej lokalizacji}
-        \item{bardzo dobra dokumentacja}
-        \item{bardzo dobre przykłady wykorzystania API}
-        \item{popularność rozwiązania}
-    \end{packed_item}
-
-    Wady:
-    \begin{packed_item}
-        \item{brak usługi geolokalizacji po adresie IP}
-    \end{packed_item}
-
-    Alternatywy:
-    \begin{packed_item}
-        \item{Nokia Maps API for JavaScript \url{http://api.maps.nokia.com/en/overview.html}}
-        \item{Bing Maps AJAX \url{http://www.bingmapsportal.com/isdk/ajaxv7}}
-    \end{packed_item}
-\end{minipage}
-
-\begin{minipage}{\textwidth}
-    \subsubsection{Inne technologie}
-    Przy tworzeniu systemu skorzysta się również również z kilku mniejszych narzędzi, czy też bibliotek wartych wymienienia:
-    \begin{packed_item}
-        \item{MaxMind GeoIP Lite (\url{http://www.maxmind.com/app/geolite}) -- Biblioteka udostępniająca bazę IP mapowaną do nazwy lokalizacji i położenia za pomocą prostego API.}
-        \item{GIT (\url{http://git-scm.com}) -- Darmowy i otwarty, rozproszony system kontroli wersji.}
-        \item{GitHub (\url{http://github.com}) -- Serwis udostępniający darmowe miejsce na zdalne repozytorium GIT'a -- dla projektów o otwartym kodzie źródłowym.}
-        \item{Fabric (\url{http://fabfile.org}) -- Biblioteka i narzędzie linii komend umożliwiające pisanie skryptów automatycznie wykonywanych poprzez SSH na zdefiniowanych hostach. Umożliwia stworzenie procesu automatycznej aktualizacji systemu np. z aktualnego repozytorium.}
-        \item{Factory\_boy (\url{https://github.com/rbarrois/factory\_boy}) -- Biblioteka umożliwiająca w prosty sposób tworzenie fabryk do modelów danych. Bardzo pomocna przy tworzeniu testów jednostkowych i generowaniu danych potrzebnych do ich przeprowadzenia.}
-        \item{South (\url{http://south.aeracode.org}) -- Aplikacja Django umożliwiająca proste zarządzanie procesem migracji bazy danych. Dotyczy to zarówna struktury jak i samych danych.}
-        \item{Virtualenv (\url{http://pypi.python.org/pypi/virtualenv}) -- Narzędzie do tworzenia odizolowanych środowisk Python'owych, umożliwia równoległe uruchomienie kilku wersji Pythona z własną kolekcją bibliotek.}
-        \item{PIP (\url{http://pypi.python.org/pypi/pip}) -- Narzędzie linii komend do pobierania i instalowania bibliotek Python'owych. Bardzo przydatne do zarządzania wymaganiami środowiska Python'owego na serwerach wdrożeniowych.}
-        \item{Proxmox (\url{http://pve.proxmox.com/wiki/Main_Page}) -- Dystrybucja Debiana umożliwiająca wirtualizację na poziomie KVM oraz OpenVZ.}
-        \item{Ubuntu Server (\url{http://ubuntu.com}) -- Jedna z popularniejszych dystrybucji Debiana, w projekcie wykorzystywana jako podstawowa dla wszystkich maszyn wirtualnych.}
-        \item{Cherokee (\url{http://www.cherokee-project.com}) -- Silnik serwera WWW z graficznym interfejsem zarządzania, pozwalający na udostępnianie zawartości statycznej (obrazki, strony HTML), treści dynamicznej, w szczególności Python'a (Django) za pomocą kontenera uWSGI.}
-        \item{Dia (\url{http://projects.gnome.org/dia}) -- Otwarte oprogramowanie umożliwiające tworzenie diagramów. Wszystkie diagramy w pracy zostały wykonane za jego pomocą.}
-    \end{packed_item}
-\end{minipage}
+\begin{description}
+    \item[MaxMind GeoIP Lite] Biblioteka udostępniająca bazę IP mapowaną do nazwy lokalizacji i położenia za pomocą prostego API  (\url{http://www.maxmind.com/app/geolite})
+    \item[GIT] Darmowy i otwarty, rozproszony system kontroli wersji (\url{http://git-scm.com}).
+    \item[GitHub] Serwis udostępniający darmowe miejsce na zdalne repozytorium GIT'a -- dla projektów o otwartym kodzie źródłowym (\url{http://github.com}).
+    \item[Fabric] Biblioteka i narzędzie linii komend umożliwiające pisanie skryptów automatycznie wykonywanych poprzez SSH na zdefiniowanych hostach. Umożliwia stworzenie procesu automatycznej aktualizacji systemu np. z aktualnego repozytorium (\url{http://fabfile.org}).
+    \item[Factory\_boy] Biblioteka umożliwiająca w prosty sposób tworzenie fabryk do modelów danych. Bardzo pomocna przy tworzeniu testów jednostkowych i generowaniu danych potrzebnych do ich przeprowadzenia (\url{https://github.com/rbarrois/factory\_boy}).
+    \item[South] Aplikacja Django umożliwiająca proste zarządzanie procesem migracji bazy danych. Dotyczy to zarówna struktury jak i samych danych (\url{http://south.aeracode.org}).
+    \item[Virtualenv] Narzędzie do tworzenia odizolowanych środowisk Python'owych, umożliwia równoległe uruchomienie kilku wersji Pythona z własną kolekcją bibliotek (\url{http://pypi.python.org/pypi/virtualenv}).
+    \item[PIP] Narzędzie linii komend do pobierania i instalowania bibliotek Python'owych. Bardzo przydatne do zarządzania wymaganiami środowiska Python'owego na serwerach wdrożeniowych (\url{http://pypi.python.org/pypi/pip}).
+    \item[Proxmox] Dystrybucja Debiana umożliwiająca wirtualizację na poziomie KVM oraz OpenVZ (\url{http://pve.proxmox.com/wiki/Main_Page}).
+    \item[Ubuntu Server] Jedna z popularniejszych dystrybucji Debiana, w projekcie wykorzystywana jako podstawowa dla wszystkich maszyn wirtualnych (\url{http://ubuntu.com}).
+    \item[Cherokee] Silnik serwera WWW z graficznym interfejsem zarządzania, pozwalający na udostępnianie zawartości statycznej (obrazki, strony HTML), treści dynamicznej, w szczególności Python'a (Django) za pomocą kontenera uWSGI (\url{http://www.cherokee-project.com}).
+    \item[Dia] Otwarte oprogramowanie umożliwiające tworzenie diagramów. Wszystkie diagramy w pracy zostały wykonane za jego pomocą (\url{http://projects.gnome.org/dia}).
+\end{description}
 
 \newpage
 %---------------------------------------------------------------------------
