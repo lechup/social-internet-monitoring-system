@@ -334,7 +334,7 @@ W tym rozdziale umieszczono informacje o tym jakie technologie oraz dlaczego zos
 Przed wybraniem tej technologi rozważano alternatywne rozwiązania w postaci dwóch technologii. Niżej przedstawiono je wraz z krótkim opisem wyjaśniającym dlaczego nie znalazły zastosowania w systemie.
 \begin{description}
     \item[Widget JAVA w przeglądarce] Java jest środowiskiem programistycznym dostępnym na każdą platformę. Udostępnia możliwość uruchomienia widgetów w obrębie przeglądarki, umożliwia wykonywanie połączeń UDP oraz TCP. Nie znaleziono biblioteki umożliwiającej stworzenie jednego kodu dla urządzeń iOS oraz Android. Dodatkowo wykorzystanie JAVY wymusiłoby samodzielną implementacja P2P w transmisji wideo z poziomu przeglądarki. Ostatecznym ,,gwoździem do trumny'' tej technologii jest mała popularność oraz najczęściej blokowanie Javy w przeglądarkach.
-    \item[Websockets] Dostępne w specyfikacji HTML5 (\url{http://tools.ietf.org/html/rfc6455}), umożliwiające nawiązywanie połączeń TCP pomiędzy serwerem, a przeglądarką. Aktualnie wspierane przez  Firefox 4+, Google Chrome 16+, Opera 11+ oraz Safari 5+. Powodem na rezygnację z tej technologii jest brak obsługi pobierania strumienia wideo z kamery z poziomu przeglądarki, brak przykładów lub biblioteki poświęconej zagadnieniu P2P wykorzystującej websockets oraz brak wsparcia technologi dla przeglądarek mobilnych.
+    \item[Websockets] Dostępne w specyfikacji HTML5 \cite{rfc6455}, umożliwiające nawiązywanie połączeń TCP pomiędzy serwerem, a przeglądarką. Aktualnie wspierane przez  Firefox 4+, Google Chrome 16+, Opera 11+ oraz Safari 5+. Powodem na rezygnację z tej technologii jest brak obsługi pobierania strumienia wideo z kamery z poziomu przeglądarki, brak przykładów lub biblioteki poświęconej zagadnieniu P2P wykorzystującej websockets oraz brak wsparcia technologi dla przeglądarek mobilnych.
 \end{description}
 
 \begin{wrapfigure}{r}{0.5\textwidth}
@@ -373,7 +373,7 @@ Jak każda technologia Adobe Flash Platform ma swoje wady. Niżej przedstawiono 
 
 \newpage
 \subsubsection{Cumulus}
-Darmowa oraz otwarta, bo udostępniona na licencji GPL, implementacja serwera RTMFP (Real Time Media Flow Protocol). W systemie jest on nieodzowny do odkrywania listy potencjalnych peerów posiadających źródło streamów. Jego wykorzystanie jest praktycznie ,,wymuszone'' przez preferencję rozwiązań Open Source nad komercyjnymi rozwiązaniami np. w postaci Adobe Flash Media Interactive Server (\url{https://github.com/OpenRTMFP/Cumulus}).
+Darmowa oraz otwarta, bo udostępniona na licencji GPL, implementacja serwera RTMFP (Real Time Media Flow Protocol). W systemie jest on nieodzowny do odkrywania listy potencjalnych peerów posiadających źródło streamów. Jego wykorzystanie jest praktycznie ,,wymuszone'' przez preferencję rozwiązań Open Source nad komercyjnymi rozwiązaniami np. w postaci Adobe Flash Media Interactive Server (\cite{Cumulus}).
 
 Przed wybraniem Cumulusa jako serwera RTMFP brano pod uwagę następujące alternatywy.
 \begin{description}
@@ -401,7 +401,7 @@ Jak każda z technologii, także i Cumulus ma swoje wady. Niżej przedstawiono i
 
 \newpage
 \subsubsection{Django}
-Framework napisany w Pythonie, umożliwiający proste i szybkie tworzenie stron internetowych. W systemie stworzony zostanie za jego pomocą Interfejs WWW, będący centrum wymiany informacji i możliwości przeglądania streamów. Strona domowa projektu to \url{http://djangoproject.com}.
+Framework napisany w Pythonie, umożliwiający proste i szybkie tworzenie stron internetowych. W systemie stworzony zostanie za jego pomocą Interfejs WWW, będący centrum wymiany informacji i możliwości przeglądania streamów \cite{Django}.
 
 Przed wybraniem Django, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
 \begin{description}
@@ -439,7 +439,7 @@ Jak każda z technologii, także i Django ma swoje wady. Niżej przedstawiono ic
 
 \newpage
 \subsubsection{jQuery}
-Biblioteka JavaScript tworząca wspólne API dla wszystkich przeglądarek służące do: przechodzenia i wybierania elementów z drzewa dokumentu HTML, tworzenia animacji, interakcji AJAX oraz zarządzania zdarzeniami. W~systemie jest dokładnie w tych celach wykorzystywana (\url{http://jquery.com}).
+Biblioteka JavaScript tworząca wspólne API dla wszystkich przeglądarek służące do: przechodzenia i wybierania elementów z drzewa dokumentu HTML, tworzenia animacji, interakcji AJAX oraz zarządzania zdarzeniami. W~systemie jest dokładnie w tych celach wykorzystywana (\cite{jQuery}).
 
 Przed wybraniem jQuery, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
 \begin{description}
@@ -472,7 +472,7 @@ Jak każda z technologii, także i jQuery ma swoje wady. Niżej przedstawiono ic
 
 \newpage
 \subsubsection{Bootstrap}
-Framework do tworzenia interfejsu WWW, napisany w LESS, kompilujący się do CSS. Dodatkowo za pomocą jQuery, umożliwia skorzystanie z wielu niestandardowych komponentów, czy też animacji. Za jego pomocą zostanie stworzony layout na potrzebny systemu, dostosowany do obsługi urządzeń mobilnych zachowując przy tym jedno źródło (\url{http://twitter.github.com/bootstrap}).
+Framework do tworzenia interfejsu WWW, napisany w LESS, kompilujący się do CSS. Dodatkowo za pomocą jQuery, umożliwia skorzystanie z wielu niestandardowych komponentów, czy też animacji. Za jego pomocą zostanie stworzony layout na potrzebny systemu, dostosowany do obsługi urządzeń mobilnych zachowując przy tym jedno źródło (\cite{bootstrap}).
 
 Nie znaleziono alternatywnej technologii, która mogła by być porównana na każdej płaszczyźnie z Bootstrapem. Większość rozwiązań trzeba rozszerzać lub kompletować o to co jest gotowe i wbudowane w Bootstrap.
 
@@ -505,7 +505,7 @@ Jak każda z technologii, także i Bootstrap ma swoje wady. Niżej przedstawiono
 
 \newpage
 \subsubsection{FlashDevelop}
-Jedyne otwarte i darmowe IDE współpracujące z Adobe Flash Platform (wykorzystujące SDK Flex'a), umożliwiające tworzenie aplikacji z wykorzystaniem Adobe Flash Platform. Wszystkie części systemu związane z technologią Adobe zostaną przygotowane za pomocą tego IDE (\url{http://flashdevelop.org}).
+Jedyne otwarte i darmowe IDE współpracujące z Adobe Flash Platform (wykorzystujące SDK Flex'a), umożliwiające tworzenie aplikacji z wykorzystaniem Adobe Flash Platform. Wszystkie części systemu związane z technologią Adobe zostaną przygotowane za pomocą tego IDE (\cite{flashDevelop}).
 
 Nie znaleziono alternatywnego rozwiązania darmowego pozwalającego na porównanie z FlashDevelop. Flash Builder Premium 4.6, jest oryginalnym i polecanym przez Adobe rozwiązaniem. Koszt to ,,jedyne'' ~639 EURO za pełną licencję jednostanowiskową.
 
@@ -535,7 +535,7 @@ Jak każde z rozwiązań, także i FlashDevelop ma swoje wady. Niżej przedstawi
 
 \newpage
 \subsubsection{PostgreSQL}
-Serwer obiektowo-relacyjnej bazy danych, umożliwiający przechowywanie i szybki dostęp do wszelkich danych. Jest rozwijany od ponad 15 lat. Jego sprawdzona przez ten czas architektura potwierdza jego opinię, jako serwera niezawodnego, utrzymującego spójność i poprawność danych. W projekcie jest podstawowym mechanizmem składowania danych (\url{http://www.postgresql.org}).
+Serwer obiektowo-relacyjnej bazy danych, umożliwiający przechowywanie i szybki dostęp do wszelkich danych. Jest rozwijany od ponad 15 lat. Jego sprawdzona przez ten czas architektura potwierdza jego opinię, jako serwera niezawodnego, utrzymującego spójność i poprawność danych. W projekcie jest podstawowym mechanizmem składowania danych (\cite{PostgreSQL}).
 
 Przed wybraniem PostgreSQL, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
 \begin{description}
@@ -569,7 +569,7 @@ Jak każde z rozwiązań, także i PostgreSQL ma swoje wady. Niżej przedstawion
 
 \newpage
 \subsubsection{Google Maps Javascript API}
-Jest darmową biblioteką Javascript pozwalającą na umieszczenie Mapy Google na własnej stronie internetowej. Dostarcza API zawierające szereg metod pozwalających na zarządzanie obiektem mapy oraz na dodawanie zawartości do Map Google. Łączy się też z wieloma darmowymi usługami dostępnymi od firmy Google  (\url{https://developers.google.com/maps/documentation/javascript}).
+Jest darmową biblioteką Javascript pozwalającą na umieszczenie Mapy Google na własnej stronie internetowej. Dostarcza API zawierające szereg metod pozwalających na zarządzanie obiektem mapy oraz na dodawanie zawartości do Map Google. Łączy się też z wieloma darmowymi usługami dostępnymi od firmy Google  (\cite{GoogleMapsJsAPI}).
 
 W projektowanym systemie będzie ona wykorzystywana do prezentacji streamów posiadających lokalizację oraz umożliwiała wyszukiwanie informacji.
 
