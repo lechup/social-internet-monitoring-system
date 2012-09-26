@@ -145,67 +145,6 @@ Przy implementacji prototypu systemu, nie skupiano się na sprawach pobocznych j
 \end{packed_item}
 
 \newpage
-\section{Dokumentacja}
-Zgodnie z filozofią metodyki \textit{XP} (szczegóły \namedref{sec:ZMTOzalozenia}), dokumentacja projektu sprowadza się do opisu architektury oraz komentarzy kodu, testów oraz komentarzy do testów. Unika się tworzenia bazy wiedzy, która najczęściej jest po pewnym czasie nieaktualizowana.
-
-Dlatego też, aby zapoznać się z działaniem systemu należy przejrzeć architekturę systemu, a następnie zapoznać się bezpośrednio z kodem źródłowym i zawartymi w nim komentarzami.
-
-\subsection{Uruchomienie systemu}
-
-Aby uruchomić system z kodu źródłowego należy przygotować szereg aplikacji i skonfigurować odpowiednio środowisko. Niżej prezentowana jest lista części systemu, wraz z opisem jak daną część uruchomić.
-
-\begin{description}
-    \item[Interfejs WWW] Uruchomić aplikację Django, znajdującą się w dołączonym kodzie źródłowym w katalogu \texttt{./src/Django/facewithme/}. Wymagane do uruchomienia biblioteki środowiska Pythonowskiego w formacie pliku wymagań programu PIP znajdują się w \texttt{./src/Django/facewithme/requirements/requirements.txt}. Instrukcja instalacji i wdrożenia aplikacji Django znajduje się w \cite{DjangoDocs}. System wdrożony został przy wykorzystaniu Django 1.4.1.
-    \item[Baza danych] Uruchomić i zainstalować serwer PostgreSQL (\cite{PostgreSQL}). Zainstalować rozszerzenie GIS zgodnie z instrukcją zamieszczoną w \cite{DjangoPostGIS}. System wdrożony został przy wykorzystaniu PostgreSQL 9.1.
-    \item[Serwer RTMFP] Uruchomić serwer Cumulus. Instrukcja instalacji znajduje się w \cite{CumulusInstall}. Dodatkowo należy umieścić serwer na liście dostępnych serwerów w panelu administracyjnym aplikacji Django. Domyślnie, dodawane streamy losują jeden z dostępnych serwerów RTMFP. Można pokusić się o implementację algorytmu rozkładającego obciążenie bardziej równomiernie np. Round Robin.
-    \item[Browser Receiver] Należy tak skonfigurować dołączanie obiektu flash, aby przekazywać informację na temat AMFGateway. Można do tego wykorzystać zmienną amfgateway dodając ją w widokach wyświetlających Browser Receiver. Domyślnie ustawiona jest na wartość \texttt{http://facewithme.com/amf/}.
-    \item[Mobile Broadcaster] Należy uruchomić, zainstalować i skonfigurować środowisko Flash Develop zgodnie z tą instrukcją \cite{flashDevelopConfig}. W plikach źródłowych odnaleźć domyślną konfigurację AMFGateway (\texttt{./src/Flex/FaceWithMe Mobile/src/Main.mxml}) i poprawić ją na adres skonfigurowanego wcześniej Interfejsu WWW. Skompilować projekt oraz stworzyć odpowiednie paczki instalacyjne dla platform docelowych (Android / iOS).
-\end{description}
-
-W razie problemów z wyświetlaniem się streamu należy zapoznać się z plikiem pomocy \url{http://facewithme.com/help/}.
-
-\subsection{Testy automatyczne}
-
-Część Interfejsu WWW systemu posiada zalążki testów jednostkowych. Dotyczą one poprawnego wyświetlania widoków. Aby uruchomić testy, należy przejść do katalogu z z kodem źródłowym Django (\texttt{./src/Dajango/facewithme/}), a następnie uruchomić polecenie:
-
-\lstset{language=Bash}
-\begin{lstlisting}
-python manage.py test core
-\end{lstlisting}
-
-O poprawnym wykonaniu testów informuje nas konsola, której wyjście zawiera:
-\begin{lstlisting}
-Creating test database for alias 'default'...
-......
-----------------------------------------------------------------------
-Ran 6 tests in 0.822s
-
-OK
-Destroying test database for alias 'default'...
-\end{lstlisting}
-
-\subsection{Przeprowadzone testy}
-\label{sec:EtapIprzeprowadzoneTesty}
-System testowany był na kilku platformach. Niżej znajduje się lista konfiguracji systemu, w której poszczególne części nie wykazywały błędnego zachowania.
-
-\begin{description}
-    \item[Interfejs WWW z Browser Receiver] Google Chrome (21.0.1180.89) + Flash Player (11.3.31.232)/Linux; FireFox 15.0.1 + Flash Player 11.2.202.238/Linux; Google Google Chrome (21.0.1180.89) + Flash Player (11.3.31.232)/Windows 7;  FireFox 15 + Flash Player 11.2.202.238/Windows 7.
-    \item[Mobile Broadcaster] Adobe AIR 3.4.0.254/Android 4.04/Samsung Galaxy S I, Adobe AIR 3.4.0.254/Android 3.2/Samsung Galaxy Tab 10.1.
-\end{description}
-
-\subsection{Bezpieczeństwo}
-\label{sec:ImplementacjaPrototypuBezpieczenstwo}
-Bardzo ważnym aspektem docelowego systemu powinno być bezpieczeństwo. Niżej wyszczególniono elementy prototypu systemu, które mają bezpośredni związek z bezpieczeństwem i sugerowane poprawki, które pomogą zabezpieczyć system.
-
-\begin{packed_item}
-    \item{Dzięki zastosowaniu technologii Adobe Flash Platform oraz wykorzystaniu protokołu RTMFP, transmisja danych pomiędzy Mobile Broadcasterem oraz Browser Receiverem jest szyfrowana. Szyfrowanie odbywa się za pomocą 128-bitowego klucza. Szczegółowe informacje można uzyskać w \cite{AdobeSecurity}}.
-    \item{Komunikacja pomiędzy Interfejsem WWW, a Browser Receiverem oraz Mobile Receiverem, odbywająca się za pomocą AMFGateway powinna odbywać się za pomocą protokołu HTTPS, nie HTTP jak w prototypie.}
-    \item{Logowanie do panelu administracyjnego oraz logowanie użytkowników powinno wykorzystywać protokół HTTPS, nie HTTP jak w prototypie.}
-    \item{Sugeruje się przejście na HTTPS w każdej komunikacji nawiązywanej pomiędzy użytkownikiem, a Interfejsem WWW, nie HTTP jak w prototypie.}
-    \item{Serwer RTMFP (Cumulus), nie udostępnia żadnego sposobu na autoryzację połączeń. Najprostszym sposobem na ograniczenie wykorzystania przez nieautoryzowanych użytkowników jest sprawdzanie \texttt{swfUrl} połączającego się klienta za pomocą rozszerzenia serwera wykorzystującego zdarzenie \texttt{onConnection} (szczegóły w \cite{CumulusDocs}).}
-\end{packed_item}
-
-\newpage
 \section{Wydajność P2P Multicasting w Adobe Flash Platform}
 \label{sec:ImplementacjaPrototypuWydajnoscP2P}
 W tym rozdziale chciano poruszyć temat związany z wydajnością transmisji wideo za pomocą technologii P2P Multicasting. Kryterium jakie chcemy sprawdzać to opóźnienie transmisji wideo względem obrazu oryginalnego oraz jego płynność. Opóźnienie jest wyrażone w sekundach. Płynność określono jako jedną z poniższych możliwości.
