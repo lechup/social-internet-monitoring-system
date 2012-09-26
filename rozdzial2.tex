@@ -201,18 +201,16 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
 \section{Analiza wymagań i dobór rozwiązań}
 \label{sec:EtapIaw}
 
-Po rozmowie z klientem, na podstawie głównego zadania systemu oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań więcej w \namedref{sec:ZMTOzwinnaAnalizaWymagan}.
+Po rozmowie z klientem, na podstawie głównego zadania systemu oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań więcej~\namedref{sec:ZMTOzwinnaAnalizaWymagan}.
 
 Celem tego etapu jest stworzenie wstępnej architektury systemu, przetestowanie wydajności technologii -- najczęściej przy użyciu prototypu systemu.
 
-Jako początek rozważań architektury systemu skorzystano z elementów metody Architecture Tradeoff Analysis Method -- Drzewo użyteczności -- szczegóły metody można poznać w \cite{Kaz2000}.
-
-Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą ilość dokumentacji, z której metodyki zwinne chcą rezygnować. Dodatkowo zgodnie z założeniami \textit{XP} (szczegóły \namedref{sec:ZMTOzalozenia}), wszystkie ustalenia sporządzone w tej fazie mogą ulec zmianie na każdym późniejszym etapie prowadzenia projektu. Zwinna analiza wymagań nie zamyka możliwości późniejszej zmiany technologii, architektury czy dowolnego z elementów wspomagających projekt.
+Jako początek rozważań architektury systemu skorzystano z elementów metody Architecture Tradeoff Analysis Method -- Drzewo użyteczności -- szczegóły metody można poznać w \cite{Kaz2000}. Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą ilość dokumentacji, z której metodyki zwinne chcą rezygnować. Dodatkowo zgodnie z założeniami \textit{XP} (szczegóły \namedref{sec:ZMTOzalozenia}), wszystkie ustalenia sporządzone w tej fazie mogą ulec zmianie na każdym późniejszym etapie prowadzenia projektu. Zwinna analiza wymagań nie zamyka możliwości późniejszej zmiany technologii, architektury czy dowolnego z elementów wspomagających projekt.
 
 \subsection{Drzewo użyteczności (ATAM Usability Tree)}
 \label{sec:EtapIdrzewoUzytecznosci}
 
-Niżej umieszczono \textit{Drzewo Użyteczności} metody ATAM w formie listy. Pokazuje w bardzo przejrzysty sposób najważniejsze aspekty architektury systemu.
+Niżej umieszczono \textit{Drzewo Użyteczności} metody ATAM w formie listy. Pokazuje w bardzo przejrzysty sposób najważniejsze kryteria oceny architektury systemu.
 
 \begin{packed_item}
     \item{
@@ -284,11 +282,11 @@ Niżej umieszczono \textit{Drzewo Użyteczności} metody ATAM w formie listy. Po
 \subsection{Wstępna architektura systemu}
 \label{sec:EtapIwstepnaArchitekturaSystemu}
 
-Docelowy system będzie składał się z \textbf{Interfejsu WWW}, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń. Wszystkie streamy będą umieszczone w relacyjnej \textbf{Bazie danych} z rozszerzeniem GIS, dzięki czemu możliwe będzie łatwe zapisanie lokalizacji streamu.
+Docelowy system będzie składał się z \textit{Interfejsu WWW}, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń. Wszystkie streamy będą umieszczone w relacyjnej \textit{Bazie danych} z rozszerzeniem GIS, dzięki czemu możliwe będzie łatwe zapisanie lokalizacji streamu.
 
-Po stronie komputerów stacjonarnych, za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt SWF \textbf{Adobe Flash Player}. W przypadku urządzeń mobilnych, do przygotowania aplikacji obsługującej zarówno iPhone'a jak i Androida wykorzystany zostanie otwarty framework Adobe Flex i jego mobilne wsparcie w postaci \textbf{Adobe AIR for Mobile} (alternatywne rozwiązania, które rozważano, opisane są \namedref{sec:EtapItechnologia}.)
+Po stronie komputerów stacjonarnych, za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt SWF \textit{Adobe Flash Player}. W przypadku urządzeń mobilnych, do przygotowania aplikacji obsługującej zarówno iPhone'a jak i Androida wykorzystany zostanie otwarty framework Adobe Flex i jego mobilne wsparcie w postaci \textit{Adobe AIR for Mobile} (alternatywne rozwiązania, które rozważano, opisane są \namedref{sec:EtapItechnologia}).
 
-Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu połączenia sieciowego -- osoby udostępniającej stream -- będą wykorzystane sieci ze wspomaganiem równorzędnym wbudowane w Adobe Flash Platform. Zasada działania sieci P2P wymusza udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream. Firma Adobe nazywa tę technologię \textbf{Multicast/P2P Multicast}, niżej przedstawione są schematy pokazujące różnicę pomiędzy transmisją Unicast, a P2P Multicast.
+Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu połączenia sieciowego -- osoby udostępniającej stream -- będą wykorzystane sieci ze wspomaganiem równorzędnym wbudowane w Adobe Flash Platform. Zasada działania sieci P2P wymusza udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream. Firma Adobe nazywa tę technologię \textit{P2P Multicasting}, niżej przedstawione są schematy pokazujące różnicę pomiędzy transmisją Unicast, a P2P Multicast.
 
     \begin{center}
         \includegraphics[width=\textwidth]{img/adobe-p2p-unicast.jpg}
@@ -302,13 +300,10 @@ Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu 
         \captionof{figure}{Przedstawienie transmisji P2P Multicast w Adobe Flash Platform, obrazek pochodzi z \cite{TomKrcha2010ME}.}
     \end{center}
 
-    W przypadku transmisji P2P Multicast łącza są obciążone względem swoich możliwości. Obciążenie rozłożone na całość sieci ze wspomaganiem równorzędnym. Klienci komunikują się ze sobą współdzieląc zasób.
+W przypadku transmisji P2P Multicast łącza są obciążone względem swoich możliwości. Obciążenie rozłożone na całość sieci ze wspomaganiem równorzędnym. Klienci komunikują się ze sobą współdzieląc zasób. Decyzja o wykorzystaniu technologii Adobe Flash Platform miała bezpośredni wpływ na architekturę systemu. Alternatywy, które rozważano opisane są \namedref{sec:EtapItechnologia}.
 
-
-Decyzja o wykorzystaniu technologii Adobe Flash Platform miała bezpośredni wpływ na architekturę systemu. Alternatywy, które rozważano opisane są \namedref{sec:EtapItechnologia}.
-
+\newpage
 Niżej przedstawiono schemat architektury pokazujący powiązanie pomiędzy poszczególnymi, wcześniej wymienionymi, elementami systemu.
-
 \begin{center}
     \includegraphics[width=\textwidth]{diagramy/architektura.png}
     \captionof{figure}{Wstępna architektura systemu.}
