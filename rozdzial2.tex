@@ -26,13 +26,13 @@ Użytkownik za pomocą smartphone'a z kamerą działającego pod systemem Androi
             \textbf{Czy jest wymóg użycia konkretnej technologii?} Nie jest wymagana żadna konkretna technologia. Wymaganiem jest wykorzystanie technologii Open Source -- wszędzie tam gdzie jesteśmy w stanie zastąpić komercyjne rozwiązania.
         }
         \item{
-            \textbf{Jaka jest wymagana skalowalność systemu?} System musi być skalowalny, idealnie by było, gdyby obraz z kamery udostępniany przez jednego użytkownika, mógłby być odbierany przez nieskończoną liczbę ludzi. Na pewno w jakiś sposób system musi reagować automatycznie na zwiększony ruch w obrębie jednego stream'a.
+            \textbf{Jaka jest wymagana skalowalność systemu?} System musi być skalowalny, idealnie by było, gdyby obraz z kamery udostępniany przez jednego użytkownika, mógłby być odbierany przez nieskończoną liczbę ludzi. Na pewno w jakiś sposób system musi reagować automatycznie na zwiększony ruch w obrębie jednego streama.
         }
         \item{
             \textbf{Czy są jakieś wymagania dotyczące środowiska produkcyjnego w jakim ma działać system?} System docelowo będzie wdrożony na odpowiednim sprzęcie, testy powinien być w stanie odpalić się na średniej klasy laptopie. Im mniejsze wymagania tym lepiej.
         }
         \item{
-            \textbf{Czy system ma współpracować z innymi systemami lub udostępniać coś innym systemom?} Duży nacisk będzie kładziony na integrację z serwisami społecznościowymi, głównie chodzi o Facebook'a. Będzie można go wykorzystać celem rejestracji i logowania w serwisie, czy też automatycznego udostępniania stream'u na swojej Facebook'owej ścianie.
+            \textbf{Czy system ma współpracować z innymi systemami lub udostępniać coś innym systemom?} Duży nacisk będzie kładziony na integrację z serwisami społecznościowymi, głównie chodzi o Facebooka. Będzie można go wykorzystać celem rejestracji i logowania w serwisie, czy też automatycznego udostępniania streamu na swojej Facebookowej ścianie.
         }
         \item{
             \textbf{Czy istnieją systemy podobne do tworzonego?} Jeżeli chodzi o sposób prezentacji interfejsu WWW to najbardziej zbliżony do tego co chce się osiągnąć jest Bambuser. Podobnie ma się sprawa funkcjonalności na telefonie z systemem Android -- aplikacja Bambuser.
@@ -127,7 +127,7 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
     \scr{img/logowanie.jpg}{Formularz logowania.}
     \begin{packed_enum}
         \item reszta strony wyszarzona, formularz logowania jako ,,overlay''
-        \item klikając X'a wracamy do wyszarzonej strony
+        \item klikając X-a wracamy do wyszarzonej strony
         \item miejsce na wpisanie loginu lub email
         \item miejsce na wpisanie hasła
         \item link do formularza przypomnienia hasła
@@ -189,7 +189,7 @@ Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w
     \scr{img/dzielenie_sie_streamem2.jpg}{Okno danych udostępnianego streamu audio/video.}
     \begin{packed_enum}
         \item{możliwość zmiany kamery oraz jakości w trakcie nadawania}
-        \item{jeżeli wcześniej wybrano publiczną dostępność streamu, wyświetlamy tutaj unikalny link do dzielenia się streamem ze znajomymi np. za pomocą Facebook'a, w przeciwnym wypadku wyświetlamy ,,permalink'' streamu w formie \url{http://domena.com/login_usera/slug_tytulu_streamu}}
+        \item{jeżeli wcześniej wybrano publiczną dostępność streamu, wyświetlamy tutaj unikalny link do dzielenia się streamem ze znajomymi np. za pomocą Facebooka, w przeciwnym wypadku wyświetlamy ,,permalink'' streamu w formie \url{http://domena.com/login_usera/slug_tytulu_streamu}}
         \item{przycisk otwierający w nowym oknie link streamu}
         \item{informacja na temat tytułu oraz kategorii udostępnianego streamu}
     \end{packed_enum}
@@ -348,7 +348,7 @@ Platforma technologii Flash składająca się z kilku elementów. Przy odpowiedn
 
 \begin{description}
     \item[Adobe Flex] Framework z otwartym kodem źródłowym umożliwiający tworzenie aplikacji w środowiskach Adobe AIR oraz Adobe Flash Player.
-    \item[Adobe Flash Player] Środowisko dostępne we wszystkich desktopowych przeglądarkach i niektórych mobilnych (Android). Służy do odtwarzania animacji SWF. Pozwala wykorzystać szereg klas Flex'a niebędących częścią Adobe AIR.
+    \item[Adobe Flash Player] Środowisko dostępne we wszystkich desktopowych przeglądarkach i niektórych mobilnych (Android). Służy do odtwarzania animacji SWF. Pozwala wykorzystać szereg klas Flexa niebędących częścią Adobe AIR.
     \item[Adobe AIR] Środowisko dostępne na szereg platform (Windows, Android, iOS) umożliwiające tworzenie aplikacji mobilnych jak i desktopowych niezależnie od platformy docelowej.
 \end{description}
 
@@ -505,7 +505,7 @@ Jak każda z technologii, także i Bootstrap ma swoje wady. Niżej przedstawiono
 
 \newpage
 \subsubsection{FlashDevelop}
-Jedyne otwarte i darmowe IDE współpracujące z Adobe Flash Platform (wykorzystujące SDK Flex'a), umożliwiające tworzenie aplikacji z wykorzystaniem Adobe Flash Platform. Wszystkie części systemu związane z technologią Adobe zostaną przygotowane za pomocą tego IDE (\cite{flashDevelop}).
+Jedyne otwarte i darmowe IDE współpracujące z Adobe Flash Platform (wykorzystujące SDK Flexa), umożliwiające tworzenie aplikacji z wykorzystaniem Adobe Flash Platform. Wszystkie części systemu związane z technologią Adobe zostaną przygotowane za pomocą tego IDE (\cite{flashDevelop}).
 
 Nie znaleziono alternatywnego rozwiązania darmowego pozwalającego na porównanie z FlashDevelop. Flash Builder Premium 4.6, jest oryginalnym i polecanym przez Adobe rozwiązaniem. Koszt to ,,jedyne'' ~639 EURO za pełną licencję jednostanowiskową.
 
@@ -564,7 +564,7 @@ Poniżej przedstawiono zalety PostgreSQL, przez które zdecydowano o jego zastos
 Jak każde z rozwiązań, także i PostgreSQL ma swoje wady. Niżej przedstawiono ich listę.
 \begin{packed_item}
     \item{Stosunkowo długie otwieranie nowego połączenia.}
-    \item{Mniejsza popularność i dostępność w pakietach hostingowych niż MySQL'a.}
+    \item{Mniejsza popularność i dostępność w pakietach hostingowych niż MySQLa.}
 \end{packed_item}
 
 \newpage
@@ -613,15 +613,15 @@ Przy tworzeniu systemu skorzysta się również również z kilku mniejszych nar
 \begin{description}
     \item[MaxMind GeoIP Lite] Biblioteka udostępniająca bazę IP mapowaną do nazwy lokalizacji i położenia za pomocą prostego API  (\url{http://www.maxmind.com/app/geolite})
     \item[GIT] Darmowy i otwarty, rozproszony system kontroli wersji (\url{http://git-scm.com}).
-    \item[GitHub] Serwis udostępniający darmowe miejsce na zdalne repozytorium GIT'a -- dla projektów o otwartym kodzie źródłowym (\url{http://github.com}).
+    \item[GitHub] Serwis udostępniający darmowe miejsce na zdalne repozytorium GITaa -- dla projektów o otwartym kodzie źródłowym (\url{http://github.com}).
     \item[Fabric] Biblioteka i narzędzie linii komend umożliwiające pisanie skryptów automatycznie wykonywanych poprzez SSH na zdefiniowanych hostach. Umożliwia stworzenie procesu automatycznej aktualizacji systemu np. z aktualnego repozytorium (\url{http://fabfile.org}).
     \item[Factory\_boy] Biblioteka umożliwiająca w prosty sposób tworzenie fabryk do modelów danych. Bardzo pomocna przy tworzeniu testów jednostkowych i generowaniu danych potrzebnych do ich przeprowadzenia (\url{https://github.com/rbarrois/factory\_boy}).
     \item[South] Aplikacja Django umożliwiająca proste zarządzanie procesem migracji bazy danych. Dotyczy to zarówna struktury jak i samych danych (\url{http://south.aeracode.org}).
-    \item[Virtualenv] Narzędzie do tworzenia odizolowanych środowisk Python'owych, umożliwia równoległe uruchomienie kilku wersji Pythona z własną kolekcją bibliotek (\url{http://pypi.python.org/pypi/virtualenv}).
-    \item[PIP] Narzędzie linii komend do pobierania i instalowania bibliotek Python'owych. Bardzo przydatne do zarządzania wymaganiami środowiska Python'owego na serwerach wdrożeniowych (\url{http://pypi.python.org/pypi/pip}).
+    \item[Virtualenv] Narzędzie do tworzenia odizolowanych środowisk Pythonowych, umożliwia równoległe uruchomienie kilku wersji Pythona z własną kolekcją bibliotek (\url{http://pypi.python.org/pypi/virtualenv}).
+    \item[PIP] Narzędzie linii komend do pobierania i instalowania bibliotek Pythonowych. Bardzo przydatne do zarządzania wymaganiami środowiska Pythonowego na serwerach wdrożeniowych (\url{http://pypi.python.org/pypi/pip}).
     \item[Proxmox] Dystrybucja Debiana umożliwiająca wirtualizację na poziomie KVM oraz OpenVZ (\url{http://pve.proxmox.com/wiki/Main_Page}).
     \item[Ubuntu Server] Jedna z popularniejszych dystrybucji Debiana, w projekcie wykorzystywana jako podstawowa dla wszystkich maszyn wirtualnych (\url{http://ubuntu.com}).
-    \item[Cherokee] Silnik serwera WWW z graficznym interfejsem zarządzania, pozwalający na udostępnianie zawartości statycznej (obrazki, strony HTML), treści dynamicznej, w szczególności Python'a (Django) za pomocą kontenera uWSGI (\url{http://www.cherokee-project.com}).
+    \item[Cherokee] Silnik serwera WWW z graficznym interfejsem zarządzania, pozwalający na udostępnianie zawartości statycznej (obrazki, strony HTML), treści dynamicznej, w szczególności Pythona (Django) za pomocą kontenera uWSGI (\url{http://www.cherokee-project.com}).
     \item[Dia] Otwarte oprogramowanie umożliwiające tworzenie diagramów. Wszystkie diagramy w pracy zostały wykonane za jego pomocą (\url{http://projects.gnome.org/dia}).
 \end{description}
 

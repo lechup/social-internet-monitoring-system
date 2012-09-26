@@ -14,7 +14,7 @@ Prototyp systemu dostępny jest on-line pod adresem \url{http://facewithme.com}.
     \item{Browser Receiver}
 \end{packed_item}
 
-Dzięki wybraniu ww. elementów udało się stworzyć system zdolny do przetestowania transmisji wideo pomiędzy Mobile Broadcaster, a Browser Receiver, za pomocą technologii Adobe P2P Multicast. Interfejs WWW umożliwia dodatkowo ładną prezentację oraz wyszukiwanie stream'ów w zadanej lokalizacji czy też personalizację ustawień.
+Dzięki wybraniu ww. elementów udało się stworzyć system zdolny do przetestowania transmisji wideo pomiędzy Mobile Broadcaster, a Browser Receiver, za pomocą technologii Adobe P2P Multicast. Interfejs WWW umożliwia dodatkowo ładną prezentację oraz wyszukiwanie streamów w zadanej lokalizacji czy też personalizację ustawień.
 
 Na poniższym rysunku widać architekturę  zaimplementowanej częsciu systemu wraz z prezentacją transmisji P2P. Należy zwrócić uwagę, że Serwer RTMFP nie bierze czynnego udziału w transmisji wideo, służy jedynie do rozgłaszania klientów udostępniających stream. Transmisja wideo odbywa się pomiędzy Mobile Broadcasterem, a klientami Browser Receivera.
 
@@ -127,7 +127,7 @@ Mobile Broadcaster, czyli aplikacja umożliwiająca nadawanie streamu -- szczeg�
 \newpage
 \section{Co wymaga usprawnienia}
 
-Przy implementacji prototypu systemu, nie skupiano się na sprawach pobocznych jak interfejs czy komunikacja z użytkownikiem. Głównie kierowano się intencją przetestowania w praktyce działania technologii Adobe P2P Multicast'ing. Dlatego też system wymaga znacznej ilości poprawek zanim może zacząć być wykorzystywany publicznie. Przygotowany prototyp traktować można jako bazę wyjściową do zapoznania się z działaniem i wydajnością technologii. Główne braki prototypu systemu to:
+Przy implementacji prototypu systemu, nie skupiano się na sprawach pobocznych jak interfejs czy komunikacja z użytkownikiem. Głównie kierowano się intencją przetestowania w praktyce działania technologii Adobe P2P Multicasting. Dlatego też system wymaga znacznej ilości poprawek zanim może zacząć być wykorzystywany publicznie. Przygotowany prototyp traktować można jako bazę wyjściową do zapoznania się z działaniem i wydajnością technologii. Główne braki prototypu systemu to:
 
 \begin{packed_item}
     \item{Brak szyfrowania połączeń HTTP pomiędzy użytkownikiem a systemem, dotyczy także logowania.}
@@ -136,9 +136,9 @@ Przy implementacji prototypu systemu, nie skupiano się na sprawach pobocznych j
     \item{Brak całego Mobile Receivera, szczegóły \namedref{sec:EtapIwstepnaArchitekturaSystemu}.}
     \item{Brak całego Browser Broadcastera, szczegóły \namedref{sec:EtapIwstepnaArchitekturaSystemu}.}
     \item{Isnienie panelu DEBUG w Mobile Broadcasterze.}
-    \item{Brak obrotu komponentu kamery względem obrócenia urządzenia w Mobile Broadcasterz'e co skutkuje przesuwaniem obrazu kamery góra/dół, gdy kamera fizycznie poruszana jest prawo/lewo.}
-    \item{Brak automatycznego usuwania stream'u z Interfejsu WWW w przypadku nieoczekiwanego przerwania działania Mobile Broadcastera.}
-    \item{Brak komunikatów skierowanych do użytkownika Mobile Broadcaster'a, informujących o stanie lub błędach aplikacji.}
+    \item{Brak obrotu komponentu kamery względem obrócenia urządzenia w Mobile Broadcasterze co skutkuje przesuwaniem obrazu kamery góra/dół, gdy kamera fizycznie poruszana jest prawo/lewo.}
+    \item{Brak automatycznego usuwania streamu z Interfejsu WWW w przypadku nieoczekiwanego przerwania działania Mobile Broadcastera.}
+    \item{Brak komunikatów skierowanych do użytkownika Mobile Broadcastera, informujących o stanie lub błędach aplikacji.}
     \item{Brak wyłączania trybu czuwania urządzenia podczas udostępniania streamu.}
     \item{Brak aplikacji na iOS -- Głównym powodem dla którego nie udało się stworzyć i przetestować aplikacji na platformę iOS jest koszt licencji Apple Developer Account (99\$), jaki trzeba ponieść, aby dostać możliwość umieszczania aplikacji na Apps Market oraz testowania aplikacji na własnym telefonie (szczegóły można znaleźć \cite{UnknAuth11}). Z powodu zastosowania technologii Adobe AIR for Mobile, nie ma możliwości testowania aplikacji za pomocą XCode i wirtualnego środowiska iOS. Z tego powodu dostępność komputerów Mac na uczelni na wiele się nie zdała.}
     \item{Brak środowiska testującego oraz testów kodu źródłowego Adobe Flash Platform, zarówno kodu Adobe AIR for Mobile jak i Adobe Flash.}
@@ -157,7 +157,7 @@ Aby uruchomić system z kodu źródłowego należy przygotować szereg aplikacji
 \begin{description}
     \item[Interfejs WWW] Uruchomić aplikację Django, znajdującą się w dołączonym kodzie źródłowym w katalogu \texttt{./src/Django/facewithme/}. Wymagane do uruchomienia biblioteki środowiska Pythonowskiego w formacie pliku wymagań programu PIP znajdują się w \texttt{./src/Django/facewithme/requirements/requirements.txt}. Instrukcja instalacji i wdrożenia aplikacji Django znajduje się w \cite{DjangoDocs}. System wdrożony został przy wykorzystaniu Django 1.4.1.
     \item[Baza danych] Uruchomić i zainstalować serwer PostgreSQL (\cite{PostgreSQL}). Zainstalować rozszerzenie GIS zgodnie z instrukcją zamieszczoną w \cite{DjangoPostGIS}. System wdrożony został przy wykorzystaniu PostgreSQL 9.1.
-    \item[Serwer RTMFP] Uruchomić serwer Cumulus. Instrukcja instalacji znajduje się w \cite{CumulusInstall}. Dodatkowo należy umieścić serwer na liście dostępnych serwerów w panelu administracyjnym aplikacji Django. Domyślnie, dodawane stream'y losują jeden z dostępnych serwerów RTMFP. Można pokusić się o implementację algorytmu rozkładającego obciążenie bardziej równomiernie np. Round Robin.
+    \item[Serwer RTMFP] Uruchomić serwer Cumulus. Instrukcja instalacji znajduje się w \cite{CumulusInstall}. Dodatkowo należy umieścić serwer na liście dostępnych serwerów w panelu administracyjnym aplikacji Django. Domyślnie, dodawane streamy losują jeden z dostępnych serwerów RTMFP. Można pokusić się o implementację algorytmu rozkładającego obciążenie bardziej równomiernie np. Round Robin.
     \item[Browser Receiver] Należy tak skonfigurować dołączanie obiektu flash, aby przekazywać informację na temat AMFGateway. Można do tego wykorzystać zmienną amfgateway dodając ją w widokach wyświetlających Browser Receiver. Domyślnie ustawiona jest na wartość \texttt{http://facewithme.com/amf/}.
     \item[Mobile Broadcaster] Należy uruchomić, zainstalować i skonfigurować środowisko Flash Develop zgodnie z tą instrukcją \cite{flashDevelopConfig}. W plikach źródłowych odnaleźć domyślną konfigurację AMFGateway (\texttt{./src/Flex/FaceWithMe Mobile/src/Main.mxml}) i poprawić ją na adres skonfigurowanego wcześniej Interfejsu WWW. Skompilować projekt oraz stworzyć odpowiednie paczki instalacyjne dla platform docelowych (Android / iOS).
 \end{description}
@@ -198,17 +198,17 @@ System testowany był na kilku platformach. Niżej znajduje się lista konfigura
 Bardzo ważnym aspektem docelowego systemu powinno być bezpieczeństwo. Niżej wyszczególniono elementy prototypu systemu, które mają bezpośredni związek z bezpieczeństwem i sugerowane poprawki, które pomogą zabezpieczyć system.
 
 \begin{packed_item}
-    \item{Dzięki zastosowaniu technologii Adobe Flash Platform oraz wykorzystaniu protokołu RTMFP, transmisja danych pomiędzy Mobile Broadcaster'em oraz Browser Receiver'em jest szyfrowana. Szyfrowanie odbywa się za pomocą 128-bitowego klucza. Szczegółowe informacje można uzyskać w \cite{AdobeSecurity}}.
-    \item{Komunikacja pomiędzy Interfejsem WWW, a Browser Receiver'em oraz Mobile Receiver'em, odbywająca się za pomocą AMFGateway powinna odbywać się za pomocą protokołu HTTPS, nie HTTP jak w prototypie.}
+    \item{Dzięki zastosowaniu technologii Adobe Flash Platform oraz wykorzystaniu protokołu RTMFP, transmisja danych pomiędzy Mobile Broadcasterem oraz Browser Receiverem jest szyfrowana. Szyfrowanie odbywa się za pomocą 128-bitowego klucza. Szczegółowe informacje można uzyskać w \cite{AdobeSecurity}}.
+    \item{Komunikacja pomiędzy Interfejsem WWW, a Browser Receiverem oraz Mobile Receiverem, odbywająca się za pomocą AMFGateway powinna odbywać się za pomocą protokołu HTTPS, nie HTTP jak w prototypie.}
     \item{Logowanie do panelu administracyjnego oraz logowanie użytkowników powinno wykorzystywać protokół HTTPS, nie HTTP jak w prototypie.}
     \item{Sugeruje się przejście na HTTPS w każdej komunikacji nawiązywanej pomiędzy użytkownikiem, a Interfejsem WWW, nie HTTP jak w prototypie.}
     \item{Serwer RTMFP (Cumulus), nie udostępnia żadnego sposobu na autoryzację połączeń. Najprostszym sposobem na ograniczenie wykorzystania przez nieautoryzowanych użytkowników jest sprawdzanie \texttt{swfUrl} połączającego się klienta za pomocą rozszerzenia serwera wykorzystującego zdarzenie \texttt{onConnection} (szczegóły w \cite{CumulusDocs}).}
 \end{packed_item}
 
 \newpage
-\section{Wydajność P2P Multicast'ing w Adobe Flash Platform}
+\section{Wydajność P2P Multicasting w Adobe Flash Platform}
 
-W tym rozdziale chciano poruszyć temat związany z wydajnością transmisji wideo za pomocą technologii P2P Multicast'ing. Kryterium jakie chcemy sprawdzać to opóźnienie transmisji wideo względem obrazu oryginalnego oraz jego płynność. Opóźnienie jest wyrażone w sekundach. Płynność określono jako jedną z poniższych możliwości.
+W tym rozdziale chciano poruszyć temat związany z wydajnością transmisji wideo za pomocą technologii P2P Multicasting. Kryterium jakie chcemy sprawdzać to opóźnienie transmisji wideo względem obrazu oryginalnego oraz jego płynność. Opóźnienie jest wyrażone w sekundach. Płynność określono jako jedną z poniższych możliwości.
 \begin{description}
     \item[Obraz całkowicie płynny] Obraz zachowuje płynność ciągle.
     \item[Obraz płynny] Obraz od czasu do czasu wstrzymuje się, większą część czasu jest płynny.
@@ -217,7 +217,7 @@ W tym rozdziale chciano poruszyć temat związany z wydajnością transmisji wid
     \item[Obraz nieczytelny] Obraz pojawia się we fragmentach, wyświetlają się pomniejsze.
 \end{description}
 
-Środowisko testowe składa się z dwóch komputerów klientów, na których uruchomiono przeglądarkę Google Chrome i włączono Browser Receiver dla stream'u udostępnianego przez Mobile Broadcaster uruchomionego na Adobe AIR 3.4.0.254/Android 3.2/Samsung Galaxy Tab 10.1. Aplikacja mobilna wysyłanie stream'u wideo przeprowadza za pomocą łącza ADSL (połączenie WiFi przez router) o parametrach faktycznych 8 Mb/s pobieranie, 1 Mb/s wysyłanie danych. Alternatywnym połączeniem Mobile Broadcaster'a jest darmowy internet od Aero2 w technologii HSPA/HSPA+ o parametrach faktycznych 0.5 Mb/s pobieranie, 0.4 Mb/s wysyłanie danych. Komputery klienckie są połączone do tej samej sieci LAN, korzystającej z wcześniej wymienionego łącza ADSL. Test prędkości łącz został wykonany za pomocą serwisu \url{http://speedtest.net}. W poniższej tabeli znajdują się parametry łącz na których przeprowadzono testy.
+Środowisko testowe składa się z dwóch komputerów klientów, na których uruchomiono przeglądarkę Google Chrome i włączono Browser Receiver dla streamu udostępnianego przez Mobile Broadcaster uruchomionego na Adobe AIR 3.4.0.254/Android 3.2/Samsung Galaxy Tab 10.1. Aplikacja mobilna wysyłanie streamu wideo przeprowadza za pomocą łącza ADSL (połączenie WiFi przez router) o parametrach faktycznych 8 Mb/s pobieranie, 1 Mb/s wysyłanie danych. Alternatywnym połączeniem Mobile Broadcastera jest darmowy internet od Aero2 w technologii HSPA/HSPA+ o parametrach faktycznych 0.5 Mb/s pobieranie, 0.4 Mb/s wysyłanie danych. Komputery klienckie są połączone do tej samej sieci LAN, korzystającej z wcześniej wymienionego łącza ADSL. Test prędkości łącz został wykonany za pomocą serwisu \url{http://speedtest.net}. W poniższej tabeli znajdują się parametry łącz na których przeprowadzono testy.
 
 \begin{table}[h]
     \centering
@@ -392,7 +392,7 @@ W tym rozdziale zaprezentowane są wnioski powstałe podczas implementacji proto
     \item{Im gorsze połączenie Mobile Broadcastera tym gorsza możliwa jakość przesyłu wideo.}
     \item{Im gorsze połączenie Mobile Broadcastera, a ilość Browser Reveicerów większa tym lepsza płynność transmisji wideo.}
     \item{Im lepsze połączenie Mobile Broadcastera tym lepsza możliwa jakość przesyłu wideo.}
-    \item{Im więcej klientów Browser Reveivera podłączone do stream'u tym większe możliwe opóźnienie.}
+    \item{Im więcej klientów Browser Reveivera podłączone do streamu tym większe możliwe opóźnienie.}
     \item{Aby stworzyć aplikację na iOS za pomocą Adobe AIR for Mobile należy posiadać Apple Developer Account.}
     \item{Adobe P2P Multicasting działa i wydaje się sensowną technologią do wdrożenia projektowanego systemu.}
     \item{Aby publicznie udostępnić system należy sporo rzeczy poprawić, w szczególności popracować nad bezpieczeństwem systemu.}
