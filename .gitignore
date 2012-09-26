@@ -11,3 +11,4 @@ ksiazki_i_artykuly/*
 *.log
 *.out
 *.toc
+*.lof
