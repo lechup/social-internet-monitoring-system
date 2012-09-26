@@ -17,7 +17,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
-
+\usepackage{epstopdf}
 
 % ustawienie kolorów
 \hypersetup{
@@ -29,13 +29,9 @@
 }
 % kilka swoich komend do odnośników
 % z w rozdziale
-\newcommand\namedref[1]{
-    w~rozdziale \texttt{\ref{#1}~\nameref{#1}}
-}
+\newcommand\namedref[1]{w~rozdziale \ref{#1}~\nameref{#1}}
 % bez w rozdziale
-\newcommand\namedrefw[1]{
-    \texttt{\ref{#1}~\nameref{#1}}
-}
+\newcommand\namedrefw[1]{\ref{#1}~\nameref{#1}}
 
 % w itemize, chcemy kropki, a nie pauzy
 \renewcommand{\labelitemi}{$\bullet$}
@@ -119,6 +115,7 @@
 \hypersetup{pageanchor=false}
 \titlepages
 \hypersetup{pageanchor=true}
+\urlstyle{same}
 
 \tableofcontents
 \clearpage
@@ -126,6 +123,8 @@
 \include{rozdzial1}
 \include{rozdzial2}
 \include{rozdzial3}
+\include{rozdzial4}
+\include{rozdzial5}
 
 \appendix
 \include{dodatekA}

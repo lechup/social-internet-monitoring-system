@@ -6,6 +6,8 @@
 \RequirePackage{capt-of}
 %\RequirePackage{wrapfig}
 \RequirePackage{packed_item}
+\RequirePackage{packed_enum}
+\RequirePackage{packed_enum_roman}
 
 \newenvironment{userstory}[1]{
     \noindent
@@ -26,10 +28,10 @@
         \noindent
         \ignorespaces
         \subsubsection{Testy akceptacyjne ,,\emph{#1}''}
-        \begin{packed_item}
+        \begin{packed_enum_roman}
     }
     {
-        \end{packed_item}
+        \end{packed_enum_roman}
         \noindent
         \ignorespacesafterend
     }

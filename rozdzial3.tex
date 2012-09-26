@@ -1,405 +1,606 @@
-\chapter{Implementacja prototypu systemu}
-\label{cha:ImplementacjaPrototypu}
+\chapter{Projekt, etap I -- Badanie (Exploration)}
+\label{cha:EtapI}
 
-Ten rozdział poświęcony jest szczegółom związanym z implementacją prototypu systemu. Była to najbardziej pracochłonna część pracy. Celem implementacji systemu jest sprawdzenie działania technologi jaką jest Adobe P2P Multicasting. Czy rozwiązanie to nadaje się dla projektowanego ,,Społecznościowego, internetowego systemu monitoringu''.
+Zgodnie z cyklem życia \textit{XP} (więcej \namedref{sec:ZMTOcykl}), projekt zaczyna się od akwizycji ogólnego, głównego zadania systemu. Proponuje się w tym celu wykorzystać przygotowany szablon (więcej \namedref{sec:dodatekAsgzs}). Zawiera on nie tylko najważniejszą część, czyli ogólny opis głównego zadania systemu, ale także szereg pomocnych pytań pomagających w realizacji systemu zgodnie z oczekiwaniami klienta. Szablonu nie należy traktować jako idealnego, a raczej jako propozycję lub punkt wyjścia do rozwinięcia własnego dokumentu wykorzystywanego do akwizycji ogólnych wymagań w swoich projektach.
 
-\section{Co zostało zaimplementowane}
-Prototyp systemu dostępny jest on-line pod adresem \url{http://facewithme.com}. Przy tworzeniu prototypu systemu skupiono się na pięciu elementach systemu (szczegóły architektury znajdują się \namedref{sec:EtapIwstepnaArchitekturaSystemu}):
+\section{Specyfikacja wymagań}
+\label{sec:EtapIsw}
+
+Specyfikacja wymagań jest bardzo ważnym elementem w cyklu tworzenia systemu. Ewentualne niedociągnięcia w tej fazie mogą rzutować na cały projekt. Celem zwinnej specyfikacji wymagań jest stworzenie wymagań minimalnego systemu, spełniającego wszystkie podstawowe funkcje biznesowe zdefiniowane przez klienta, który można wdrożyć, używać i rozwijać -- więcej można przeczytać \namedref{cha:ZMTOzwinnaSpecyfikacjaWymagan}.
+
+\subsection{Specyfikacja głównego zadania systemu}
+\label{sec:EtapIswSGZS}
+
+Sformułowanie głównego zadania systemu pozwala skupić się generowaniu kart wymagań związanych z~nim, a~nie ze~sprawami pobocznymi. Pozwala na uzmysłowienie grupie projektowej jaka jest główna część systemu wokół której należy się skupić. Niżej przedstawiono szablon (więcej \namedref{sec:dodatekAsgzs}) wypełniony razem z klientem na jednym z pierwszych spotkań dotyczących wymagań systemu. 
+
+\begin{userstory}{Główne zadanie systemu}
+Użytkownik za pomocą smartphone'a z kamerą działającego pod systemem Android lub za pomocą przeglądarki internetowej na komputerze stacjonarnym i kamery podłączonej do niego, ma możliwość udostępnienia on-line aktualnego obrazu i dźwięku.
+    \begin{questions}
+        \item{
+            \textbf{Kto jest użytkownikiem systemu?} Użytkownikiem systemu może być każdy kto ma przeglądarkę. Aby udostępnić swoją kamerę dodatkowo użytkownik musi być zalogowany, a wcześniej zarejestrowany w systemie. Aby korzystać z reszty funkcji serwisu nie trzeba być zalogowanym.
+        }
+        \item{
+            \textbf{Jakie urządzenia muszą współpracować z systemem?} Wszystkie komputery wyposażone w przeglądarkę IE 7.0+, Firefox 3+, Chrome, Opera 9+. Dodatkowo system ma działać na telefonach komórkowych / tabletach z systemem Android.
+        }
+        \item{
+            \textbf{Czy jest wymóg użycia konkretnej technologii?} Nie jest wymagana żadna konkretna technologia. Wymaganiem jest wykorzystanie technologii Open Source -- wszędzie tam gdzie jesteśmy w stanie zastąpić komercyjne rozwiązania.
+        }
+        \item{
+            \textbf{Jaka jest wymagana skalowalność systemu?} System musi być skalowalny, idealnie by było, gdyby obraz z kamery udostępniany przez jednego użytkownika, mógłby być odbierany przez nieskończoną liczbę ludzi. Na pewno w jakiś sposób system musi reagować automatycznie na zwiększony ruch w obrębie jednego streama.
+        }
+        \item{
+            \textbf{Czy są jakieś wymagania dotyczące środowiska produkcyjnego w jakim ma działać system?} System docelowo będzie wdrożony na odpowiednim sprzęcie, testy powinien być w stanie odpalić się na średniej klasy laptopie. Im mniejsze wymagania tym lepiej.
+        }
+        \item{
+            \textbf{Czy system ma współpracować z innymi systemami lub udostępniać coś innym systemom?} Duży nacisk będzie kładziony na integrację z serwisami społecznościowymi, głównie chodzi o Facebooka. Będzie można go wykorzystać celem rejestracji i logowania w serwisie, czy też automatycznego udostępniania streamu na swojej Facebookowej ścianie.
+        }
+        \item{
+            \textbf{Czy istnieją systemy podobne do tworzonego?} Jeżeli chodzi o sposób prezentacji interfejsu WWW to najbardziej zbliżony do tego co chce się osiągnąć jest Bambuser. Podobnie ma się sprawa funkcjonalności na telefonie z systemem Android -- aplikacja Bambuser.
+        }
+        \item{
+            \textbf{Czy są jakieś inne specjalne wymagania, które nie wynikają z funkcji jakie powinien posiadać system (wymagania niefunkcjonalne)?} Szybki, skalowalny, bezpieczny, wykorzystujący technologie Open Source.
+        }
+    \end{questions}
+\end{userstory}
+
+\subsection{Karty wymagań dla ,,pierwszego wydania''}
+\label{sec:EtapIswKWDPW}
+
+Akwizycja głównego zadania systemu pozwala na przejście do kolejnego etapu, w którym przygotowuje się wszystkie karty wymagań dla ,,pierwszego wydania'' (więcej \namedref{sec:ZMTOcykl}). Faza ta trwa do momentu kiedy klient nie będzie już miał pomysłu na karty wymagań związane z głównym zadaniem systemu lub grupa projektowa nie będzie w stanie lepiej oszacować czasu potrzebnego na wykonanie danej karty wymagań bez rozpoczęcia jej implementacji.
+
+\begin{userstory}{Strona główna dla niezalogowanego użytkownika}
+    Użytkownikowi niezalogowanemu w systemie, po wejściu na główną domenę serwisu, zostaje zaprezentowana zawartość w postaci:
+    \scr{img/strona_glowna.jpg}{Strona główna dla niezalogowanego użytkownika}
+    \begin{packed_enum}
+        \item Odnośnik przekierowujący zawsze na stronę główną serwisu.
+        \item Wyszukiwarka umożliwiająca wyszukiwanie udostępnionych streamów audio/video po kategoriach i lokalizacji.
+        \item Dwa odnośniki, dzięki którym pokazuje się formularz logowania lub rejestracji.
+        \item Mapa pokazująca grupy streamów audio/wideo.
+    \end{packed_enum}
+
+    \begin{tests}
+        \item{
+            Użytkownik po wejściu na stronie główną widzi mapę swojej okolicy (fizycznej lokalizacji). Lokalizację możemy oszacować za pomocą IP lub jak jest taka możliwość w każdy inny dokładniejszy sposób.
+        }
+        \item{
+            Użytkownik może dowolnie przesuwać mapą. Mapa reaguje na przesuwanie, oraz są na niej aktualizowane punkty streamów audio/video.
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Strona główna dla zalogowanego użytkownika}
+    Użytkownikowi zalogowanemu w systemie, po wejściu na główną domenę serwisu, zostaje zaprezentowana zawartość w postaci:
+    \scr{img/strona_glowna2.jpg}{Strona główna dla zalogowanego użytkownika}
+    \begin{packed_enum}
+        \item Avatar pobrany z gravatar.com oraz nazwa zalogowanego użytkownika.
+        \item Wpis w menu przenoszący do podstrony ustawień zalogowanego użytkownika.
+        \item Wpis w menu przenoszący do podstrony udostępniania streamu audio/video.
+    \end{packed_enum}
+    \begin{tests}
+        \item{
+            Po kliknięciu w menu na pozycję z nazwą zalogowanego użytkownika, pojawiają się poniższe wpisy w menu.
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Rejestracja}
+    Użytkownik po naciśnięciu odnośnika rejestruj,
+    zostaje przekierowany do formularza rejestracji:
+    \scr{img/rejestracja.jpg}{Formularz rejestracji.}
+    \begin{tests}
+        \item{
+            Pole email i powtórz email muszą być takie same, inaczej wyświetlany jest błąd, użytkownik proszony jest o poprawę pól.
+        }
+        \item{
+            Pole hasło i powtórz hasło muszą być takie same, inaczej wyświetlany jest błąd, użytkownik proszony jest o poprawę pól.
+        }
+        \item{
+            Pole loginu musi być unikalne w bazie. W przypadku wystąpienia w bazie zwracamy użytkownikowi błąd.
+        }
+        \item{
+            Pole email musi być unikalne w bazie. W przypadku wystąpienia w bazie zwracamy użytkownikowi błąd.
+        }
+        \item{
+            Po prawidłowym wypełnieniu formularza, użytkownik dostaje informację o konieczności potwierdzenia swojego adresu e-mail. Aby potwierdzić rejestrację musi kliknąć w link aktywacyjny wysłany na rejestrowane konto pocztowe, w ciągu 7 dni od momentu rejestracji. W innym wypadku konto nie zostanie aktywowane, a zgłoszenie usunięte z bazy.
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Przypomnienie hasła}
+    Użytkownik po naciśnięciu odnośnika zapomniałem hasła,
+    zostaje przekierowany do formularza przypomnienia hasła:
+    \scr{img/przypomnenie_hasla.jpg}{Formularz przypomnienia hasła.}
+    \begin{tests}
+        \item{
+            Po wpisaniu istniejącego loginu lub maila, na maila wysyłane jest zapytanie, czy chcemy resetować hasło z linkiem aktywującym. Po jego kliknięciu otrzymujemy drugi mail z wygenerowanym nowym hasłem, które później możemy zmienić na zakładce ,,Ustawienia''.
+        }
+        \item{
+            Użytkownik po podaniu błędnego loginu/maila zostaje o tym poinformowany ekranem:
+            \scr{img/przypomnenie_hasla2.jpg}{Ekran informacji o błędnym wypełnieniu loginu/hasła.}
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Logowanie użytkownika}
+    Użytkownik po naciśnięciu odnośnika zaloguj,
+    zostaje przekierowany do formularza logowania:
+    \scr{img/logowanie.jpg}{Formularz logowania.}
+    \begin{packed_enum}
+        \item Reszta strony wyszarzona, formularz logowania jako ,,overlay''.
+        \item Klikając X-a wracamy do wyszarzonej strony.
+        \item Miejsce na wpisanie loginu lub email.
+        \item Miejsce na wpisanie hasła.
+        \item Link do formularza przypomnienia hasła.
+        \item Przycisk wysyłający formularz logowania.
+    \end{packed_enum}
+    
+    \begin{tests}
+        \item{
+            Użytkownik tylko po podaniu istniejącego loginu oraz pasującego do niego hasła
+            zostaje zalogowany i przeniesiony na oglądaną przed logowaniem stronę.
+        }
+        \item{
+            Użytkownik po zalogowaniu ma dostęp do dodatkowych podstron -- Ustawienia, Podziel się!
+        }
+        \item{
+            Użytkownik po podaniu błędnego hasła lub nieistniejącego loginu, zostaje o tym poinformowany ekranem:
+            \scr{img/logowanie2.jpg}{Ekran informacji o błędnym haśle lub loginie.}
+            \begin{packed_enum}
+                \item Informacja o typie błędu.
+                \item Oznaczenie pól jako błędnie wypełnionych, pole hasła pozostaje puste, pole loginu zostaje jako ostatnia wpisana wartość.
+            \end{packed_enum}
+        }
+        \item{
+            Użytkownik po zalogowaniu widzi zmodyfikowane menu -- na wszystkich podstronach serwisu.
+            \scr{img/strona_glowna2.jpg}{Zmodyfikowane menu na górze}
+            \begin{packed_enum}
+                \item Avatar pobrany z gravatar.com oraz nazwa zalogowanego użytkownika.
+                \item Wpis w menu przenoszący do podstrony ustawień zalogowanego użytkownika.
+                \item Wpis w menu przenoszący do podstrony udostępniania streamu audio/video.
+            \end{packed_enum}
+        }
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Udostępnianie streamu audio/video krok pierwszy}
+    Użytkownik po wybraniu z menu opcji podziel się,
+    zostaje przekierowany do formularza udostępniania audio/video:
+    \scr{img/dzielenie_sie_streamem1.jpg}{Formularz udostępniania audio/video.}
+    \begin{packed_enum}
+        \item {Aby udostępnić stream należy wybrać kategorię, do której ten stream ma być przypisany. Lista kategorii jest przykładową lista, administrator ma mieć możliwość modyfikowania tej listy z poziomu panelu administracyjnego.}
+        \item {Jeżeli w systemie istnieje więcej niż jedna kamera, tutaj wybierana jest kamera źródłowa. Domyślnie wybraną jest pierwsza systemowa kamera.}
+        \item {Możemy wybrać jakość transmisji spośród:
+            \begin{description}
+                \item[Wysoka] Wysoka jakość z preferencją wideo nad audio.
+                \item[Średnia] Średnia jakość zarówno wideo jak audio.
+                \item[Niska] Niska jakość wideo z preferencją jakości audio nad wideo
+            \end{description}
+        }
+        \item{Po kliknięciu ,,Podziel się'' na formularzu udostępniania audio/video, użytkownikowi otwiera się nowe okno przeglądarki gdzie prezentowane są dane udostępnionego streamu (krok drugi). W starym oknie użytkownik zostaje przekierowany do poprzednio odwiedzanej strony -- przed wybraniem ,,Podziel się''.}
+        \item {Wybór dostępności streamu, albo publiczny -- wszyscy użytkownicy systemu mogą go oglądać/udostępniać (domyślna opcja) -- lub prywatny -- tylko posiadający link do streamu mogą go zobaczyć.}
+    \end{packed_enum}
+    \begin{tests}
+        \item{Jeżeli w systemie nie ma kamery, użytkownik jest informowany o braku możliwości udostępniania, przycisk ,,Podziel się!'' staje się nieaktywny.}
+    \end{tests}
+\end{userstory}
+
+\begin{userstory}{Udostępnianie streamu audio/video krok drugi}
+    Po kliknięciu ,,Podziel się'' na formularzu udostępniania audio/video, użytkownikowi otwiera się nowe okno przeglądarki gdzie prezentowane są dane udostępnionego streamu. W starym oknie użytkownik zostaje przekierowany do poprzednio odwiedzanej strony -- przed wybraniem ,,Podziel się''.
+    \scr{img/dzielenie_sie_streamem2.jpg}{Okno danych udostępnianego streamu audio/video.}
+    \begin{packed_enum}
+        \item{Możliwość zmiany kamery oraz jakości w trakcie nadawania.}
+        \item{Jeżeli wcześniej wybrano publiczną dostępność streamu, wyświetlamy tutaj unikalny link do dzielenia się streamem ze znajomymi np. za pomocą Facebooka, w przeciwnym wypadku wyświetlamy ,,permalink'' streamu w formie \url{http://domena.com/login_usera/slug_tytulu_streamu}.}
+        \item{Przycisk otwierający w nowym oknie link streamu.}
+        \item{Informacja na temat tytułu oraz kategorii udostępnianego streamu.}
+    \end{packed_enum}
+    \begin{tests}
+        \item{Po kliknięciu na pole tekstowe linku, zaznacza się cała zawartość. Dodatkowo zaznaczona zawartość zostaje skopiowana do schowka, na ekranie pojawia się informacja ,,Link skopiowano do schowka!''}
+    \end{tests}
+\end{userstory}
+
+\section{Analiza wymagań i dobór rozwiązań}
+\label{sec:EtapIaw}
+
+Po rozmowie z klientem, na podstawie głównego zadania systemu oraz innych przygotowanych kart wymagań, można przejść do fazy analizy wymagań więcej~\namedref{sec:ZMTOzwinnaAnalizaWymagan}.
+
+Celem tego etapu jest stworzenie wstępnej architektury systemu, przetestowanie wydajności technologii -- najczęściej przy użyciu prototypu systemu.
+
+Jako początek rozważań architektury systemu skorzystano z elementów metody Architecture Tradeoff Analysis Method -- Drzewo użyteczności -- szczegóły metody można poznać w \cite{Kaz2000}. Pełna metoda ATAM wprowadza zbyt dużą formalizację i generuje zbyt dużą ilość dokumentacji, z której metodyki zwinne chcą rezygnować. Dodatkowo zgodnie z założeniami \textit{XP} (szczegóły \namedref{sec:ZMTOzalozenia}), wszystkie ustalenia sporządzone w tej fazie mogą ulec zmianie na każdym późniejszym etapie prowadzenia projektu. Zwinna analiza wymagań nie zamyka możliwości późniejszej zmiany technologii, architektury czy dowolnego z elementów wspomagających projekt.
+
+\subsection{Drzewo użyteczności (ATAM Usability Tree)}
+\label{sec:EtapIdrzewoUzytecznosci}
+
+Niżej umieszczono \textit{Drzewo Użyteczności} metody ATAM w formie listy. Pokazuje w bardzo przejrzysty sposób najważniejsze kryteria oceny architektury systemu.
 
 \begin{packed_item}
-    \item{Interfejs WWW}
-    \item{Baza danych}
-    \item{Serwer RTMFP}
-    \item{Mobile Broadcaster}
-    \item{Browser Receiver}
+    \item{
+        \textbf{WYDAJNOŚĆ}
+        \begin{packed_item}
+            \item{
+                Opóźnienie transmisji danych
+                \begin{packed_item}
+                    \item{Opóźnienie wideo dostosowane do aktualnej przepustowości łącza, jak najmniejsze.}
+                    \item{Brak lub minimalne opóźnienia transmisji audio.}
+                \end{packed_item}
+            }
+            \item{
+                Ilość użytkowników
+                \begin{packed_item}
+                    \item{Liniowa zależność ilość użytkowników używających system od zużywanych zasobów.}
+                    \item{Minimalna ilość użytkowników aktywnie poruszających się po stronie -- 1000 osób.}
+                    \item{Minimalna ilość użytkowników oglądających jeden strumień wideo -- 100 osób.}
+                \end{packed_item}
+            }
+        \end{packed_item}
+    }
+    \item{
+        \textbf{MODYFIKOWALNOŚĆ}
+        \begin{packed_item}
+            \item{Zarządzanie użytkownikami.}
+            \item{Zarządzanie dostępnymi streamami.}
+            \item{Zarządzanie kategoriami streamów.}
+            \item{Aktualizacja i dystrybucja oprogramowania mobilnego.}
+            \item{Łatwa modyfikacja wyglądu strony.}
+        \end{packed_item}
+    }
+    \item{
+        \textbf{DOSTĘPNOŚĆ}
+        \begin{packed_item}
+            \item{Dostępność całej usługi na poziomie 99,9\% rocznie.}
+            \item{Dostępność usługi na urządzenia mobilne (tablety, telefony).}
+            \item{Dostępność usługi na desktopy.}
+        \end{packed_item}
+    }
+    \item{
+        \textbf{SKALOWALNOŚĆ}
+        \begin{packed_item}
+            \item{Odporność na geometryczną ,,nagłą popularyzację''.}
+            \item{Liniowa zależność ilość użytkowników/zużywane zasoby.}
+        \end{packed_item}
+    }
+    \item{
+        \textbf{BEZPIECZEŃSTWO}
+        \begin{packed_item}
+            \item{
+                System logowania.
+            }
+            \item{
+                Stream publiczny/prywatny.
+            }
+            \item{
+                Szyfrowanie
+                \begin{packed_item}
+                    \item{Szyfrowanie transmisji wideo.}
+                    \item{Szyfrowanie transmisji audio.}
+                    \item{Szyfrowanie transmisji http i każdej innej transmisji danych poza system.}
+                \end{packed_item}
+            }
+        \end{packed_item}
+    }
 \end{packed_item}
 
-Dzięki wybraniu ww. elementów udało się stworzyć system zdolny do przetestowania transmisji wideo pomiędzy Mobile Broadcaster, a Browser Receiver, za pomocą technologii Adobe P2P Multicast. Interfejs WWW umożliwia dodatkowo ładną prezentację oraz wyszukiwanie streamów w zadanej lokalizacji czy też personalizację ustawień.
+\subsection{Wstępna architektura systemu}
+\label{sec:EtapIwstepnaArchitekturaSystemu}
 
-Na poniższym rysunku widać architekturę  zaimplementowanej częsciu systemu wraz z prezentacją transmisji P2P. Należy zwrócić uwagę, że Serwer RTMFP nie bierze czynnego udziału w transmisji wideo, służy jedynie do rozgłaszania klientów udostępniających stream. Transmisja wideo odbywa się pomiędzy Mobile Broadcasterem, a klientami Browser Receivera.
+Docelowy system będzie składał się z \textit{Interfejsu WWW}, odpowiedzialnego za prezentację mapy i dostosowywanie się do zmiennej szerokości ekranu urządzeń. Wszystkie streamy będą umieszczone w relacyjnej \textit{Bazie danych} z rozszerzeniem GIS, dzięki czemu możliwe będzie łatwe zapisanie lokalizacji streamu.
 
-\begin{center}
-    \includegraphics[width=\textwidth]{diagramy/architetura-implementacja.png}
-    \captionof{figure}{Architektura implementacji prototypu systemu uwzględniająca transmisję wideo z Mobile Broadcastera do kilku Browser Receiverów.}
-    \label{fig:architekturaImplementacji}
-\end{center}
+Po stronie komputerów stacjonarnych, za pobieranie obrazu z kamery i wyświetlanie obrazu u drugiego użytkownika będzie odpowiedzialny obiekt SWF \textit{Adobe Flash Player}. W przypadku urządzeń mobilnych, do przygotowania aplikacji obsługującej zarówno iPhone'a jak i Androida wykorzystany zostanie otwarty framework Adobe Flex i jego mobilne wsparcie w postaci \textit{Adobe AIR for Mobile} (alternatywne rozwiązania, które rozważano, opisane są \namedref{sec:EtapItechnologia}).
 
-\subsection{Interfejs WWW}
-Niżej przedstawiono elementy, które udało się zaimplementować w części systemu nazwanej Interfejs WWW. Szczegóły i opis architektury znajdują się \namedref{sec:EtapIwstepnaArchitekturaSystemu}.
+Do rozproszenia ruchu i stworzenia systemu niezależnego od pojedynczego punktu połączenia sieciowego -- osoby udostępniającej stream -- będą wykorzystane sieci ze wspomaganiem równorzędnym wbudowane w Adobe Flash Platform. Zasada działania sieci P2P wymusza udostępnianie oglądanego streamu, tak aby zapewnić prostą zależność -- im więcej użytkowników chce oglądać, tym więcej użytkowników udostępnia żądany stream. Firma Adobe nazywa tę technologię \textit{P2P Multicasting}, niżej przedstawione są schematy pokazujące różnicę pomiędzy transmisją Unicast, a P2P Multicast.
 
-\begin{packed_item}
-    \item{System rejestracji użytkownika (\url{http://facewithme.com/accounts/register}), można zobaczyć na rysunku \ref{fig:rejestracja}.}
-    \item{System logowania użytkownika (\url{http://facewithme.com/accounts/login}), można zobaczyć na rysunku \ref{fig:logowanie}.}
-    \item{Panel administracyjny do zarządzania streamami, kategoriami i użytkownikami (\url{http://facewithme.com/admin}), można zobaczyć na rysunku \ref{fig:panelAdministracyjny}.}
-    \item{Interaktywną mapę prezentującą streamy (\url{http://facewithme.com}), można zobaczyć na rysunku \ref{fig:interaktywnaMapa}.}
-    \item{Funkcję automatycznej lokalizacji użytkownika i ustawienie pozycji mapy zgodnie z nią (\url{http://facewithme.com}), można zobaczyć na rysunku \ref{fig:interaktywnaMapa}.}
-    \item{Listowanie wszystkich streamów nadawanych w systemie z podziałem na kategorie (\url{http://facewithme.com/stream/list}), można zobaczyć na rysunku \ref{fig:listaStreamow}.}
-    \item{Wyświetlanie Browser Receivera, można zobaczyć na rysunku \ref{fig:browserReceiver}.}
-\end{packed_item}
+    \begin{center}
+        \includegraphics[width=\textwidth]{img/adobe-p2p-unicast.jpg}
+        \captionof{figure}{Przedstawienie transmisji Unicast w Adobe Flash Platform, ilustracja pochodzi z \cite{TomKrcha2010ME}.}
+    \end{center}
 
-\begin{center}
-    \includegraphics[width=\textwidth]{img/screens/interfejs_www/rejestracja.jpg}
-    \captionof{figure}{System rejestracji użytkownika.}
-    \label{fig:rejestracja}
-\end{center}
-\begin{center}
-    \includegraphics[width=\textwidth]{img/screens/interfejs_www/logowanie.jpg}
-    \captionof{figure}{System logowania użytkownika.}
-    \label{fig:logowanie}
-\end{center}
-\begin{center}
-    \includegraphics[width=\textwidth]{img/screens/interfejs_www/panel-administracyjny.jpg}
-    \captionof{figure}{Panel administracyjny do zarządzania streamami, kategoriami i użytkownikami.}
-    \label{fig:panelAdministracyjny}
-\end{center}
-\begin{center}
-    \includegraphics[width=\textwidth]{img/screens/interfejs_www/interaktywna-mapa.jpg}
-    \captionof{figure}{Interaktywna mapa prezentująca streamy.}
-    \label{fig:interaktywnaMapa}
-\end{center}
-\begin{center}
-    \includegraphics[width=\textwidth]{img/screens/interfejs_www/lista-streamow.jpg}
-    \captionof{figure}{Lista streamów nadawanych w systemie z podziałem na kategorie.}
-    \label{fig:listaStreamow}
-\end{center}
-\begin{center}
-    \includegraphics[width=\textwidth]{img/screens/interfejs_www/browser-receiver.jpg}
-    \captionof{figure}{Wyświetlanie Browser Receivera w Google Chrome.}
-    \label{fig:browserReceiver}
-\end{center}
+    Jak widać w tym przypadku potrzebny jest serwer z łączem o odpowiedniej przepustowości, aby zapewnić ciągłość transmisji. Klienci biorący udział w transmisji nie komunikują się w żaden sposób ze sobą.
 
+    \begin{center}
+        \includegraphics[width=\textwidth]{img/adobe-p2p-multicast.jpg}
+        \captionof{figure}{Przedstawienie transmisji P2P Multicast w Adobe Flash Platform, ilustracja pochodzi z \cite{TomKrcha2010ME}.}
+    \end{center}
+
+W przypadku transmisji P2P Multicast łącza są obciążone względem swoich możliwości. Obciążenie rozłożone na całość sieci ze wspomaganiem równorzędnym. Klienci komunikują się ze sobą współdzieląc zasób. Decyzja o wykorzystaniu technologii Adobe Flash Platform miała bezpośredni wpływ na architekturę systemu. Alternatywy, które rozważano opisane są \namedref{sec:EtapItechnologia}.
 
 \newpage
-\subsection{Mobile Broadcaster}
-Mobile Broadcaster, czyli aplikacja umożliwiająca nadawanie streamu -- szczegóły \namedref{sec:EtapIwstepnaArchitekturaSystemu} -- jest aplikacją na systemy Android wykonana w środowisku AIR. Na przygotowanej stronie \url{http://facewithme.com} można pobrać aplikację. Aplikacji nie umieszczono w Google Play, gdyż nie jest ona produktem skończonym, a tylko takie można umieszczać na tej platformie. Aplikacja w formie instalatora na systemy Android została umieszczona również na dołączonej płycie CD w katalogu \texttt{./src/Django/facewithme/apps/core/static/FaceWithMe.apk}. Aplikacja została przetestowana z wykorzystaniem środowisk uściślonych w \namedref{sec:EtapIprzeprowadzoneTesty}. Niżej przedstawiono funkcje Mobile Broadcastera, które udało się zaimplementować w prototypie systemu.
-
-\begin{packed_item}
-    \item{Panel udostępniania streamu wideo, można zobaczyć na rysunku~\ref{fig:MB1}.}
-    \item{Streaming wideo, można zobaczyć na rysunku~\ref{fig:MB2}.}
-    \item{Ustawianie jakości streamu w trakcie nadawania, można zobaczyć na rysunku~\ref{fig:MB3}.}
-    \item{Panel ustawień aplikacji, można zobaczyć na rysunku~\ref{fig:MB4}.}
-    \item{Panel DEBUG aplikacji, można zobaczyć na rysunku~\ref{fig:MB5}.}
-\end{packed_item}
-
-\begin{figure}[h]
-    \centering
-    \begin{subfigure}{0.4\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{img/screens/mobile_broadcaster/panel-udostepniania-streamu.png}
-        \caption{Panel udostępniania streamu.}
-        \label{fig:MB1}
-    \end{subfigure}
-    \quad
-    \begin{subfigure}{0.4\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{img/screens/mobile_broadcaster/streaming-wideo.png}
-        \caption{Streaming wideo.}
-        \label{fig:MB2}
-    \end{subfigure}
-    \caption{Screenshoty z Mobile Receivera część 1.}
-\end{figure}
-
-\begin{figure}[ht]
-    \centering
-    \begin{subfigure}{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{img/screens/mobile_broadcaster/panel-ustawien.png}
-        \caption{Panel ustawień aplikacji.}
-        \label{fig:MB3}
-    \end{subfigure}
-    \quad
-    \begin{subfigure}{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{img/screens/mobile_broadcaster/panel-debug.png}
-        \caption{Panel DEBUG aplikacji.}
-        \label{fig:MB4}
-    \end{subfigure}
-    \quad
-    \begin{subfigure}{0.3\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{img/screens/mobile_broadcaster/interfejs-www.png}
-        \caption{Interfejs WWW widoczny z poziomu przeglądarki mobilnej.}
-        \label{fig:MB5}
-    \end{subfigure}
-    \caption{Screenshoty z Mobile Receivera część 2.}
-\end{figure}
-
-\newpage
-\section{Co wymaga usprawnienia}
-
-Przy implementacji prototypu systemu, nie skupiano się na sprawach pobocznych jak interfejs czy komunikacja z użytkownikiem. Głównie kierowano się intencją przetestowania w praktyce działania technologii Adobe P2P Multicasting. Dlatego też system wymaga znacznej ilości poprawek zanim może zacząć być wykorzystywany publicznie. Przygotowany prototyp traktować można jako bazę wyjściową do zapoznania się z działaniem i wydajnością technologii. Główne braki prototypu systemu to:
-
-\begin{packed_item}
-    \item{Brak szyfrowania połączeń HTTP pomiędzy użytkownikiem a systemem, dotyczy także logowania.}
-    \item{Brak jakiejkolwiek autoryzacji serwera RTMFP, jest dostępny publicznie.}
-    \item{Brak zabezpieczenia publicznego/prywatnego streamu wideo.}
-    \item{Brak całego Mobile Receivera, szczegóły \namedref{sec:EtapIwstepnaArchitekturaSystemu}.}
-    \item{Brak całego Browser Broadcastera, szczegóły \namedref{sec:EtapIwstepnaArchitekturaSystemu}.}
-    \item{Isnienie panelu DEBUG w Mobile Broadcasterze.}
-    \item{Brak obrotu komponentu kamery względem obrócenia urządzenia w Mobile Broadcasterze co skutkuje przesuwaniem obrazu kamery góra/dół, gdy kamera fizycznie poruszana jest prawo/lewo.}
-    \item{Brak automatycznego usuwania streamu z Interfejsu WWW w przypadku nieoczekiwanego przerwania działania Mobile Broadcastera.}
-    \item{Brak komunikatów skierowanych do użytkownika Mobile Broadcastera, informujących o stanie lub błędach aplikacji.}
-    \item{Brak wyłączania trybu czuwania urządzenia podczas udostępniania streamu.}
-    \item{Brak aplikacji na iOS -- Głównym powodem dla którego nie udało się stworzyć i przetestować aplikacji na platformę iOS jest koszt licencji Apple Developer Account (99\$), jaki trzeba ponieść, aby dostać możliwość umieszczania aplikacji na Apps Market oraz testowania aplikacji na własnym telefonie (szczegóły można znaleźć \cite{UnknAuth11}). Z powodu zastosowania technologii Adobe AIR for Mobile, nie ma możliwości testowania aplikacji za pomocą XCode i wirtualnego środowiska iOS. Z tego powodu dostępność komputerów Mac na uczelni na wiele się nie zdała.}
-    \item{Brak środowiska testującego oraz testów kodu źródłowego Adobe Flash Platform, zarówno kodu Adobe AIR for Mobile jak i Adobe Flash.}
-\end{packed_item}
-
-\newpage
-\section{Dokumentacja}
-Zgodnie z filozofią metodyki,,XP'' (szczegóły \namedref{sec:ZMTOzalozenia}), dokumentacja projektu sprowadza się do opisu architektury oraz komentarzy kodu, testów oraz komentarzy do testów. Unika się tworzenia bazy wiedzy, która najczęściej jest po pewnym czasie nieaktualizowana.
-
-Dlatego też, aby zapoznać się z działaniem systemu należy przejrzeć architekturę systemu, a następnie zapoznać się bezpośrednio z kodem źródłowym i zawartymi w nim komentarzami.
-
-\subsection{Uruchomienie systemu}
-
-Aby uruchomić system z kodu źródłowego należy przygotować szereg aplikacji i skonfigurować odpowiednio środowisko. Niżej prezentowana jest lista części systemu, wraz z opisem jak daną część uruchomić.
-
+Niżej przedstawiono schemat architektury pokazujący powiązanie pomiędzy poszczególnymi, wcześniej wymienionymi, elementami systemu.
+\begin{center}
+    \includegraphics[width=\textwidth]{diagramy/architektura.pdf}
+    \captionof{figure}{Wstępna architektura systemu.}
+\end{center}
 \begin{description}
-    \item[Interfejs WWW] Uruchomić aplikację Django, znajdującą się w dołączonym kodzie źródłowym w katalogu \texttt{./src/Django/facewithme/}. Wymagane do uruchomienia biblioteki środowiska Pythonowskiego w formacie pliku wymagań programu PIP znajdują się w \texttt{./src/Django/facewithme/requirements/requirements.txt}. Instrukcja instalacji i wdrożenia aplikacji Django znajduje się w \cite{DjangoDocs}. System wdrożony został przy wykorzystaniu Django 1.4.1.
-    \item[Baza danych] Uruchomić i zainstalować serwer PostgreSQL (\cite{PostgreSQL}). Zainstalować rozszerzenie GIS zgodnie z instrukcją zamieszczoną w \cite{DjangoPostGIS}. System wdrożony został przy wykorzystaniu PostgreSQL 9.1.
-    \item[Serwer RTMFP] Uruchomić serwer Cumulus. Instrukcja instalacji znajduje się w \cite{CumulusInstall}. Dodatkowo należy umieścić serwer na liście dostępnych serwerów w panelu administracyjnym aplikacji Django. Domyślnie, dodawane streamy losują jeden z dostępnych serwerów RTMFP. Można pokusić się o implementację algorytmu rozkładającego obciążenie bardziej równomiernie np. Round Robin.
-    \item[Browser Receiver] Należy tak skonfigurować dołączanie obiektu flash, aby przekazywać informację na temat AMFGateway. Można do tego wykorzystać zmienną amfgateway dodając ją w widokach wyświetlających Browser Receiver. Domyślnie ustawiona jest na wartość \texttt{http://facewithme.com/amf/}.
-    \item[Mobile Broadcaster] Należy uruchomić, zainstalować i skonfigurować środowisko Flash Develop zgodnie z tą instrukcją \cite{flashDevelopConfig}. W plikach źródłowych odnaleźć domyślną konfigurację AMFGateway (\texttt{./src/Flex/FaceWithMe Mobile/src/Main.mxml}) i poprawić ją na adres skonfigurowanego wcześniej Interfejsu WWW. Skompilować projekt oraz stworzyć odpowiednie paczki instalacyjne dla platform docelowych (Android / iOS).
+    \item[Interfejs WWW]{Centralny interfejs użytkownika z systemem, umożliwia przeglądanie streamów z poziomu przeglądarki WWW, implementuje design dostosowywany do szerokości ekranu urządzenia na którym się go przegląda. Współpracuje z wszystkimi nowoczesnymi przeglądarkami WWW. Udostępnia API do komunikacji z aplikacją mobilną czy samym obiektem SWF.}
+    \item[Baza Danych]{Centralne miejsce składowania wszystkich danych przechowywanych w systemie. Umożliwia szybkie wyszukiwanie, jest bezpośrednio połączona z Interfejsem WWW, który przez swoje API udostępnia przechowywane przez nią dane.}
+    \item[Browser Receiver]{Aplikacja Adobe Flash Player, umożliwiająca dołączenie do streamu wideo nadawanego przez Browser Broadcaster lub Mobile Broadcaster.}
+    \item[Browser Broadcaster]{Aplikacja Adobe Flash Player, umożliwiająca nadawanie streamu wideo bezpośrednio z przeglądarki.}
+    \item[Mobile Receiver]{Aplikacja mobilna Adobe AIR for Mobile, umożliwiająca odbieranie streamu wideo nadawanego przez Mobile Broadcaster lub Browser Broadcaster z poziomu urządzenia wspierającego iOS lub Androida.}
+    \item[Mobile Broadcaster]{Aplikacja mobilna Adobe AIR for Mobile, umożliwiająca nadawanie streamu wideo z poziomu urządzenia wspierającego iOS lub Androida.}
+    \item[Serwer RTMFP]{Serwer przechowujący informację na temat listy osób biorących udział w transmisji wideo streamów. Dzięki niemu pokonujemy niefiltrowany NAT. Łączą się z nim wszystkie aplikacje Broadcaster oraz Receiver.}
 \end{description}
 
-W razie problemów z wyświetlaniem się streamu należy zapoznać się z plikiem pomocy \url{http://facewithme.com/help/}.
+\subsection{Technologia}
+\label{sec:EtapItechnologia}
 
-\subsection{Testy automatyczne}
+W tym rozdziale umieszczono informacje o tym jakie technologie oraz dlaczego zostały wybrane do realizacji poszczególnych elementów systemu. Przed przedstawieniem wybranej technologii rozważono alternatywy jeżeli takowe istniały.
 
-Część Interfejsu WWW systemu posiada zalążki testów jednostkowych. Dotyczą one poprawnego wyświetlania widoków. Aby uruchomić testy, należy przejść do katalogu z z kodem źródłowym Django (\texttt{./src/Dajango/facewithme/}), a następnie uruchomić polecenie:
+\subsubsection{Adobe Flash Platform}
+\label{sec:EtapItechnologiaAFP}
 
-\lstset{language=Bash}
-\begin{lstlisting}
-python manage.py test core
-\end{lstlisting}
-
-O poprawnym wykonaniu testów informuje nas konsola, której wyjście zawiera:
-\begin{lstlisting}
-Creating test database for alias 'default'...
-......
-----------------------------------------------------------------------
-Ran 6 tests in 0.822s
-
-OK
-Destroying test database for alias 'default'...
-\end{lstlisting}
-
-\subsection{Przeprowadzone testy}
-\label{sec:EtapIprzeprowadzoneTesty}
-System testowany był na kilku platformach. Niżej znajduje się lista konfiguracji systemu, w której poszczególne części nie wykazywały błędnego zachowania.
-
+Przed wybraniem tej technologi rozważano alternatywne rozwiązania w postaci dwóch technologii. Niżej przedstawiono je wraz z krótkim opisem wyjaśniającym dlaczego nie znalazły zastosowania w systemie.
 \begin{description}
-    \item[Interfejs WWW z Browser Receiver] Google Chrome (21.0.1180.89) + Flash Player (11.3.31.232)/Linux; FireFox 15.0.1 + Flash Player 11.2.202.238/Linux; Google Google Chrome (21.0.1180.89) + Flash Player (11.3.31.232)/Windows 7;  FireFox 15 + Flash Player 11.2.202.238/Windows 7.
-    \item[Mobile Broadcaster] Adobe AIR 3.4.0.254/Android 4.04/Samsung Galaxy S I, Adobe AIR 3.4.0.254/Android 3.2/Samsung Galaxy Tab 10.1.
+    \item[Widget Java w przeglądarce] Java jest środowiskiem programistycznym dostępnym na każdą platformę. Udostępnia możliwość uruchomienia widgetów w obrębie przeglądarki, umożliwia wykonywanie połączeń UDP oraz TCP. Nie znaleziono biblioteki umożliwiającej stworzenie jednego kodu dla urządzeń iOS oraz Android. Dodatkowo wykorzystanie Javy wymusiłoby samodzielną implementacja P2P w transmisji wideo z poziomu przeglądarki. Ostatecznym ,,gwoździem do trumny'' tej technologii jest mała popularność oraz najczęściej blokowanie Javy w przeglądarkach.
+    \item[Websockets] Dostępne w specyfikacji HTML5 \cite{rfc6455}, umożliwiające nawiązywanie połączeń TCP pomiędzy serwerem, a przeglądarką. Aktualnie wspierane przez  Firefox 4+, Google Chrome 16+, Opera 11+ oraz Safari 5+. Powodem na rezygnację z tej technologii jest brak obsługi pobierania strumienia wideo z kamery z poziomu przeglądarki, brak przykładów lub biblioteki poświęconej zagadnieniu P2P wykorzystującej websockets oraz brak wsparcia technologi dla przeglądarek mobilnych.
 \end{description}
 
-\subsection{Bezpieczeństwo}
+Platforma technologii Flash składająca się z kilku elementów. Przy odpowiednim ich wykorzystaniu umożliwia stworzenie aplikacji działających praktycznie na dowolnej platformie i dowolnej przeglądarce.
 
-Bardzo ważnym aspektem docelowego systemu powinno być bezpieczeństwo. Niżej wyszczególniono elementy prototypu systemu, które mają bezpośredni związek z bezpieczeństwem i sugerowane poprawki, które pomogą zabezpieczyć system.
+\begin{description}
+    \item[Adobe Flex] Framework z otwartym kodem źródłowym umożliwiający tworzenie aplikacji w środowiskach Adobe AIR oraz Adobe Flash Player.
+    \item[Adobe Flash Player] Środowisko dostępne we wszystkich desktopowych przeglądarkach i niektórych mobilnych (Android). Służy do odtwarzania animacji SWF. Pozwala wykorzystać szereg klas Flexa niebędących częścią Adobe AIR.
+    \item[Adobe AIR] Środowisko dostępne na szereg platform (Windows, Android, iOS) umożliwiające tworzenie aplikacji mobilnych jak i desktopowych niezależnie od platformy docelowej.
+\end{description}
 
+Wybranie tej technologii było koniecznością już na samym początku -- stąd jej obecność w architekturze systemu. Wynika bezpośrednio ze specyfikacji wymagań. Jest to jedyne rozwiązanie umożliwiające aktualnie:
 \begin{packed_item}
-    \item{Dzięki zastosowaniu technologii Adobe Flash Platform oraz wykorzystaniu protokołu RTMFP, transmisja danych pomiędzy Mobile Broadcasterem oraz Browser Receiverem jest szyfrowana. Szyfrowanie odbywa się za pomocą 128-bitowego klucza. Szczegółowe informacje można uzyskać w \cite{AdobeSecurity}}.
-    \item{Komunikacja pomiędzy Interfejsem WWW, a Browser Receiverem oraz Mobile Receiverem, odbywająca się za pomocą AMFGateway powinna odbywać się za pomocą protokołu HTTPS, nie HTTP jak w prototypie.}
-    \item{Logowanie do panelu administracyjnego oraz logowanie użytkowników powinno wykorzystywać protokół HTTPS, nie HTTP jak w prototypie.}
-    \item{Sugeruje się przejście na HTTPS w każdej komunikacji nawiązywanej pomiędzy użytkownikiem, a Interfejsem WWW, nie HTTP jak w prototypie.}
-    \item{Serwer RTMFP (Cumulus), nie udostępnia żadnego sposobu na autoryzację połączeń. Najprostszym sposobem na ograniczenie wykorzystania przez nieautoryzowanych użytkowników jest sprawdzanie \texttt{swfUrl} połączającego się klienta za pomocą rozszerzenia serwera wykorzystującego zdarzenie \texttt{onConnection} (szczegóły w \cite{CumulusDocs}).}
+    \item{Nadawanie ,,peer to peer'' streamu wideo z przeglądarki/urządzenia mobilnego.}
+    \item{Odbiór transmisji ,,peer to peer'' streamu wideo z przeglądarki/urządzenia mobilnego.}
+    \item{Nadawanie ,,peer to peer'' streamu wideo z urządzenia mobilnego.}
+    \item{Odbiór transmisji ,,peer to peer'' streamu na urządzeniu mobilnym.}
+    \item{Skalowalność na poziomie miliona klientów w sieci ,,peer to peer'' dla pojedynczego streamu (więcej w~\cite{MattKauf2009}).}
+    \item{Tworzenie aplikacji na iOS oraz Androida z jednego źródła.}
+\end{packed_item}
+
+Jak każda technologia Adobe Flash Platform ma swoje wady. Niżej przedstawiono listę najważniejszych z nich.
+\begin{packed_item}
+    \item{Komunikacja losowym, wysokim portem UDP może generować problemy z korporacyjnymi firewallami.}
+    \item{Wymagana instalacja wtyczki do przeglądarki (w Google Chrome/Chromium jest instalowana automatycznie alternatywna wersja).}
+    \item{Ograniczony support Adobe Flash Player na urządzeniach firmy Apple.}
+    \item{W przypadku programów IPA dla urządzeń firmy Apple, aplikacja wykorzystująca Adobe AIR for Mobile dołącza wykorzystywane biblioteki Adobe AIR do samej aplikacji, umożliwiając w ten sposób jej uruchomienie na ww. urządzeniach.}
+\end{packed_item}
+
+\begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/adobe-flash-platform.jpg}
+    \captionof{figure}{Logo Adobe Flash Platform, pobrane z Google Images.}
+\end{center}
+
+\newpage
+\subsubsection{Cumulus}
+Darmowa oraz otwarta, bo udostępniona na licencji GPL, implementacja serwera RTMFP (Real Time Media Flow Protocol). W systemie jest on nieodzowny do odkrywania listy potencjalnych peerów posiadających źródło streamów. Jego wykorzystanie jest praktycznie ,,wymuszone'' przez preferencję rozwiązań Open Source nad komercyjnymi rozwiązaniami np. w postaci Adobe Flash Media Interactive Server \cite{Cumulus}.
+
+Przed wybraniem Cumulusa jako serwera RTMFP brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[Adobe Cirrus] Darmowy i ograniczony dostęp do Adobe Cirrus za pomocą klucza developerskiego (\url{http://labs.adobe.com/technologies/cirrus/}). Nie nadaje się do wykorzystania komercyjnego, nie skaluje się ze względu na stały limit wywołań.
+    \item[Adobe Flash Media Interactive Server 4.5] Jedyną, lecz także poważną wadą tego rozwiązania jest koszt około 5 900 EURO za licencję.
+\end{description}
+
+Poniżej przedstawiono zalety Cumulus, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Wbudowana obsługa P2P ,,rendez-vous'', czyli zbierania i udostępniania informacji na temat dostępnych peerów dla danego streamu.}
+    \item{Możliwość rozsyłania streamu wideo na żywo.}
+    \item{Otwartość oraz darmowość -- jedyna otwarta implementacja serwera RTMFP.}
+    \item{Możliwość pisania rozszerzeń serwera za pomocą języka LUA.}
+    \item{Wbudowana obsługa komunikacji AMF (Action Message Format): pull, push, RPC.}
+    \item{Przewidziana skalowalność oraz zarządzanie obciążeniem za pomocą CumulusEdge.}
+    \item{Łatwa konfiguracja oraz instalacja.}
+    \item{Wieloplatformowość.}
+    \item{Aktywna grupa dyskusyjna.}
+\end{packed_item}
+
+Jak każda z technologii, także i Cumulus ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Brak wbudowanej obsługi ,,zwykłego'' protokołu RTMP (Real Time Messaging Protocol), jako alternatywnego źródła streamu w przypadku blokady firewall po stronie klienta.}
 \end{packed_item}
 
 \newpage
-\section{Wydajność P2P Multicasting w Adobe Flash Platform}
+\subsubsection{Django}
+Framework napisany w Pythonie, umożliwiający proste i szybkie tworzenie stron internetowych. W systemie stworzony zostanie za jego pomocą Interfejs WWW, będący centrum wymiany informacji i możliwości przeglądania streamów \cite{Django}.
 
-W tym rozdziale chciano poruszyć temat związany z wydajnością transmisji wideo za pomocą technologii P2P Multicasting. Kryterium jakie chcemy sprawdzać to opóźnienie transmisji wideo względem obrazu oryginalnego oraz jego płynność. Opóźnienie jest wyrażone w sekundach. Płynność określono jako jedną z poniższych możliwości.
+Przed wybraniem Django, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
 \begin{description}
-    \item[Obraz całkowicie płynny] Obraz zachowuje płynność ciągle.
-    \item[Obraz płynny] Obraz od czasu do czasu wstrzymuje się, większą część czasu jest płynny.
-    \item[Obraz skaczący] Obraz nie jest płynny, posiada natomiast więcej niż jedną klatkę na sekundę.
-    \item[Obraz poklatkowy] Obraz nie jest całkowicie płynny, posiada mniej niż jedną klatkę na sekundę.
-    \item[Obraz nieczytelny] Obraz pojawia się we fragmentach, wyświetlają się pomniejsze.
+    \item[Zend] Framework napisany w PHP, technologia nie będąca bliska autorowi pracy (\url{http://framework.zend.com}). 
+    \item[Pyramid] Framework napisany w Pythonie, mniej popularny od Django. Brak doświadczenia w wdrażaniu aplikacji Pyramid (\url{http://www.pylonsproject.org}).
+    \item[Rails] Framework napisany w Ruby. Brak doświadczenia w Ruby oraz w wdrażaniu aplikacji Rails (\url{http://rubyonrails.org}).
 \end{description}
 
-Środowisko testowe składa się z dwóch komputerów klientów, na których uruchomiono przeglądarkę Google Chrome i włączono Browser Receiver dla streamu udostępnianego przez Mobile Broadcaster uruchomionego na Adobe AIR 3.4.0.254/Android 3.2/Samsung Galaxy Tab 10.1. Aplikacja mobilna wysyłanie streamu wideo przeprowadza za pomocą łącza ADSL (połączenie WiFi przez router) o parametrach faktycznych 8 Mb/s pobieranie, 1 Mb/s wysyłanie danych. Alternatywnym połączeniem Mobile Broadcastera jest darmowy internet od Aero2 w technologii HSPA/HSPA+ o parametrach faktycznych 0.5 Mb/s pobieranie, 0.4 Mb/s wysyłanie danych. Komputery klienckie są połączone do tej samej sieci LAN, korzystającej z wcześniej wymienionego łącza ADSL. Test prędkości łącz został wykonany za pomocą serwisu \url{http://speedtest.net}. W poniższej tabeli znajdują się parametry łącz na których przeprowadzono testy.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|l|l|l|l|}
-        \hline
-        & ping & prędkość pobierania & prędkość wysyłania \\
-        \hline
-        ADSL
-        &
-        51~ms
-        &
-        8~Mb/s
-        &
-        1~Mb/s
-        \\
-        \hline
-        Aero2
-        &
-        107~ms
-        &
-        0.5~Mb/s
-        &
-        0.4~Mb/s
-        \\
-        \hline
-    \end{tabular}
-    \caption{Parametry łącz na których zostały przeprowadzone testy.}
-\end{table}
-
-Wpływ na badane kryteria mają parametry:
+Wykorzystując konkurencyjne frameworki dało by się również zrealizować Interfejs WWW. Poniżej przedstawiono zalety Django, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
 \begin{packed_item}
-    \item{Rozdzielczość obrazu w transmisji wideo, która jest przekazywana.}
-    \item{Ilość klientów uczestniczących w transmisji P2P Multicast.}
-    \item{Łącze wykorzystywane przez Mobile Broadcastera.}
-    \item{Łącze wykorzystywane przez Browser Receivera.}
+    \item{Znajomość procesu wdrażania oraz doświadczenie w zarządzaniu aplikacjami Django autora pracy.}
+    \item{Wbudowany/automatyczny panel admina.}
+    \item{Wbudowany ORM dla PostgreSQL, MySQL, SQLite.}
+    \item{Wbudowane wsparcie dla baz danych z rozszerzeniem GIS -- geodjango.}
+    \item{Wbudowana obsługa testów jednostkowych.}
+    \item{Obszerna baza bibliotek Pythona -- np. PyAMF do połączeń Adobe Flash / Django; Fabric do deployowania gotowej aplikacji.}
+    \item{Tworzony z myślą, DRY -- Don't Repeat Yourself.}
+    \item{Bardzo dobra dokumentacja.}
+    \item{Napisany w Pythonie.}
+    \item{Skalowalny do rozmiarów Disqus, Instagram czy Pinterest.}
 \end{packed_item}
 
-Tabela przedstawiająca płynność transmisji oglądanej na ekranie Browser Receivera, względem rozdzielczości przesyłanego strumienia w pikselach. Dla dwóch włączonych Browser Reveiverów, po jednej instancji per komputer klient:
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|l|l|l|l|l|}
-        \hline
-        & 80x60px & 160x120px & 320x240px & 640x480px \\
-        \hline
-        ADSL
-        &
-        obraz całkowicie płynny 
-        &
-        obraz całkowicie płynny
-        &
-        obraz płynny
-        &
-        obraz skaczący
-        \\
-        \hline
-        Aero2
-        &
-        obraz płynny
-        &
-        obraz poklatkowy
-        &
-        obraz nieczytelny
-        &
-        obraz nieczytelny
-        \\
-        \hline
-    \end{tabular}
-    \caption{Płynność transmisji wideo w danej rozdzielczości względem wykorzystywanego łącza dla dwóch Browser Receiverów.}
-\end{table}
+Jak każda z technologii, także i Django ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Wymaga odpowiedniego hostingu. Wymaga wiedzy i doświadczenia we wdrażaniu.}
+    \item{Konieczność poznania Pythona.}
+\end{packed_item}
 
-Tabela przedstawiająca opóźnienie transmisji oglądanej na ekranie Browser Receivera, względem rozdzielczości przesyłanego strumienia w pikselach. Dla dwóch włączonych Browser Reveiverów, po jednej instancji per komputer klient:
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|l|l|l|l|l|}
-        \hline
-        & 80x60px & 160x120px & 320x240px & 640x480px \\
-        \hline
-        ADSL
-        &
-        opóźnienie 0s
-        &
-        opóźnienie 0s
-        &
-        opóźnienie 0,1s
-        &
-        opóźnienie 0-1s \\
-        \hline
-        Aero2
-        &
-        opóźnienie 0,1-0,5s
-        &
-        opóźnienie 2-3s
-        &
-        opóźnienie 4-5s
-        &
-        opóźnienie ~40s \\
-        \hline
-    \end{tabular}
-    \caption{Opóźnienie transmisji wideo w danej rozdzielczości względem wykorzystywanego łącza dla dwóch Browser Receiverów.}
-\end{table}
-
-Tabela przedstawiająca płynność transmisji oglądanej na ekranie Browser Receivera, względem rozdzielczości przesyłanego strumienia w pikselach. Dla sześciu włączonych Browser Reveiverów, po trzy instancje per komputer klient:
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|l|l|l|l|l|}
-        \hline
-        & 80x60px & 160x120px & 320x240px & 640x480px \\
-        \hline
-        ADSL
-        &
-        obraz całkowicie płynny 
-        &
-        obraz płynny
-        &
-        obraz płynny
-        &
-        obraz poklatkowy
-        \\
-        \hline
-        Aero2
-        &
-        obraz płynny
-        &
-        obraz poklatkowy
-        &
-        obraz poklatkowy
-        &
-        obraz nieczytelny
-        \\
-        \hline
-    \end{tabular}
-    \caption{Płynność transmisji wideo w danej rozdzielczości względem wykorzystywanego łącza dla sześciu Browser Receiverów.}
-\end{table}
-
-Tabela przedstawiająca opóźnienie transmisji oglądanej na ekranie Browser Receivera, względem rozdzielczości przesyłanego strumienia w pikselach. Dla sześciu włączonych Browser Reveiverów, po trzy instancje per komputer klient:
-\begin{table}[h]
-    \centering
-    \begin{tabular}{|l|l|l|l|l|}
-        \hline
-        & 80x60px & 160x120px & 320x240px & 640x480px \\
-        \hline
-        ADSL
-        &
-        opóźnienie 0s
-        &
-        opóźnienie 0-0,3s
-        &
-        opóźnienie 0-0,5s
-        &
-        opóźnienie 0,5-2s \\
-        \hline
-        Aero2
-        &
-        opóźnienie 0-3s
-        &
-        opóźnienie 30s
-        &
-        opóźnienie 35s
-        &
-        opóźnienie 45s \\
-        \hline
-    \end{tabular}
-    \caption{Opóźnienie transmisji wideo w danej rozdzielczości względem wykorzystywanego łącza dla sześciu Browser Receiverów.}
-\end{table}
+\begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/django.jpg}
+    \captionof{figure}{Logo Django, pobranie ze strony projektu.}
+\end{center}
 
 \newpage
-\section{Wnioski}
+\subsubsection{jQuery}
+Biblioteka JavaScript tworząca wspólne API dla wszystkich przeglądarek służące do: przechodzenia i wybierania elementów z drzewa dokumentu HTML, tworzenia animacji, interakcji AJAX oraz zarządzania zdarzeniami. W~systemie jest dokładnie w tych celach wykorzystywana \cite{jQuery}.
 
-W tym rozdziale zaprezentowane są wnioski powstałe podczas implementacji prototypu systemu.
+Przed wybraniem jQuery, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[mootools] Jest frameworkiem JavaScriptowym, jest narzędziem zbyt poważnym do zastosowania w systemie (\url{http://mootools.net}).
+    \item[prototypeJS] Jest podobnie jak jQuery biblioteką JavaScript, mniejsza od mootools, ale wolniejsza od jQuery (\url{http://prototypejs.org}).
+    \item[dojotoolkit] Jest modularnym frameworkiem JavaScriptowym, zbyt poważnym do zastosowania w systemie (\url{http://dojotoolkit.org}).
+\end{description}
 
+Poniżej przedstawiono zalety jQuery, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
 \begin{packed_item}
-    \item{Im gorsze połączenie Mobile Broadcastera tym gorsza możliwa jakość przesyłu wideo.}
-    \item{Im gorsze połączenie Mobile Broadcastera, a ilość Browser Reveicerów większa tym lepsza płynność transmisji wideo.}
-    \item{Im lepsze połączenie Mobile Broadcastera tym lepsza możliwa jakość przesyłu wideo.}
-    \item{Im więcej klientów Browser Reveivera podłączone do streamu tym większe możliwe opóźnienie.}
-    \item{Aby stworzyć aplikację na iOS za pomocą Adobe AIR for Mobile należy posiadać Apple Developer Account.}
-    \item{Adobe P2P Multicasting działa i wydaje się sensowną technologią do wdrożenia projektowanego systemu.}
-    \item{Aby publicznie udostępnić system należy sporo rzeczy poprawić, w szczególności popracować nad bezpieczeństwem systemu.}
-    \item{Komunikacja P2P odbywa się przy udziale wysokiego portu UDP. Komunikacja ta może być blokowana w sieciach korporacyjnych.}
-    \item{Wszystkie wykorzystane przy implementacji prototypu technologie spełniają swoją powierzoną rolę.}
-    \item{Istnieje ryzyko stworzenia systemu służącego do permanentnej inwigilacji...}
-    \item{Metodyka XP ma duże szanse powodzenia przy prowadzeniu szybko zmieniającego się projektu przy udziale niedużej grupy projektowej.}
-    \item{Przygotowywanie ekranów do kart wymagań za pomocą programu graficznego jest pracochłonną czynnością, dużo lepiej powinny sprawdzić odręczne szkice i ,,cyfryzacja'' za pomocą zdjęć np. telefonem komórkowym.}
+    \item{Zajmuje jedynie 31KB.}
+    \item{Zgodny z CSS3.}
+    \item{API wspólne dla wszystkich przeglądarek: IE~6.0+, FF~10+, Safari~5.0+, Opera, Chrome.}
+    \item{Dobra dokumentacja i przykłady.}
+    \item{Duża popularność.}
 \end{packed_item}
+
+Jak każda z technologii, także i jQuery ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Dalej jest to ten sam poczciwy JavaScript.}
+    \item{Nie jest to framework, a jedynie biblioteka.}
+\end{packed_item}
+
+\begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/jquery.jpg}
+    \captionof{figure}{Logo jQuery, pobranie ze strony projektu.}
+\end{center}
+
+\newpage
+\subsubsection{Bootstrap}
+Framework do tworzenia interfejsu WWW, napisany w LESS, kompilujący się do CSS. Dodatkowo za pomocą jQuery, umożliwia skorzystanie z wielu niestandardowych komponentów, czy też animacji. Za jego pomocą zostanie stworzony layout na potrzebny systemu, dostosowany do obsługi urządzeń mobilnych zachowując przy tym jedno źródło \cite{bootstrap}.
+
+Nie znaleziono alternatywnej technologii, która mogła by być porównana na każdej płaszczyźnie z Bootstrapem. Większość rozwiązań trzeba rozszerzać lub kompletować o to co jest gotowe i wbudowane w Bootstrap.
+
+Poniżej przedstawiono zalety Bootstrapa, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Wbudowana obsługa responsywności -- klasy CSS zależne do szerokości ekranu.}
+    \item{Wbudowany reset stylów CSS, tak aby przeglądarki wyświetlały w taki sam sposób wszystkie komponenty HTML'a (marginesy, paddingi).}
+    \item{Formatowanie domyślne standardowych tagów HTML.}
+    \item{Wbudowane klasy pomocnicze do typografii.}
+    \item{Wbudowane komponenty rozszerzające tagi HTML.}
+    \item{Wbudowany, dwunasto-kolumnowy grid.}
+    \item{Rozszerzalny dzięki jQuery o dodatkowe możliwości (animacje, dodatkowe komponenty).}
+    \item{Zbudowany za pomocą LESS (\url{http://lesscss.org}) -- duże ułatwienie przy pisaniu kodu CSS m.in. poprzez: zmienne, zagnieżdżenia oraz ,,mix-iny''.}
+    \item{Bardzo dobra dokumentacja oraz przykłady.}
+\end{packed_item}
+
+Jak każda z technologii, także i Bootstrap ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Aby w pełni skorzystać trzeba znać CSS i poznać LESS.}
+    \item{Pliki źródłowe LESS trzeba kompilować do CSS, co jest dosyć uciążliwe.}
+    \item{Raz wykorzystany stanie się podstawą przy większości projektów webowych.}
+\end{packed_item}
+
+\begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/bootstrap.jpg}
+    \captionof{figure}{Logo Bootstrap, pobranie ze strony projektu.}
+\end{center}
+
+\newpage
+\subsubsection{FlashDevelop}
+Jedyne otwarte i darmowe IDE współpracujące z Adobe Flash Platform (wykorzystujące SDK Flexa), umożliwiające tworzenie aplikacji z wykorzystaniem Adobe Flash Platform. Wszystkie części systemu związane z technologią Adobe zostaną przygotowane za pomocą tego IDE \cite{flashDevelop}.
+
+Nie znaleziono alternatywnego rozwiązania darmowego pozwalającego na porównanie z FlashDevelop. Flash Builder Premium 4.6, jest oryginalnym i polecanym przez Adobe rozwiązaniem. Koszt to ,,jedyne'' ~639 EURO za pełną licencję jednostanowiskową.
+
+Poniżej przedstawiono zalety FlashDevelop, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Otwartość oraz darmowość.}
+    \item{Gotowe szablony aplikacji Adobe Flex/AIR/AIR for Mobile.}
+    \item{Zaawansowane podpowiadanie kodu (,,code completion'').}
+    \item{Możliwość pobrania i instalacji  Adobe Flex SDK z poziomu aplikacji.}
+    \item{Wbudowany Flash debugger.}
+\end{packed_item}
+
+Jak każde z rozwiązań, także i FlashDevelop ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Dostępna jest jedynie wersja na platformę Windows.}
+    \item{Szczątkowa dokumentacja.}
+    \item{Wymaga podstawowej znajomości technologii Adobe, aby odnaleźć się w interfejsie i zacząć projekt.}
+\end{packed_item}
+
+\begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/flashdevelop.jpg}
+    \captionof{figure}{Logo FlashDevelop, pobranie ze strony projektu.}
+\end{center}
+
+\newpage
+\subsubsection{PostgreSQL}
+Serwer obiektowo-relacyjnej bazy danych, umożliwiający przechowywanie i szybki dostęp do wszelkich danych. Jest rozwijany od ponad 15 lat. Jego sprawdzona przez ten czas architektura potwierdza jego opinię, jako serwera niezawodnego, utrzymującego spójność i poprawność danych. W projekcie jest podstawowym mechanizmem składowania danych \cite{PostgreSQL}.
+
+Przed wybraniem PostgreSQL, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[MySQL] Najpopularniejsza relacyjna baza danych. Posiada wbudowane rozszerzenie GIS, jest wspierana przez ORM Django. Szybka, lecz nie tak niezawodna jak PostgreSQL.  (\url{http://www.mysql.com}).
+    \item[SQLite] Relacyjna baza danych umożliwiająca przechowywanie bazy w pliku. Posiada ograniczone transakcje oraz rozszerzenie GIS, jest wspierana przez ORM Django. Mało wydaja dla aplikacji wielowątkowych (\url{http://www.sqlite.org}).
+\end{description}
+
+Poniżej przedstawiono zalety PostgreSQL, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Otwartość oraz darmowość.}
+    \item{Niezawodność, stabilność.}
+    \item{Duża wydajność.}
+    \item{Wbudowane narzędzia do tworzenia backupu danych -- pg\_dump.}
+    \item{Dostępne narzędzia do replikacji oraz zarządzania obciążeniem np. pgpool2 -- ważne w przypadku skalowalności.}
+    \item{Dostępne rozszerzenie GIS (Geographic Information System) w postaci PostGIS (\url{http://postgis.refractions.net}).}
+    \item{Możliwość uruchomienia na wielu platformach.}
+\end{packed_item}
+
+Jak każde z rozwiązań, także i PostgreSQL ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Stosunkowo długie otwieranie nowego połączenia.}
+    \item{Mniejsza popularność i dostępność w pakietach hostingowych niż MySQLa.}
+\end{packed_item}
+
+\begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/postgresql.jpg}
+    \captionof{figure}{Logo PostgreSQL, pobranie ze strony projektu.}
+\end{center}
+
+\newpage
+\subsubsection{Google Maps Javascript API}
+Jest darmową biblioteką Javascript pozwalającą na umieszczenie Mapy Google na własnej stronie internetowej. Dostarcza API zawierające szereg metod pozwalających na zarządzanie obiektem mapy oraz na dodawanie zawartości do Map Google. Łączy się też z wieloma darmowymi usługami dostępnymi od firmy Google  \cite{GoogleMapsJsAPI}.
+
+W projektowanym systemie będzie ona wykorzystywana do prezentacji streamów posiadających lokalizację oraz umożliwiała wyszukiwanie informacji.
+
+Przed wybraniem Google Maps Javascript API, jako technologie do wykorzystania brano pod uwagę następujące alternatywy.
+\begin{description}
+    \item[OpenLayers] Całkowicie darmowa i otwarta biblioteka wraz z serwerem map, umożliwiająca wyświetlanie interaktywnej mapy na stronie internetowej. Wolniejsza i z mniej dopracowanym interfejsem względem rozwiązania od Google (\url{http://openlayers.org}).
+    \item[Nokia Maps API for JavaScript] Zaawansowana biblioteka JavaScript do wyświetlania map Ovi. Stosunkowo nieduże ograniczenia jeżeli chodzi o ilość zapytań -- 1 milion w wersji Trial. Reszta opcji płatna lub do uzgodnienia z Nokia (\url{http://api.maps.nokia.com/en/overview.html}).
+    \item[Bing Maps AJAX] Biblioteka JavaScript umożliwiająca skorzystanie z map http://www.bing.com/maps . Korzysta z map dostarczanych przez Nokia, udostępniają własne API. Gorszy interfejs oraz aktualność map i zdjęć satelitarnych niż w przypadku rozwiązania od Google (\url{http://www.bingmapsportal.com/isdk/ajaxv7}).
+\end{description}
+
+Poniżej przedstawiono zalety Google Maps Javascript API, przez które zdecydowano o jego zastosowaniu przy tworzeniu implementacji systemu.
+\begin{packed_item}
+    \item{Biblioteka jest darmowa.}
+    \item{Biblioteka działa z większością używanych dzisiaj przeglądarek (IE 7.0+ (Windows), Firefox 3.0+ (Windows, Mac OS X, Linux), Safari 4+ (Mac OS X, iOS), Chrome (Windows, Mac OS X, Linux), Android, BlackBerry 6, Dolfin 2.0+ (Samsung Bada)).}
+    \item{Biblioteka dostosowana jest do mobilnych urządzeń -- zarówno pod względem prędkości jak i wyglądu oraz interfejsu użytkownika.}
+    \item{Łączy się z usługą wyszukiwania lokalizacji i udostępnia dane dotyczące położenia danej lokalizacji.}
+    \item{Bardzo dobra dokumentacja.}
+    \item{Bardzo dobre przykłady wykorzystania API.}
+    \item{Dokładność map.}
+    \item{Popularność rozwiązania.}
+\end{packed_item}
+
+Jak każde z rozwiązań, także i Google Maps Javascript API ma swoje wady. Niżej przedstawiono ich listę.
+\begin{packed_item}
+    \item{Brak usługi geolokalizacji po adresie IP.}
+\end{packed_item}
+
+\begin{center}
+    \includegraphics[width=0.48\textwidth]{img/logos/google-maps-api.jpg}
+    \captionof{figure}{Logo Google Developers, odpowiedzialnego za Google Maps JavaScript API, pobranie ze strony projektu.}
+\end{center}
+
+\newpage
+\subsubsection{Inne technologie}
+Przy tworzeniu systemu skorzysta się również również z kilku mniejszych narzędzi, czy też bibliotek wartych wymienienia. Niżej przedstawiono ich listę.
+
+\begin{description}
+    \item[MaxMind GeoIP Lite] Biblioteka udostępniająca bazę IP mapowaną do nazwy lokalizacji i położenia za pomocą prostego API (\url{http://www.maxmind.com/app/geolite})
+    \item[GIT] Darmowy i otwarty, rozproszony system kontroli wersji (\url{http://git-scm.com}).
+    \item[GitHub] Serwis udostępniający darmowe miejsce na zdalne repozytorium GITaa -- dla projektów o otwartym kodzie źródłowym (\url{http://github.com}).
+    \item[Fabric] Biblioteka i narzędzie linii komend umożliwiające pisanie skryptów automatycznie wykonywanych poprzez SSH na zdefiniowanych hostach. Umożliwia stworzenie procesu automatycznej aktualizacji systemu np. z aktualnego repozytorium (\url{http://fabfile.org}).
+    \item[Factory\_boy] Biblioteka umożliwiająca w prosty sposób tworzenie fabryk do modelów danych. Bardzo pomocna przy tworzeniu testów jednostkowych i generowaniu danych potrzebnych do ich przeprowadzenia (\url{https://github.com/rbarrois/factory\_boy}).
+    \item[South] Aplikacja Django umożliwiająca proste zarządzanie procesem migracji bazy danych. Dotyczy to zarówna struktury jak i samych danych (\url{http://south.aeracode.org}).
+    \item[Virtualenv] Narzędzie do tworzenia odizolowanych środowisk Pythonowych, umożliwia równoległe uruchomienie kilku wersji Pythona z własną kolekcją bibliotek (\url{http://pypi.python.org/pypi/virtualenv}).
+    \item[PIP] Narzędzie linii komend do pobierania i instalowania bibliotek Pythonowych. Bardzo przydatne do zarządzania wymaganiami środowiska Pythonowego na serwerach wdrożeniowych (\url{http://pypi.python.org/pypi/pip}).
+    \item[Proxmox] Dystrybucja Debiana umożliwiająca wirtualizację na poziomie KVM oraz OpenVZ (\url{http://pve.proxmox.com/wiki/Main_Page}).
+    \item[Ubuntu Server] Jedna z popularniejszych dystrybucji Debiana, w projekcie wykorzystywana jako podstawowa dla wszystkich maszyn wirtualnych (\url{http://ubuntu.com}).
+    \item[Cherokee] Silnik serwera WWW z graficznym interfejsem zarządzania, pozwalający na udostępnianie zawartości statycznej (obrazki, strony HTML), treści dynamicznej, w szczególności Pythona (Django) za pomocą kontenera uWSGI (\url{http://www.cherokee-project.com}).
+    \item[Dia] Otwarte oprogramowanie umożliwiające tworzenie diagramów. Wszystkie diagramy w pracy zostały wykonane za jego pomocą (\url{http://projects.gnome.org/dia}).
+\end{description}
+
+\newpage
 %---------------------------------------------------------------------------
